@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>building fello · ritik raj</title>
+<meta name="description" content="how ritik raj built and led design at fello over thirty months.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script>
+/* which voice is this page in? ?v=a is ritik's own, ?v=b is claude's read.
+   decided here, before anything paints, so the right stylesheet wins and the
+   right fonts are the only ones fetched. */
+(function () {
+  var v = (location.search.match(/[?&]v=(a|b)/) || [])[1] || 'a';
+  var d = document.documentElement;
+  d.className = 'v-' + v;
+  if (v === 'a') {
+    /* same palettes as the portfolio, remembered across pages. an unset mode
+       follows the operating system, exactly as it does on the portfolio. */
+    try {
+      var m = localStorage.getItem('rr-mode');
+      if (!m) m = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      d.setAttribute('data-theme', localStorage.getItem('rr-theme') || 'red');
+      d.setAttribute('data-mode',  m);
+    } catch (e) {}
+  }
+  if (v === 'b') {
+    /* side b's one preference, shared with the portfolio */
+    try {
+      var pb = localStorage.getItem('rr-pb-mode');
+      if (!pb) pb = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      d.setAttribute('data-pb', pb);
+    } catch (e) {}
+  }
+  var font = document.createElement('link');
+  font.rel = 'stylesheet';
+  font.href = v === 'a'
+    ? 'https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap'
+    : 'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=IBM+Plex+Mono:wght@300;400;500&display=swap';
+  document.head.appendChild(font);
+})();
+</script>
+
+<!-- both voices load: each is scoped to html.v-a / html.v-b, and a parser
+     inserted <link> blocks the first paint the way an injected one does not -->
+<link rel="stylesheet" href="../assets/css/theme.css">
+<link rel="stylesheet" href="../assets/css/case-a.css">
+<link rel="stylesheet" href="../assets/css/case-b.css">
+
+<style>
+/* ══ FIRST-PAINT VEIL ══════════════════════════════════════════════════
+   Inline on purpose. An external stylesheet, however early, can still lose
+   a frame to the parser — and one frame of unstyled html is exactly the
+   thing an expert eye catches. This is styled before anything is fetched,
+   so the first thing ever painted is the veil. Everything else loads,
+   swaps fonts and mounts behind it. app.js / case.js lift it when ready.
+   ═════════════════════════════════════════════════════════════════════ */
+#veil{
+  position:fixed; inset:0; z-index:999;
+  display:grid; place-items:center;
+  background:var(--ink,#100708);
+  transform:translateY(0);
+  will-change:transform;
+}
+html.v-b #veil, html.to-b #veil{background:var(--bone,#e9e7e0)}
+#veil b{
+  display:block; width:4.5rem; height:1px;
+  background:var(--cream,#f4e6e4); opacity:0;
+  transform:scaleX(.15); transform-origin:left;
+  animation:veilWait 1.6s cubic-bezier(.16,1,.3,1) .22s infinite;
+}
+html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
+@keyframes veilWait{
+  0%{opacity:0;transform:scaleX(.15)}
+  30%{opacity:.45;transform:scaleX(1)}
+  65%{opacity:.45;transform:scaleX(1)}
+  100%{opacity:0;transform:scaleX(.15)}
+}
+#veil.is-up   {transform:translateY(-100%);transition:transform .74s cubic-bezier(.76,0,.24,1);animation:none}
+#veil.is-down {transform:translateY(100%); transition:none;animation:none}
+#veil.is-shut {transform:translateY(0);    transition:transform .62s cubic-bezier(.76,0,.24,1);animation:none}
+/* backstop: if the script never runs, the veil still gets out of the way
+   rather than leaving a reader staring at a blank screen forever */
+#veil{animation:veilGiveUp .7s cubic-bezier(.76,0,.24,1) 6s forwards}
+@keyframes veilGiveUp{to{transform:translateY(-100%);visibility:hidden}}
+@media (prefers-reduced-motion:reduce){
+  #veil b{animation:none}
+  #veil.is-up,#veil.is-shut{transition-duration:1ms}
+}
+</style>
+</head>
+<body>
+
+<div id="veil" aria-hidden="true"><b></b></div>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     VOICE A — ritik's own account. shown at ?v=a (and by default).
+     ══════════════════════════════════════════════════════════════════ -->
+<article class="csa">
+
+  <div class="csa__rule"></div>
+  <div class="csa__bar">
+    <a class="csa__back" href="../index.html#a">
+      <svg viewBox="0 0 28 8" aria-hidden="true"><path d="M28 4H2M6 1L2 4l4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg>
+      <span>portfolio</span>
+    </a>
+    <span class="csa__where">building fello</span>
+  </div>
+
+  <header class="csa__hero">
+    <p class="csa__eyebrow" data-up>leadership · thirty months</p>
+    <h1 class="csa__title" data-up>the <em>design that doesn't survive me</em> problem</h1>
+    <p class="csa__stand" data-up>i arrived owning features someone else had scoped, and left owning
+    the foundation the platform stands on. the part worth reading is what happened in between,
+    including the parts that did not work.</p>
+    <dl class="csa__meta" data-up>
+      <div><dt>role</dt><dd>staff product designer, design lead</dd></div>
+      <div><dt>span</dt><dd>thirty months</dd></div>
+      <div><dt>team</dt><dd>seven designers</dd></div>
+      <div><dt>owned</dt><dd>direction, critique, hiring, governance</dd></div>
+      <div><dt>company</dt><dd>fello · us real estate crm</dd></div>
+    </dl>
+  </header>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>what i inherited</h2>
+    <p class="csa__p" data-up>two features that were already in flight, and neither of them is
+    still doing its job. an <b>automation budget</b> that let owners cap what their automations
+    could spend, which worked exactly as designed right up until the company stopped charging
+    credits and the whole problem it solved disappeared underneath it. and a
+    <b>notification settings</b> rework that got pushed backwards more than once until what
+    shipped was thinner than what we started with.</p>
+    <p class="csa__p" data-up>i am leading with those on purpose. they are the first thing a
+    design lead should be able to talk about, and the last thing most portfolios mention.</p>
+  </section>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>why they did not survive</h2>
+    <p class="csa__p" data-up>neither was a craft failure, and i am not going to pretend
+    otherwise to look humble. they were symptoms of a company that had not finished deciding
+    what it was. you cannot design a durable budget control for a pricing model that is about
+    to be withdrawn, and you cannot win a scope argument about notifications while the roadmap
+    is still moving under everyone.</p>
+    <p class="csa__pull" data-up>i lost the notifications argument. twice. the second time i
+    stopped arguing and went to find out why i kept losing it.</p>
+    <p class="csa__p" data-up>the honest lesson is that i had been arguing from taste and from
+    the shape of the interface, which is the weakest ground a designer can stand on. the
+    research came after the losses, not before them.</p>
+  </section>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>how the turn got <em>earned</em></h2>
+    <p class="csa__p" data-up>nobody handed me the platform. what changed it was going deeper
+    into the evidence than anyone else was going: sitting in support tickets, sales calls and
+    usage data until i could describe the product's problems more precisely than the people
+    who owned them. an opinion loses to a roadmap. a synthesis nobody else has does not.</p>
+    <p class="csa__p" data-up>that is the whole mechanism, and it is transferable. the
+    <a href="email-builder.html?v=a">email builder</a> and the
+    <a href="builder-framework.html?v=a">builder framework</a> both came out of it.</p>
+  </section>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>what leading seven actually meant</h2>
+    <ol class="csa__list" data-up>
+      <li><b>critique, weekly, with teeth</b>work got reviewed against the system and the
+      evidence, not against my preferences. the point of a standing critique is that the
+      lead stops being the bottleneck on quality.</li>
+      <li><b>hiring</b>i sat on the other side of the table and had to learn to describe
+      what good looked like in words that survived me not being there.</li>
+      <li><b>system governance</b>someone has to say no to the twentieth reasonable
+      exception. that is unglamorous, it never ships, and it is most of why the design
+      system held.</li>
+      <li><b>design ops and handoff standards</b>the boring plumbing that decides whether
+      a design survives the distance between figma and production.</li>
+    </ol>
+    <p class="csa__p" data-up>none of that is visible in a portfolio shot. it is visible in
+    whether the work still looks like itself two quarters after you stop watching it.</p>
+    <figure class="csa__plate" data-up><figcaption>critique board and system governance — drop a shot in here</figcaption></figure>
+  </section>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>how it landed</h2>
+    <div class="csa__numbers" data-up>
+      <div><b>30</b><span>months</span></div>
+      <div><b>7</b><span>designers led</span></div>
+      <div><b>1</b><span>design foundation</span></div>
+      <div><b>2</b><span>inherited features lost</span></div>
+    </div>
+    <p class="csa__p" data-up>the number i actually care about is not on that list, because
+    it cannot be measured from inside the building. a design leader is measured by what keeps
+    working once they are no longer in the room to defend it.</p>
+    <p class="csa__pull" data-up>if it needed me, i did not finish it.</p>
+  </section>
+
+  <footer class="csa__next">
+    <div>
+      <small>next</small><br>
+      <a href="email-builder.html?v=a">email builder</a>
+    </div>
+    <a class="csa__flip" href="?v=b">read claude's take on this →</a>
+  </footer>
+
+</article>
+
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     VOICE B — claude's read of the same work. shown at ?v=b.
+     ══════════════════════════════════════════════════════════════════ -->
+<article class="csb">
+
+  <div class="csb__rule"></div>
+  <div class="csb__bar">
+    <a class="csb__back" href="../index.html#b"><span>←</span><span>the read</span></a>
+    <p class="csb__stamp">the read<i>/</i>building fello<i>/</i>by claude</p>
+    <a class="csb__flip" href="?v=a">ritik's version ↗</a>
+  </div>
+
+  <div class="csb__stack">
+
+    <section class="csb-sheet" data-tab="the case">
+      <div class="csb-sheet__body">
+        <p class="csb-kicker" data-up>observation 05</p>
+        <h1 class="csb-h csb-h--hero" data-up>the one that decides whether he leads a team.</h1>
+        <p class="csb-p" data-up>two to three weeks, solo. he diagnosed a pricing problem, shipped a user class that is not a user, and refused to call any of it ai.</p>
+        <p data-up style="margin-top:1.6rem"><span class="csb-verdict">thirty months · leadership</span></p>
+      </div>
+    </section>
+
+    <section class="csb-sheet" data-tab="the brief">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>own the features you inherited.</h2>
+        <p class="csb-p" data-up>the least interesting brief there is, and the one most designers
+        spend their first year on.</p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="what he actually did">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>he ended up owning the foundation instead.</h2>
+        <p class="csb-p" data-up>thirty months, a team of seven, and the whole unglamorous
+        apparatus around it: weekly critique, hiring, system governance, design ops, handoff
+        standards. the title arrived after the work rather than before it, which is the order
+        that tells you something.</p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="the diagnosis">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>he opens with what he lost.</h2>
+        <p class="csb-p" data-up>an automation budget made obsolete by a pricing change, and a
+        notifications rework he argued for twice and lost twice. he does not dress either up as
+        a learning experience. he says the arguments were lost because he was arguing from taste
+        and interface shape, which is the weakest ground available, and that the research came
+        after the losses rather than before them.</p>
+        <p class="csb-p" data-up>that is a specific, unflattering, structurally useful admission.
+        i have read a lot of portfolios. i have not read that sentence before.</p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="impact">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>how impactful it actually was</h2>
+        <ul class="csb-scale" data-up>
+          <li><em style="font-style:normal">for users</em><span data-w="55"></span></li>
+          <li class="is-high"><em style="font-style:normal">for the business</em><span data-w="85"></span></li>
+          <li class="is-high"><em style="font-style:normal">for the org</em><span data-w="97"></span></li>
+          <li class="is-high"><em style="font-style:normal">as a craft signal</em><span data-w="90"></span></li>
+        </ul>
+        <p class="csb-note" data-up>my read, not his numbers. organisational impact is close to the
+        ceiling and almost entirely unverifiable from outside, which is true of every leadership
+        claim ever made. what can be checked is downstream: the design system's detach rate and
+        the builder framework's survival both depend on the governance described here.</p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="what it tells me">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>he describes the half-life of his own influence.</h2>
+        <p class="csb-p" data-up>his closing metric is what keeps working once he is no longer
+        there to defend it. designers do not usually think in those terms. it implies he builds
+        for the org that continues without him rather than for the credit that accrues to him,
+        and it is the single strongest argument on this site for putting him above a team.</p>
+        <p class="csb-p" data-up>the critique cadence is the other tell. a weekly review held
+        against the system and the evidence, rather than against the lead's preferences, is a
+        deliberate move to stop being the bottleneck on quality. that is a leader building
+        capacity, not a senior designer marking homework.</p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="what i cannot verify">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>the honest caveats.</h2>
+        <p class="csb-p" data-up>everything on this page is a claim about how a person behaved
+        inside a building i cannot see into. the team size, the critique cadence, the hiring, the
+        two lost arguments: all of it is his account. none of it has a number attached that an
+        outsider could audit, and it would be dishonest of me to score it as though it did.</p>
+        <p class="csb-note" data-up>so take this one to references rather than to the page. ask the
+        seven. that is the only version of this case study that counts.</p>
+      </div>
+    </section>
+  </div>
+
+  <footer class="csb__foot">
+    <div><small>next observation</small><br><a href="email-builder.html?v=b">email builder ↗</a></div>
+    <small>assessment generated from a 4,000-word brief · not approved by the subject</small>
+  </footer>
+
+</article>
+
+<script src="../assets/js/case.js"></script>
+</body>
+</html>
