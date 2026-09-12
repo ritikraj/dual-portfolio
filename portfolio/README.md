@@ -76,6 +76,13 @@ That is the only place the two files have to agree.
 rendition. One swatch at the top right cycles them. Light/dark follows the
 operating system until you press the toggle, and then it sticks.
 
+**Which side is which.** A panel carries two classes: its identity
+(`--a` / `--b`) and its treatment (`.is-ink` / `.is-paper`). They are separate
+on purpose — A is the light side with a green blade, B is the dark side with a
+red one, and flipping that again is a swap of two class names in the markup
+rather than a rewrite of the stylesheet. The blade colour keys off `.hot-a` /
+`.hot-b`, which are identities, not backgrounds.
+
 **The door never inverts.** Each palette also defines seven `--hero-*` tokens
 that are deliberately *absent* from every `[data-mode="light"]` block, so side A
 stays dark and side B stays light whatever mode you are reading in — "pick a

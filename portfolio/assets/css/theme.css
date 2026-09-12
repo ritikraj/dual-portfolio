@@ -232,7 +232,7 @@ body.is-hero .theme,
 body.is-a .theme,
 body.is-case .theme{opacity:1;pointer-events:auto}
 /* on the door it sits over the light panel, so it takes that panel's ink */
-body.is-hero .theme{color:var(--hero-fg-light)}
+body.is-hero .theme{color:var(--hero-fg-dark)}
 /* light/dark is a reading preference for the sections. on the door it would
    only flip the two sides, which is the one thing the door is about. */
 body.is-hero .theme__mode,
@@ -270,6 +270,9 @@ body.is-hero .theme__sep{display:none}
 
 @media (max-width:720px){
   .theme{top:1.05rem;right:1.1rem;gap:.4rem}
+  /* the door stacks on a phone, so the top of the screen is side A's paper,
+     not side B's ink */
+  body.is-hero .theme{color:var(--hero-fg-light)}
   .theme__swatch span{display:none}
 }
 @media (prefers-reduced-motion:reduce){

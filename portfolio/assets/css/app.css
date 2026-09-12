@@ -73,8 +73,11 @@ em{font-style:italic}
              flex-basis var(--dur-hero) var(--ease-lux);
   will-change:flex-grow;
 }
-.hero__panel--dark {background:var(--hero-dark);  color:var(--hero-fg-dark)}
-.hero__panel--light{background:var(--hero-light); color:var(--hero-fg-light)}
+/* identity (--a / --b) and treatment (.is-ink / .is-paper) are deliberately
+   separate classes, so which portfolio gets the dark side is one swap in the
+   markup rather than a rewrite of this file. */
+.hero__panel.is-ink  {background:var(--hero-dark);  color:var(--hero-fg-dark)}
+.hero__panel.is-paper{background:var(--hero-light); color:var(--hero-fg-light)}
 
 /* the slow radial glow that follows the cursor */
 .hero__veil{
@@ -85,7 +88,7 @@ em{font-style:italic}
   background:radial-gradient(38rem 38rem at var(--mx,50%) var(--my,50%),
              var(--hero-glow), transparent 62%);
 }
-.hero__panel--light .hero__veil{
+.hero__panel.is-paper .hero__veil{
   background:radial-gradient(38rem 38rem at var(--mx,50%) var(--my,50%),
              rgba(0,0,0,.07), transparent 62%);
 }
@@ -104,10 +107,19 @@ em{font-style:italic}
 .hero__panel{transition:flex-grow var(--dur-hero) var(--ease-lux),
                         filter 900ms var(--ease-lux)}
 
-.hero__eyebrow{
+.hero__eyebrow{display:block;margin-bottom:1.8rem}
+.hero__eyebrow b{
   display:block;
-  font-size:.68rem; letter-spacing:.42em; text-transform:uppercase;
-  opacity:.5; margin-bottom:1.6rem;
+  font-size:clamp(.8rem,1.05vw,.95rem); font-weight:500;
+  letter-spacing:.34em; text-transform:uppercase;
+  color:var(--hero-accent);
+}
+.hero__panel.is-paper .hero__eyebrow b{color:var(--hero-accent-light)}
+.hero__eyebrow i{
+  display:block; margin-top:.6rem;
+  font-style:normal;
+  font-size:.62rem; letter-spacing:.26em; text-transform:uppercase;
+  opacity:.5;
 }
 .hero__title{
   font-family:var(--font-display);
@@ -117,7 +129,7 @@ em{font-style:italic}
   letter-spacing:-.015em;
 }
 .hero__title em{font-style:normal;color:var(--hero-accent)}
-.hero__panel--light .hero__title em{color:var(--hero-accent-light)}
+.hero__panel.is-paper .hero__title em{color:var(--hero-accent-light)}
 .hero__note{
   margin-top:1.5rem;
   font-size:.9rem; line-height:1.75; opacity:.55;
@@ -153,7 +165,21 @@ em{font-style:italic}
 }
 /* same top and same height as .theme, so the two sit on one line */
 .hero__mark{top:1.55rem}
-.hero__hint{bottom:.85rem;height:auto;opacity:.6}
+.hero__hint{
+  bottom:.85rem; height:auto; opacity:.75;
+  display:grid; place-items:center;
+}
+.hero__hint span{
+  grid-area:1/1;
+  opacity:0; transform:translateY(.3rem);
+  transition:opacity 420ms var(--ease-lux), transform 420ms var(--ease-lux);
+  white-space:nowrap;
+}
+.hero__hint [data-hint="idle"]{opacity:1;transform:none}
+.hero.hot-a .hero__hint [data-hint="idle"],
+.hero.hot-b .hero__hint [data-hint="idle"]{opacity:0;transform:translateY(-.3rem)}
+.hero.hot-a .hero__hint [data-hint="a"],
+.hero.hot-b .hero__hint [data-hint="b"]{opacity:1;transform:none}
 
 /* a way past the door for anyone who has forty seconds and wants the work.
    quiet, tertiary, and off to one side: the door is still the front door. */
@@ -162,13 +188,13 @@ em{font-style:italic}
   padding:.6rem .9rem;
   border:1px solid transparent;
   font-size:.58rem; letter-spacing:.26em; text-transform:uppercase;
-  color:var(--hero-fg-light); opacity:.4;
+  color:var(--hero-fg-dark); opacity:.45;
   transition:opacity 400ms ease, border-color 400ms ease;
 }
-.hero__skip:hover{opacity:.9;border-color:var(--hero-accent-light)}
+.hero__skip:hover{opacity:.9;border-color:var(--hero-accent)}
 .hero.is-hovering .hero__skip,
 .hero.is-leaving .hero__skip{opacity:0;pointer-events:none}
-.hero.is-hovering .hero__hint{opacity:0}
+
 
 /* — the grand exit — */
 .hero.is-leaving{pointer-events:none}
@@ -176,10 +202,10 @@ em{font-style:italic}
 .hero.is-leaving .hero__mark,
 .hero.is-leaving .hero__hint,
 .hero.is-leaving .hero__seam{opacity:0}
-.hero.pick-a .hero__panel--dark  {flex-grow:2; transition:flex-grow 900ms var(--ease-door)}
-.hero.pick-a .hero__panel--light {flex-grow:0; transition:flex-grow 900ms var(--ease-door)}
-.hero.pick-b .hero__panel--light {flex-grow:2; transition:flex-grow 900ms var(--ease-door)}
-.hero.pick-b .hero__panel--dark  {flex-grow:0; transition:flex-grow 900ms var(--ease-door)}
+.hero.pick-a .hero__panel--a{flex-grow:2; transition:flex-grow 900ms var(--ease-door)}
+.hero.pick-a .hero__panel--b{flex-grow:0; transition:flex-grow 900ms var(--ease-door)}
+.hero.pick-b .hero__panel--b{flex-grow:2; transition:flex-grow 900ms var(--ease-door)}
+.hero.pick-b .hero__panel--a{flex-grow:0; transition:flex-grow 900ms var(--ease-door)}
 .hero.is-gone{opacity:0}
 
 /* the curtain wipe */
@@ -212,8 +238,8 @@ em{font-style:italic}
 }
 /* it rides the seam. hovering a side grows that panel to 65%, so the blade
    travels with the edge instead of being left behind at half-way. */
-.hero.hot-a .saber{left:65%; --saber:#ff2a1c}    /* the dark side */
-.hero.hot-b .saber{left:35%; --saber:#2bff6d}    /* the light side */
+.hero.hot-a .saber{left:65%; --saber:#2bff6d}    /* a · the light side */
+.hero.hot-b .saber{left:35%; --saber:#ff2a1c}    /* b · the dark side  */
 .hero.pick-a .saber{left:100%}
 .hero.pick-b .saber{left:0}
 .hero .hero__seam{display:none}          /* .saber__rail is the divider now */
@@ -884,10 +910,14 @@ em{font-style:italic}
   .creed b{font-size:.86rem}
   .creed span{font-size:.78rem}
   .hero{flex-direction:column}
-  /* the wordmark sits at the top and the hint at the bottom; the panels
-     have to start below one and end above the other */
-  .hero__panel{padding:3.3rem 0 2.4rem}
-  .hero__panel--light{padding-bottom:3.2rem}
+  /* the wordmark sits at the top; the panels start below it */
+  .hero__panel{padding:3.3rem 0 2rem}
+  .hero__panel--b{padding-bottom:2.8rem}
+  /* both of these are height a phone cannot spare, and the door reads without
+     them: the panel titles already say which side is which */
+  .hero__eyebrow i{display:none}
+  .hero__eyebrow{margin-bottom:1.2rem}
+  .hero__hint{display:none}
   .hero__inner{width:min(30rem,86%)}
   .saber{
     left:50%; top:50%; bottom:auto;
@@ -902,14 +932,14 @@ em{font-style:italic}
   .hero.pick-b .saber{left:50%;top:0}
   .saber__blade{height:44vw}
   .saber__hilt{height:72px}
-  .hero__skip{right:auto;left:50%;transform:translateX(-50%);bottom:3.4rem;font-size:.54rem}
+  .hero__skip{right:auto;left:50%;transform:translateX(-50%);bottom:1.1rem;font-size:.54rem}
   .hero__seam{
     top:50%; left:0; right:0; bottom:auto;
     width:auto; height:1px; margin:-.5px 0 0;
     background:linear-gradient(to right,transparent,var(--hero-line),transparent);
   }
-  .hero.pick-a .hero__panel--dark,
-  .hero.pick-b .hero__panel--light{flex-grow:2}
+  .hero.pick-a .hero__panel--a,
+  .hero.pick-b .hero__panel--b{flex-grow:2}
   .panel{padding:5.5rem 1.5rem 5.5rem 3.1rem}
   .panel__ghost{font-size:26vh;right:-.5rem}
   .thread{opacity:.55}
