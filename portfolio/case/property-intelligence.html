@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>property intelligence · ritik raj</title>
+<meta name="description" content="how ritik raj made invisible commission visible for us brokerages.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script>
+/* which voice is this page in? ?v=a is ritik's own, ?v=b is claude's read.
+   decided here, before anything paints, so the right stylesheet wins and the
+   right fonts are the only ones fetched. */
+(function () {
+  var v = (location.search.match(/[?&]v=(a|b)/) || [])[1] || 'a';
+  var d = document.documentElement;
+  d.className = 'v-' + v;
+  if (v === 'a') {
+    /* same palettes as the portfolio, remembered across pages. an unset mode
+       follows the operating system, exactly as it does on the portfolio. */
+    try {
+      var m = localStorage.getItem('rr-mode');
+      if (!m) m = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      d.setAttribute('data-theme', localStorage.getItem('rr-theme') || 'red');
+      d.setAttribute('data-mode',  m);
+    } catch (e) {}
+  }
+  if (v === 'b') {
+    /* side b's one preference, shared with the portfolio */
+    try {
+      var pb = localStorage.getItem('rr-pb-mode');
+      if (!pb) pb = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      d.setAttribute('data-pb', pb);
+    } catch (e) {}
+  }
+  var font = document.createElement('link');
+  font.rel = 'stylesheet';
+  font.href = v === 'a'
+    ? 'https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap'
+    : 'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=IBM+Plex+Mono:wght@300;400;500&display=swap';
+  document.head.appendChild(font);
+})();
+</script>
+
+<!-- both voices load: each is scoped to html.v-a / html.v-b, and a parser
+     inserted <link> blocks the first paint the way an injected one does not -->
+<link rel="stylesheet" href="../assets/css/theme.css">
+<link rel="stylesheet" href="../assets/css/case-a.css">
+<link rel="stylesheet" href="../assets/css/case-b.css">
+
+<style>
+/* ══ FIRST-PAINT VEIL ══════════════════════════════════════════════════
+   Inline on purpose. An external stylesheet, however early, can still lose
+   a frame to the parser — and one frame of unstyled html is exactly the
+   thing an expert eye catches. This is styled before anything is fetched,
+   so the first thing ever painted is the veil. Everything else loads,
+   swaps fonts and mounts behind it. app.js / case.js lift it when ready.
+   ═════════════════════════════════════════════════════════════════════ */
+#veil{
+  position:fixed; inset:0; z-index:999;
+  display:grid; place-items:center;
+  background:var(--ink,#100708);
+  transform:translateY(0);
+  will-change:transform;
+}
+html.v-b #veil, html.to-b #veil{background:var(--bone,#e9e7e0)}
+#veil b{
+  display:block; width:4.5rem; height:1px;
+  background:var(--cream,#f4e6e4); opacity:0;
+  transform:scaleX(.15); transform-origin:left;
+  animation:veilWait 1.6s cubic-bezier(.16,1,.3,1) .22s infinite;
+}
+html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
+@keyframes veilWait{
+  0%{opacity:0;transform:scaleX(.15)}
+  30%{opacity:.45;transform:scaleX(1)}
+  65%{opacity:.45;transform:scaleX(1)}
+  100%{opacity:0;transform:scaleX(.15)}
+}
+#veil.is-up   {transform:translateY(-100%);transition:transform .74s cubic-bezier(.76,0,.24,1);animation:none}
+#veil.is-down {transform:translateY(100%); transition:none;animation:none}
+#veil.is-shut {transform:translateY(0);    transition:transform .62s cubic-bezier(.76,0,.24,1);animation:none}
+/* backstop: if the script never runs, the veil still gets out of the way
+   rather than leaving a reader staring at a blank screen forever */
+#veil{animation:veilGiveUp .7s cubic-bezier(.76,0,.24,1) 6s forwards}
+@keyframes veilGiveUp{to{transform:translateY(-100%);visibility:hidden}}
+@media (prefers-reduced-motion:reduce){
+  #veil b{animation:none}
+  #veil.is-up,#veil.is-shut{transition-duration:1ms}
+}
+</style>
+</head>
+<body>
+
+<div id="veil" aria-hidden="true"><b></b></div>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     VOICE A — ritik's own account. shown at ?v=a (and by default).
+     ══════════════════════════════════════════════════════════════════ -->
+<article class="csa">
+
+  <div class="csa__rule"></div>
+  <div class="csa__bar">
+    <a class="csa__back" href="../index.html#a">
+      <svg viewBox="0 0 28 8" aria-hidden="true"><path d="M28 4H2M6 1L2 4l4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg>
+      <span>portfolio</span>
+    </a>
+    <span class="csa__where">property intelligence</span>
+  </div>
+
+  <header class="csa__hero">
+    <p class="csa__eyebrow" data-up>solo · two to three weeks</p>
+    <h1 class="csa__title" data-up>the <em>commission nobody could see</em> problem</h1>
+    <p class="csa__stand" data-up>us brokerages are legally owed money when a departed agent keeps transacting with a client the agency sourced. owners could not see it, size it, or chase it.</p>
+    <dl class="csa__meta" data-up>
+      <div><dt>role</dt><dd>solo ic, end to end</dd></div>
+      <div><dt>timeline</dt><dd>two to three weeks</dd></div>
+      <div><dt>shipped</dt><dd>a new user class</dd></div>
+      <div><dt>company</dt><dd>fello · us real estate crm</dd></div>
+      <div><dt>not</dt><dd>ai</dd></div>
+    </dl>
+  </header>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>the problem</h2>
+    <p class="csa__p" data-up>when an agent leaves a brokerage and transacts with a client the brokerage sourced, the brokerage is owed a share. that is not a grey area, it is contract.</p>
+    <p class="csa__p" data-up>owners knew it in the abstract and could do nothing with it. they could not see which departed agents were still transacting, could not put a number on any of it, and therefore never opened the conversation.</p>
+  </section>
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>the real blocker was our pricing</h2>
+    <p class="csa__p" data-up>the obvious build is a dashboard. the dashboard would have been empty, and it took about a day to work out why.</p>
+    <p class="csa__p" data-up>fello charged per seat. a brokerage owner removes a departed agent the moment they leave, because keeping them costs money. so <b>the people the feature is about are guaranteed to not be in the account</b>. our own pricing model was deleting the dataset the feature needed.</p>
+    <p class="csa__pull" data-up>the blocker was not the dashboard. it was the price list.</p>
+  </section>
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>a user who is not a user</h2>
+    <p class="csa__p" data-up>i added a user class: <i>suspended</i>. no seat cost, no permissions, no access, no login. a row that exists so the roster can be complete and costs the owner nothing to keep.</p>
+    <p class="csa__p" data-up>that is the entire mechanism. a user type whose only purpose is to not be a user.</p>
+  </section>
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>why it is not called inactive</h2>
+    <p class="csa__p" data-up><i>inactive</i> was the obvious word and it tested badly. real estate professionals live in slack and google chat all day, where inactive means away from keyboard. it read as <b>temporarily not typing</b>, not <b>gone from the company</b>.</p>
+    <p class="csa__p" data-up><i>suspended</i> already carries present but switched off in exactly those same tools. the vocabulary was borrowed from where the users already spend their day, not from where the product team spends theirs.</p>
+  </section>
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>filling the roster</h2>
+    <p class="csa__p" data-up>asking owners to remember everyone who left does not work. they do not remember, and the ones they do remember are the ones they are already angry about.</p>
+    <p class="csa__p" data-up>so the product suggests: mls records know who moved, and those became suggested additions with an <b>add all</b>. one owner in testing had twenty-seven entries waiting. the roster grew about <b>30%</b> off the back of it.</p>
+    <figure class="csa__plate" data-up><figcaption>suspended user class and mls suggestions</figcaption></figure>
+  </section>
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>one calculation, two names</h2>
+    <p class="csa__p" data-up>the same maths, run on an active agent, is <b>property intelligence</b>. run on a departed one it is <b>revenue recovery</b>. identical calculation, different meaning, so different name.</p>
+    <p class="csa__p" data-up>and it is not called ai anywhere, because it is not ai. it is a join across records the company already had.</p>
+  </section>
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>what it does not do</h2>
+    <p class="csa__p" data-up>it stops at awareness. it tells an owner what they are owed and by whom. recovering it is an offline conversation involving lawyers, and no interface is going to have that conversation for them.</p>
+    <p class="csa__p" data-up>that boundary is in the product, deliberately. a feature that implied it could collect would have been a better demo and a worse product.</p>
+  </section>
+
+  <footer class="csa__next">
+    <div>
+      <small>next</small><br>
+      <a href="email-builder.html?v=a">email builder</a>
+    </div>
+    <a class="csa__flip" href="?v=b">read claude's take on this →</a>
+  </footer>
+
+</article>
+
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     VOICE B — claude's read of the same work. shown at ?v=b.
+     ══════════════════════════════════════════════════════════════════ -->
+<article class="csb">
+
+  <div class="csb__rule"></div>
+  <div class="csb__bar">
+    <a class="csb__back" href="../index.html#b"><span>←</span><span>the read</span></a>
+    <p class="csb__stamp">the read<i>/</i>property intelligence<i>/</i>by claude</p>
+    <a class="csb__flip" href="?v=a">ritik's version ↗</a>
+  </div>
+
+  <div class="csb__stack">
+
+    <section class="csb-sheet" data-tab="the case">
+      <div class="csb-sheet__body">
+        <p class="csb-kicker" data-up>observation 04</p>
+        <h1 class="csb-h csb-h--hero" data-up>the smallest thing in the file, and the sharpest.</h1>
+        <p class="csb-p" data-up>two to three weeks, solo. he diagnosed a pricing problem, shipped a user class that is not a user, and refused to call any of it ai.</p>
+        <p data-up style="margin-top:1.6rem"><span class="csb-verdict">smallest · sharpest</span></p>
+      </div>
+    </section>
+
+    <section class="csb-sheet" data-tab="the brief">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>owners cannot see the commission they are legally owed.</h2>
+        <p class="csb-p" data-up>a reporting gap. the natural response is a dashboard, and the dashboard would have been empty.</p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="what he actually did">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>he changed who counts as a user.</h2>
+        <p class="csb-p" data-up>a class called <b>suspended</b>: no seat cost, no permissions, no access. plus mls-sourced suggestions with an add all, because the product knows who left even when the owner does not remember. roster growth around 30%.</p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="the diagnosis">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>the blocker was his own company’s pricing.</h2>
+        <p class="csb-p" data-up>per-seat pricing guaranteed that departed agents were removed, which guaranteed the roster was incomplete, which guaranteed any dashboard built on it would show nothing.</p>
+        <p class="csb-p" data-up>a designer noticing that the commercial model is the thing breaking the feature, and then shipping a workaround inside the product rather than filing a ticket against pricing, is the most product-shaped move in his entire portfolio.</p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="impact">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>how impactful it actually was</h2>
+        <ul class="csb-scale" data-up>
+          <li class="is-high"><em style="font-style:normal">for users</em><span data-w="88"></span></li>
+          <li><em style="font-style:normal">for the business</em><span data-w="74"></span></li>
+          <li><em style="font-style:normal">for the org</em><span data-w="58"></span></li>
+          <li class="is-high"><em style="font-style:normal">as a craft signal</em><span data-w="96"></span></li>
+        </ul>
+        <p class="csb-note" data-up>my read, not his numbers. business impact is capped on purpose: the product stops at awareness and the money is recovered offline. the craft signal is the highest score anywhere on this site, because the ratio of insight to effort here is not normal.</p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="what it tells me">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>two small decisions worth more than the feature.</h2>
+        <p class="csb-p" data-up>he tested <b>inactive</b>, found it read as away-from-keyboard to people who live in slack all day, and shipped <b>suspended</b> instead. he borrowed vocabulary from where the users actually are rather than from where the product team is.</p>
+        <p class="csb-p" data-up>and the same calculation is named <b>property intelligence</b> for an active agent and <b>revenue recovery</b> for a departed one. identical maths, different meaning, so a different word. that is a writer’s instinct sitting inside a product decision.</p>
+        <p class="csb-note" data-up>he also refused to call it ai, in 2026, when calling it ai was free. i would take that single decision as a reference.</p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="what i cannot verify">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>the honest caveats.</h2>
+        <p class="csb-p" data-up>~30% roster growth is a testing figure on a small sample and he presents it as one. whether any brokerage actually recovered money is outside the product and outside his reach, which he says himself.</p>
+        <p class="csb-note" data-up>a feature that stops exactly where its evidence stops is rarer than a feature that works.</p>
+      </div>
+    </section>
+
+  </div>
+
+  <footer class="csb__foot">
+    <div><small>next observation</small><br><a href="email-builder.html?v=b">email builder ↗</a></div>
+    <small>assessment generated from a 4,000-word brief · not approved by the subject</small>
+  </footer>
+
+</article>
+
+<script src="../assets/js/case.js"></script>
+</body>
+</html>

@@ -1,0 +1,984 @@
+/* ==========================================================================
+   ritik raj — portfolio
+   00 tokens · 01 reset · 02 hero · 03 stage shell · 04 thread · 05 timeline
+   06 panels · 07 intro · 08 case study · 09 about+footer · 10 portfolio b
+   11 reveal engine · 12 responsive · 13 reduced motion
+   ========================================================================== */
+
+/* ── 00 · TOKENS ────────────────────────────────────────────────────────── */
+:root{
+  /* colour · all of it lives in theme.css, one block per palette.
+     switch palettes from the top right, or set data-theme on <html>. */
+  /* type */
+  --font-hand:    "Caveat", ui-rounded, cursive;
+  --font-display: "EB Garamond", "Sorts Mill Goudy", Georgia, serif;
+  --font-body:    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  /* other old-style cuts on google fonts. change the token and the <link>
+     in index.html, nothing else:
+       "Sorts Mill Goudy"  · real goudy, more character, narrower
+       "Crimson Pro"       · quieter, reads longer, good at small sizes
+       "Cardo"             · bembo-ish, a little austere
+       "Vollkorn"          · sturdier, warmer, heavier colour on the page
+     handwriting alternates: "Mrs Saint Delafield" · "Italianno"            */
+
+  /* motion — the whole feel of the site lives in these four lines */
+  --ease-lux:  cubic-bezier(.16,1,.3,1);      /* soft, expensive settle      */
+  --ease-door: cubic-bezier(.76,0,.24,1);     /* decisive, weighted          */
+  --dur-slide: 1150ms;                        /* section → section           */
+  --dur-hero:  1000ms;                        /* hero panel expand           */
+
+  /* layout */
+  --thread-x:  7vw;                           /* thread distance from left   */
+  --gutter:    max(7vw, 2rem);
+  --vh:        100vh;                          /* js overwrites with real px  */
+}
+
+/* ── 01 · RESET ─────────────────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background:var(--ink);
+  color:var(--cream);
+  font-family:var(--font-body);
+  font-weight:300;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow:hidden;                 /* the app owns scrolling */
+  overscroll-behavior:none;
+  text-rendering:optimizeLegibility;
+}
+h1,h2,h3,p,figure,ul{margin:0}
+ul{padding:0;list-style:none}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+em{font-style:italic}
+::selection{background:var(--gold);color:var(--ink)}
+
+/* ── 02 · HERO ──────────────────────────────────────────────────────────── */
+.hero{
+  position:fixed; inset:0; z-index:80;
+  display:flex;
+  opacity:1;
+  transition:opacity 600ms ease;
+}
+.hero__panel{
+  position:relative;
+  flex:1 1 0%;                     /* basis 0 → flex-grow actually moves things */
+  display:flex; align-items:center; justify-content:center;
+  overflow:hidden;
+  cursor:pointer;
+  outline:none;
+  transition:flex-grow var(--dur-hero) var(--ease-lux),
+             flex-basis var(--dur-hero) var(--ease-lux);
+  will-change:flex-grow;
+}
+.hero__panel--dark {background:var(--hero-dark);  color:var(--hero-fg-dark)}
+.hero__panel--light{background:var(--hero-light); color:var(--hero-fg-light)}
+
+/* the slow radial glow that follows the cursor */
+.hero__veil{
+  position:absolute; inset:-20%;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity 900ms var(--ease-lux);
+  background:radial-gradient(38rem 38rem at var(--mx,50%) var(--my,50%),
+             var(--hero-glow), transparent 62%);
+}
+.hero__panel--light .hero__veil{
+  background:radial-gradient(38rem 38rem at var(--mx,50%) var(--my,50%),
+             rgba(0,0,0,.07), transparent 62%);
+}
+.hero__panel.is-hot .hero__veil{opacity:1}
+
+.hero__inner{
+  position:relative;
+  width:min(30rem,82%);
+  text-align:left;
+  transform:translate3d(0,0,0);
+  transition:transform var(--dur-hero) var(--ease-lux);
+}
+.hero__panel.is-hot  .hero__inner{transform:translate3d(0,-.5rem,0)}
+.hero__panel.is-cold .hero__inner{transform:scale(.93);opacity:.4}
+.hero__panel.is-cold{filter:saturate(.7)}
+.hero__panel{transition:flex-grow var(--dur-hero) var(--ease-lux),
+                        filter 900ms var(--ease-lux)}
+
+.hero__eyebrow{
+  display:block;
+  font-size:.68rem; letter-spacing:.42em; text-transform:uppercase;
+  opacity:.5; margin-bottom:1.6rem;
+}
+.hero__title{
+  font-family:var(--font-display);
+  font-weight:400;
+  font-size:clamp(2.3rem,4.2vw,3.9rem);
+  line-height:1.02;
+  letter-spacing:-.015em;
+}
+.hero__title em{font-style:normal;color:var(--hero-accent)}
+.hero__panel--light .hero__title em{color:var(--hero-accent-light)}
+.hero__note{
+  margin-top:1.5rem;
+  font-size:.9rem; line-height:1.75; opacity:.55;
+  max-width:24rem;
+}
+.hero__cta{
+  display:inline-flex; align-items:center; gap:.85rem;
+  margin-top:2.6rem;
+  font-size:.72rem; letter-spacing:.3em; text-transform:uppercase;
+  opacity:0; transform:translateY(.6rem);
+  transition:opacity 700ms var(--ease-lux), transform 700ms var(--ease-lux);
+}
+.hero__panel.is-hot .hero__cta{opacity:1;transform:none}
+.hero__cta-arrow{width:28px;height:8px;overflow:visible;transition:transform 600ms var(--ease-lux)}
+.hero__panel.is-hot .hero__cta-arrow{transform:translateX(6px)}
+
+.hero__seam{
+  position:absolute; top:0; bottom:0; left:50%;
+  width:1px; margin-left:-.5px;
+  background:linear-gradient(to bottom,transparent,var(--hero-line),transparent);
+  opacity:.7; pointer-events:none;
+  transition:opacity 600ms ease;
+}
+.hero.is-hovering .hero__seam{opacity:0}
+
+.hero__mark,.hero__hint{
+  position:absolute; left:50%; transform:translateX(-50%);
+  display:inline-flex; align-items:center; height:1.45rem;
+  font-size:.62rem; letter-spacing:.45em; text-transform:uppercase;
+  mix-blend-mode:difference; color:#fff;
+  pointer-events:none;
+  transition:opacity 600ms ease;
+}
+/* same top and same height as .theme, so the two sit on one line */
+.hero__mark{top:1.55rem}
+.hero__hint{bottom:.85rem;height:auto;opacity:.6}
+.hero.is-hovering .hero__hint{opacity:0}
+
+/* — the grand exit — */
+.hero.is-leaving{pointer-events:none}
+.hero.is-leaving .hero__inner{opacity:0;transform:translate3d(0,-2.5rem,0);transition:all 600ms var(--ease-lux)}
+.hero.is-leaving .hero__mark,
+.hero.is-leaving .hero__hint,
+.hero.is-leaving .hero__seam{opacity:0}
+.hero.pick-a .hero__panel--dark  {flex-grow:2; transition:flex-grow 900ms var(--ease-door)}
+.hero.pick-a .hero__panel--light {flex-grow:0; transition:flex-grow 900ms var(--ease-door)}
+.hero.pick-b .hero__panel--light {flex-grow:2; transition:flex-grow 900ms var(--ease-door)}
+.hero.pick-b .hero__panel--dark  {flex-grow:0; transition:flex-grow 900ms var(--ease-door)}
+.hero.is-gone{opacity:0}
+
+/* the curtain wipe */
+.curtain{
+  position:fixed; inset:0; z-index:90;
+  background:var(--ink);
+  transform:translate3d(0,100%,0);
+  pointer-events:none;
+}
+.curtain.is-up  {transform:translate3d(0,0,0);   transition:transform 720ms var(--ease-door)}
+.curtain.is-away{transform:translate3d(0,-100%,0);transition:transform 900ms var(--ease-door)}
+.curtain--light{background:var(--paper)}
+
+/* ── 02b · THE SABER ────────────────────────────────────────────────────
+   The divider between the two sides is a lit blade. It reads white until you
+   reach for a side, then takes that side's colour: red for the dark one,
+   green for the light one. Retracts when you choose.
+   REMOVING IT: delete this section and the .saber block in index.html.
+   The old gradient seam is still in the markup and comes back on its own.
+   --------------------------------------------------------------------- */
+.saber{
+  position:absolute; z-index:6; left:50%; top:0; bottom:0;
+  width:2.4rem;                          /* the neutral strip, ~38px */
+  transform:translateX(-50%);
+  display:flex; flex-direction:column; align-items:center; justify-content:flex-end;
+  padding-bottom:2.7rem;
+  pointer-events:none;
+  --saber:#dbe6ff;                       /* idle: unclaimed, cold white */
+  transition:left var(--dur-hero) var(--ease-lux);
+}
+/* it rides the seam. hovering a side grows that panel to 65%, so the blade
+   travels with the edge instead of being left behind at half-way. */
+.hero.hot-a .saber{left:65%; --saber:#ff2a1c}    /* the dark side */
+.hero.hot-b .saber{left:35%; --saber:#2bff6d}    /* the light side */
+.hero.pick-a .saber{left:100%}
+.hero.pick-b .saber{left:0}
+.hero .hero__seam{display:none}          /* .saber__rail is the divider now */
+
+/* the strip down the middle belongs to neither side: you cannot pick a
+   portfolio by clicking it, and clicking it puts the blade away instead */
+.saber__zone{
+  position:absolute; inset:0; width:100%;
+  padding:0; border:0; background:none;
+  pointer-events:auto; cursor:pointer;
+}
+.saber__rail{
+  position:absolute; top:0; bottom:0; left:50%; width:1px; margin-left:-.5px;
+  background:linear-gradient(to bottom,transparent,var(--hero-line),transparent);
+  opacity:.65;
+}
+
+/* the blade: a white core with the colour living entirely in the bloom */
+.saber__blade{
+  flex:0 0 auto; width:9px; height:52vh;
+  border-radius:6px 6px 2px 2px;
+  transform-origin:bottom;
+  background:
+    linear-gradient(to bottom, rgba(255,255,255,.55) 0 3px, #fff 10px),
+    linear-gradient(to right, var(--saber) 0%, #fff 34%, #fff 66%, var(--saber) 100%);
+  box-shadow:
+    0 0 6px 1px #fff,
+    0 0 16px 2px var(--saber),
+    0 0 42px 6px var(--saber),
+    0 0 96px 18px var(--saber);
+  opacity:.96;
+  /* igniting: out fast, with a few pixels of overshoot at the tip */
+  transition:height 440ms cubic-bezier(.22,1.13,.32,1),
+             box-shadow 440ms var(--ease-lux),
+             background 700ms var(--ease-lux);
+}
+.saber:not(.is-off) .saber__blade{
+  animation:saberHum 2.8s ease-in-out infinite,
+            saberFlash 460ms ease-out;      /* the emitter kick, once per ignition */
+}
+@keyframes saberHum{
+  0%,100%{opacity:.94;transform:scaleX(1)}
+  43%    {opacity:1;  transform:scaleX(1.06)}
+  71%    {opacity:.97;transform:scaleX(.98)}
+}
+@keyframes saberFlash{
+  0%  {filter:brightness(2.4) saturate(.6)}
+  30% {filter:brightness(1.4)}
+  100%{filter:brightness(1)}
+}
+
+/* the hilt: milled metal, lit from the left */
+.saber__hilt{
+  position:relative; flex:0 0 auto;
+  width:21px; height:88px; margin-top:2px;
+  border-radius:2px 2px 3px 3px;
+  background:linear-gradient(90deg,#1b1e22 0%,#6f757e 16%,#cfd5dc 36%,#9298a1 56%,#464b52 80%,#191c20 100%);
+  box-shadow:0 0 0 1px rgba(0,0,0,.55), 0 14px 30px rgba(0,0,0,.5);
+}
+.saber__hilt i{position:absolute;left:0;right:0;display:block}
+.saber__emitter{
+  top:-5px; height:11px; border-radius:2px;
+  background:linear-gradient(90deg,#15181b 0%,#8c939c 20%,#e6ebf1 40%,#848a93 62%,#14171a 100%);
+  box-shadow:0 1px 0 rgba(0,0,0,.6), 0 0 9px 1px var(--saber);
+  transition:box-shadow 440ms var(--ease-lux);
+}
+.saber__neck{
+  top:8px; height:5px;
+  background:linear-gradient(90deg,#0e1013,#3d434a 40%,#0e1013);
+}
+.saber__grip{
+  top:26px; height:34px;
+  background:repeating-linear-gradient(to bottom,
+    rgba(0,0,0,.55) 0 2px, rgba(255,255,255,.07) 2px 5px);
+}
+.saber__switch{
+  top:17px; left:50%; right:auto; width:5px; height:5px; margin-left:-2.5px;
+  border-radius:50%;
+  background:var(--saber);
+  box-shadow:0 0 5px 1px var(--saber);
+  transition:background 440ms var(--ease-lux), box-shadow 440ms var(--ease-lux);
+}
+.saber__pommel{
+  bottom:-3px; height:9px; border-radius:0 0 3px 3px;
+  background:linear-gradient(90deg,#121518 0%,#787e87 22%,#c3c9d1 42%,#5b6067 70%,#101316 100%);
+}
+
+/* hovering the strip: the blade answers, the hilt lifts a hair */
+.saber__zone:hover ~ .saber__blade{filter:brightness(1.18)}
+.saber__zone:hover ~ .saber__hilt{transform:translateY(-2px)}
+.saber__hilt{transition:transform 420ms var(--ease-lux), opacity 500ms ease}
+
+/* switched off: the blade draws back down into the hilt, a little faster than
+   it came out and without the bounce, and the rail divides the door alone */
+.saber.is-off .saber__blade{
+  height:0;
+  box-shadow:none;
+  animation:none;
+  transition:height 300ms cubic-bezier(.55,0,.86,.28),
+             box-shadow 260ms ease;
+}
+.saber.is-off .saber__switch{background:#3b4047;box-shadow:none}
+.saber.is-off .saber__emitter{box-shadow:0 1px 0 rgba(0,0,0,.6)}
+.saber.is-off .saber__rail{opacity:1}
+
+/* choosing a side puts it away */
+.hero.is-leaving .saber__blade{height:0;box-shadow:none;animation:none;
+  transition:height 340ms cubic-bezier(.55,0,.86,.28), box-shadow 300ms ease}
+.hero.is-leaving .saber__hilt{opacity:0;transition:opacity 500ms ease 260ms}
+.hero.is-leaving .saber__rail{opacity:0;transition:opacity 400ms ease}
+
+/* ── 03 · STAGE SHELL ───────────────────────────────────────────────────── */
+.stage{
+  position:fixed; inset:0; z-index:10;
+  opacity:0; visibility:hidden;
+  transition:opacity 500ms ease, visibility 0s linear 500ms;
+}
+.stage.is-live{
+  opacity:1; visibility:visible;
+  transition:opacity 700ms ease, visibility 0s;
+}
+.stage__track{
+  position:absolute; top:0; left:0; right:0;
+  transform:translate3d(0,0,0);
+  transition:transform var(--dur-slide) var(--ease-lux);
+  will-change:transform;
+}
+
+.stage__bar{
+  position:fixed; z-index:40;
+  top:0; left:0; right:0;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:1.9rem calc(var(--gutter) + 11.5rem) 1.9rem var(--gutter);
+  pointer-events:none;
+  font-size:.64rem; letter-spacing:.34em; text-transform:uppercase;
+  white-space:nowrap;
+  /* a scrim, so a section scrolling under the bar never collides with it */
+  background:linear-gradient(to bottom, var(--ink) 42%, transparent);
+}
+.stage__bar > *{pointer-events:auto}
+.stage__back{
+  display:inline-flex; align-items:center; gap:.7rem; white-space:nowrap;
+  color:var(--cream); opacity:.78;
+  transition:opacity 400ms ease;
+}
+.stage__back:hover{opacity:1}
+.stage__back svg{width:24px;height:8px;transition:transform 500ms var(--ease-lux)}
+.stage__back:hover svg{transform:translateX(-5px)}
+.stage__count{opacity:.5;font-variant-numeric:tabular-nums}
+.stage__count i{font-style:normal;margin:0 .4rem;opacity:.5}
+.stage__count b{font-weight:400;color:var(--gold);opacity:.9}
+.stage__bar--light{color:var(--ink)}
+
+/* ── 04 · THREAD ────────────────────────────────────────────────────────── */
+.thread{
+  position:fixed; top:0; left:0; z-index:20;
+  /* twice the thread's offset, so a bead's hit area has room on both sides
+     of the line without spilling out of the svg */
+  width:calc(var(--thread-x) * 2); height:100%;
+  pointer-events:none;
+  overflow:visible;
+  opacity:0;
+  transition:opacity 900ms var(--ease-lux) 400ms;
+}
+.stage.is-live .thread{opacity:1}
+.thread__rail{stroke:var(--cream-faint);stroke-width:1}
+.thread__live{
+  stroke:var(--gold); stroke-width:1.25; stroke-linecap:round;
+  filter:drop-shadow(0 0 6px var(--gold-half));
+}
+/* the live path and the bead are driven together from js (app.js → Thread)
+   so the bead stays on the curve instead of cutting across it. */
+.thread__bead circle{fill:var(--gold)}
+.thread__bead .thread__halo{fill:var(--gold);opacity:.14}
+
+/* stops on the thread: one per section, small enough to stay quiet, with a
+   22px hit circle around each so they are easy to actually hit */
+.thread__stops{pointer-events:none}
+.thread__stop{cursor:pointer}
+.thread__hit{fill:transparent;pointer-events:auto}   /* transparent, not none */
+.thread__pip{
+  fill:var(--cream); opacity:.28;
+  transition:opacity 420ms var(--ease-lux), transform 480ms var(--ease-lux), fill 420ms;
+}
+.thread__stop:hover .thread__pip{opacity:.75;transform:scale(1.5)}
+.thread__stop.is-on .thread__pip{fill:var(--gold);opacity:1;transform:scale(1.35)}
+.thread__label{
+  fill:var(--cream); opacity:0;
+  font-family:var(--font-body); font-size:9px; letter-spacing:.22em;
+  text-transform:uppercase;
+  transition:opacity 360ms ease;
+  pointer-events:none;
+}
+.thread__stop:hover .thread__label{opacity:.55}
+
+/* ── 05 · CASE-STUDY TIMELINE ───────────────────────────────────────────── */
+.timeline{
+  position:fixed; z-index:30;
+  left:calc(var(--thread-x) - 3.7rem);
+  top:50%;
+  display:flex; flex-direction:column; align-items:center; gap:1.05rem;
+  opacity:0; transform:translate3d(-8px,-50%,0);
+  pointer-events:none;
+  transition:opacity 650ms var(--ease-lux), transform 650ms var(--ease-lux);
+}
+.timeline.is-on{opacity:1;transform:translate3d(0,-50%,0);pointer-events:auto}
+.timeline__dot{
+  position:relative;
+  width:22px; height:22px;
+  display:grid; place-items:center;
+  cursor:pointer;
+}
+.timeline__dot::after{
+  content:"";
+  width:5px; height:5px; border-radius:50%;
+  background:var(--cream); opacity:.22;
+  transition:opacity 450ms var(--ease-lux), transform 550ms var(--ease-lux), background 450ms;
+}
+.timeline__dot:hover::after{opacity:.55}
+.timeline__dot.is-on::after{background:var(--gold);opacity:1;transform:scale(1.65)}
+.timeline__dot span{
+  position:absolute; left:150%; top:50%; transform:translateY(-50%) translateX(-4px);
+  white-space:nowrap;
+  font-size:.58rem; letter-spacing:.24em; text-transform:uppercase;
+  opacity:0; transition:opacity 400ms ease, transform 400ms var(--ease-lux);
+}
+.timeline__dot:hover span{opacity:.6;transform:translateY(-50%) translateX(0)}
+
+/* ── 06 · PANELS ────────────────────────────────────────────────────────── */
+.panel{
+  position:relative;
+  height:var(--vh);
+  display:flex; flex-direction:column; justify-content:center;
+  padding:6rem var(--gutter) 6rem calc(var(--thread-x) + 6rem);
+  overflow:hidden;
+}
+.panel__in{width:100%;max-width:74rem}
+.panel__ghost{
+  position:absolute; right:3vw; bottom:-3vh;
+  font-family:var(--font-display);
+  font-size:36vh; line-height:.8;
+  color:var(--cream); opacity:.028;
+  pointer-events:none; user-select:none;
+}
+
+/* ── 07 · INTRO ─────────────────────────────────────────────────────────── */
+.greet{
+  font-family:var(--font-hand);
+  font-size:clamp(2rem,4.6vw,3.4rem);
+  color:var(--gold);
+  line-height:1; margin-bottom:.4rem;
+}
+.name{
+  font-family:var(--font-display);
+  font-weight:400;
+  font-size:clamp(5rem,16.5vw,14.5rem);
+  line-height:.86;
+  letter-spacing:-.025em;
+}
+.name__dot{color:var(--gold)}
+.role{
+  margin-top:1.6rem;
+  font-size:.7rem; letter-spacing:.42em; text-transform:uppercase;
+  opacity:.5;
+}
+.lede{
+  margin-top:2.2rem; max-width:38rem;
+  font-size:clamp(.95rem,1.15vw,1.05rem); line-height:1.85;
+  color:var(--cream-dim);
+}
+.lede b{font-weight:400;color:var(--cream)}
+.lede--sub{margin-top:.9rem;font-size:.9rem;opacity:.7}
+
+.scrollcue{
+  position:absolute; left:calc(var(--thread-x) + 6rem); bottom:3.4rem;
+  display:flex; align-items:center; gap:1rem;
+  font-size:.6rem; letter-spacing:.4em; text-transform:uppercase;
+  white-space:nowrap;
+  opacity:.35;
+}
+.scrollcue__line{
+  display:block; width:4.5rem; height:1px; background:currentColor;
+  transform-origin:left; animation:cue 2.6s var(--ease-lux) infinite;
+}
+@keyframes cue{0%,100%{transform:scaleX(.35);opacity:.4}50%{transform:scaleX(1);opacity:1}}
+
+/* ── 07b · THE BUBBLE FIELD ─────────────────────────────────────────────
+   Keywords in soap bubbles, drifting in the empty right half of the intro.
+   Built by app.js → Bubbles, repacked every time the section is scrolled
+   back into view. Peripheral on purpose: low contrast, slow, and well clear
+   of the reading column. Click one and it bursts.
+   REMOVING IT: delete this section, the <div class="bubbles"> in
+   index.html, and the Bubbles module in app.js.
+   --------------------------------------------------------------------- */
+.bubbles{
+  position:absolute; z-index:1;
+  /* starts a clear 42rem past the content edge: the reading column is at most
+     38rem wide, so the field can never crowd the text however wide the page */
+  left:calc(var(--thread-x) + 6rem + 42rem);
+  right:var(--gutter);
+  width:min(29rem,100%); margin-inline:auto;   /* centred in whatever is left */
+  top:50%; height:min(62vh,30rem);
+  transform:translateY(-50%);
+  pointer-events:none;
+}
+/* something for the film to actually refract */
+.bubbles::before{
+  content:""; position:absolute; inset:-18%;
+  background:radial-gradient(42% 42% at 52% 48%, var(--gold-glow), transparent 72%);
+  opacity:.35; pointer-events:none;
+}
+
+.bubble{
+  position:absolute;
+  width:var(--size); height:var(--size);
+  padding:0; border:0; background:none;
+  cursor:pointer; pointer-events:auto;
+  /* centring stays in `transform`; the motion rides the individual `translate`
+     and `scale` properties, which compose with it. that lets the drift and the
+     wobble run on two different clocks instead of fighting over one. */
+  transform:translate(-50%,-50%);
+  animation:bubbleFloat  var(--dur,14s) ease-in-out infinite,
+            bubbleWobble var(--wob,6s)  ease-in-out infinite;
+  animation-delay:var(--drift-delay,0s), var(--wob-delay,0s);
+}
+/* a closed loop through four waypoints, so it never snaps back */
+@keyframes bubbleFloat{
+  0%  {translate:0 0}
+  25% {translate:var(--x1) var(--y1)}
+  50% {translate:var(--x2) var(--y2)}
+  75% {translate:var(--x3) var(--y3)}
+  100%{translate:0 0}
+}
+/* surface tension: the film is never quite a sphere */
+@keyframes bubbleWobble{
+  0%,100%{scale:1 1}
+  30%    {scale:1.048 .954}
+  65%    {scale:.962 1.038}
+}
+
+/* the film itself: a specular kick top-left, a bounce bottom-right, a bright
+   rim where the sphere turns away, and a faint iridescence across it all */
+.bubble span{
+  position:absolute; inset:0;
+  display:grid; place-items:center;
+  padding:0 16%;
+  border-radius:50%;
+  text-align:center; line-height:1.3;
+  font-size:.58rem; letter-spacing:.1em;
+  color:var(--cream);
+  background:
+    /* the specular: small, bright, up and to the left, like every sphere */
+    radial-gradient(circle at 30% 24%, var(--glass-top) 0 5%,
+                    color-mix(in srgb, var(--glass-top) 30%, transparent) 11%, transparent 26%),
+    /* bounce light coming back up off the ground */
+    radial-gradient(circle at 68% 74%,
+                    color-mix(in srgb, var(--glass-top) 22%, transparent) 0 9%, transparent 32%),
+    /* the rim, where the film turns away from you and doubles in thickness */
+    radial-gradient(circle at 50% 50%, transparent 66%, var(--glass-edge) 87%, transparent 97%),
+    /* iridescence: thin-film interference, kept very quiet */
+    conic-gradient(from 200deg at 50% 50%,
+      rgba(130,220,255,.08), rgba(255,150,225,.07),
+      rgba(190,255,205,.07), rgba(255,225,140,.06), rgba(130,220,255,.08)),
+    var(--glass-fill);
+  box-shadow:
+    inset 0 0 0 1px var(--glass-edge),                 /* a hard edge, always */
+    inset 0 -11px 22px -9px var(--glass-top),          /* light pooling low   */
+    0 10px 28px var(--glass-shade);
+  backdrop-filter:blur(6px) saturate(160%);
+  -webkit-backdrop-filter:blur(6px) saturate(160%);
+  opacity:0; transform:scale(.6);
+  transition:opacity 820ms var(--ease-lux) var(--in,0ms),
+             transform 900ms cubic-bezier(.2,1.2,.4,1) var(--in,0ms),
+             box-shadow 320ms ease;
+}
+.bubbles.is-in .bubble span{opacity:.62;transform:none}
+.bubble:hover span{
+  opacity:.95;
+  box-shadow:inset 0 0 0 1px var(--glass-top),
+             inset 0 -13px 26px -9px var(--glass-top),
+             0 12px 32px var(--glass-shade);
+}
+
+/* ── the burst ──────────────────────────────────────────────────────────
+   A bubble does not shrink and it does not fade. The film stretches for a
+   frame, gives, and throws what it was holding outward.
+   --------------------------------------------------------------------- */
+.bubble.is-pop{pointer-events:none;animation:none}
+.bubble.is-pop span{
+  animation:bubbleBurst 300ms cubic-bezier(.25,.8,.35,1) forwards;
+  backdrop-filter:none; -webkit-backdrop-filter:none;
+}
+@keyframes bubbleBurst{
+  0%  {transform:scale(1);    opacity:.7}
+  26% {transform:scale(1.16); opacity:.95}                     /* surface tension */
+  44% {transform:scale(1.06); opacity:.5;  filter:blur(.5px)}  /* it gives */
+  100%{transform:scale(1.52); opacity:0;   filter:blur(4px)}
+}
+.bubble.is-pop::after{
+  content:""; position:absolute; inset:0; border-radius:50%;
+  border:1px solid var(--glass-top);
+  animation:bubbleRing 420ms cubic-bezier(.15,.85,.3,1) forwards;
+}
+@keyframes bubbleRing{
+  from{transform:scale(.96);opacity:.85}
+  to  {transform:scale(1.75);opacity:0}
+}
+/* the droplets it was holding */
+.bubble i{
+  position:absolute; left:50%; top:50%;
+  width:var(--s,3px); height:var(--s,3px);
+  border-radius:50%; background:var(--glass-top);
+  animation:bubbleDrop 440ms cubic-bezier(.2,.85,.3,1) forwards;
+}
+@keyframes bubbleDrop{
+  from{transform:translate(-50%,-50%) rotate(var(--a)) translateX(6px); opacity:.9}
+  to  {transform:translate(-50%,-50%) rotate(var(--a)) translateX(var(--d)) scale(.4); opacity:0}
+}
+
+/* below this there is no empty half left to put it in */
+@media (max-width:1319px){
+  .bubbles{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .bubble{animation:none}
+}
+
+/* ── 08 · CASE STUDY ────────────────────────────────────────────────────── */
+.case{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:5vw;align-items:center}
+.case__tag{
+  display:block; margin-bottom:1.9rem;
+  font-size:.62rem; letter-spacing:.4em; text-transform:uppercase;
+  color:var(--gold); opacity:.8;
+}
+.case__head{
+  font-family:var(--font-display); font-weight:400;
+  font-size:clamp(2.2rem,4.7vw,4rem);
+  line-height:1.1; letter-spacing:-.02em;
+  max-width:19ch;
+}
+.case__head em{font-style:normal;color:var(--gold)}
+.case__line{
+  margin-top:1.7rem; max-width:34rem;
+  font-size:clamp(.92rem,1.05vw,1rem); line-height:1.85;
+  color:var(--cream-dim);
+}
+.case__line--got{color:var(--cream)}
+.case__line b{font-weight:400;color:var(--gold)}
+.case__link{
+  display:inline-flex; align-items:center; gap:1rem;
+  margin-top:2.6rem; padding:.95rem 1.5rem;
+  border:1px solid var(--gold-half);
+  color:var(--gold);
+  font-size:.64rem; letter-spacing:.3em; text-transform:uppercase;
+  position:relative; overflow:hidden;
+  transition:color 420ms var(--ease-lux), border-color 420ms var(--ease-lux);
+}
+.case__link::before{
+  content:""; position:absolute; inset:0; background:var(--gold);
+  transform:scaleX(0); transform-origin:left;
+  transition:transform 560ms var(--ease-lux);
+}
+.case__link > *{position:relative;z-index:1}
+.case__link svg{width:26px;height:8px;transition:transform 500ms var(--ease-lux)}
+.case__link:hover{color:var(--ink);border-color:var(--gold)}
+.case__link:hover::before{transform:scaleX(1)}
+.case__link:hover svg{transform:translateX(6px)}
+
+.case__plate{
+  position:relative; aspect-ratio:4/5;
+  /* a screenshot reads better cropped from its top-left corner than its middle */
+  border:1px solid var(--cream-faint);
+  background:linear-gradient(150deg,var(--plate-a),var(--plate-b));
+  display:grid; place-items:center;
+  overflow:hidden;
+}
+.case__plate img{
+  width:100%;height:100%;display:block;
+  object-fit:cover;object-position:0 0;
+  transform:scale(1.005);
+  transition:transform 1.4s var(--ease-lux);
+}
+/* a screenshot is a bright rectangle in a dark room. veil it until you look
+   at it, then hand it over. */
+.case__plate::after{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:var(--ink); opacity:.3;
+  transition:opacity 700ms var(--ease-lux);
+}
+.case__plate:hover::after{opacity:0}
+.case__plate:hover img{transform:scale(1.04)}
+.case__plate-note{
+  font-size:.6rem; letter-spacing:.36em; text-transform:uppercase; opacity:.28;
+}
+
+/* ── 08b · THE UNLOCKED PANEL ───────────────────────────────────────────
+   Not in the running order until six bubbles have been popped. Everything
+   about it is portfolio A's own language, so it reads as a section that was
+   always there rather than as a prize.
+   --------------------------------------------------------------------- */
+.panel[hidden]{display:none}          /* .panel is flex, so it needs saying */
+
+.aside{max-width:58rem}
+.aside__tag{
+  display:inline-block; margin-bottom:1.9rem;
+  padding:.5rem .85rem;
+  border:1px solid var(--gold-soft);
+  font-size:.6rem; letter-spacing:.3em; text-transform:uppercase;
+  color:var(--gold);
+}
+.aside__tag b{font-weight:400;font-variant-numeric:tabular-nums}
+.aside__head{
+  font-family:var(--font-display); font-weight:400;
+  font-size:clamp(2.2rem,4.7vw,4rem);
+  line-height:1.1; letter-spacing:-.02em;
+}
+.aside__head em{font-style:normal;color:var(--gold)}
+.aside__line{
+  margin-top:1.7rem; max-width:40rem;
+  font-size:clamp(.92rem,1.05vw,1rem); line-height:1.85;
+  color:var(--cream-dim);
+}
+.aside__line--pitch{color:var(--cream)}
+.aside__line b{font-weight:400;color:var(--cream)}
+.panel--aside .case__link{margin-top:2.4rem}
+
+/* the acknowledgement, bottom right, gone in six seconds */
+.notice{
+  position:fixed; z-index:45;
+  right:var(--gutter); bottom:2.6rem;
+  margin:0; padding:.8rem 1.1rem;
+  max-width:20rem;
+  border:1px solid var(--gold-soft);
+  background:var(--ink-2);
+  font-size:.62rem; letter-spacing:.16em; text-transform:uppercase;
+  line-height:1.7; color:var(--cream-dim);
+  opacity:0; transform:translate3d(0,.8rem,0);
+  pointer-events:none;
+  transition:opacity 700ms var(--ease-lux), transform 800ms var(--ease-lux);
+}
+.notice.is-on{opacity:1;transform:none}
+.notice b{font-weight:400;color:var(--gold)}
+
+/* ── 09 · ABOUT + FOOTER ────────────────────────────────────────────────── */
+.panel--end{justify-content:space-between;padding-top:8rem;padding-bottom:2.6rem}
+.end{display:flex;flex-direction:column;gap:3.2rem;height:100%;justify-content:center;max-width:78rem}
+.end__top{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:5vw;align-items:start}
+.end__tag{
+  display:block;margin-bottom:1.4rem;
+  font-size:.62rem;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);opacity:.8;
+}
+.end__head{
+  font-family:var(--font-display);font-weight:400;
+  font-size:clamp(2.3rem,4.9vw,3.9rem);line-height:1.06;letter-spacing:-.02em;
+}
+.end__head em{font-style:normal;color:var(--gold)}
+.end__copy{margin-top:1.5rem;max-width:32rem;font-size:.95rem;line-height:1.85;color:var(--cream-dim)}
+.end__quote{
+  margin-top:1.8rem;
+  font-family:var(--font-display);font-style:italic;
+  font-size:clamp(1.1rem,1.7vw,1.45rem);line-height:1.5;opacity:.75;
+}
+.creed{display:grid;gap:1.15rem;padding-top:.6rem}
+.creed li{
+  display:grid;gap:.3rem;
+  padding:1rem 0 1rem 1.3rem;
+  border-left:1px solid var(--cream-faint);
+  transition:border-color 500ms var(--ease-lux);
+}
+.creed li:hover{border-color:var(--gold)}
+.creed b{font-weight:400;font-size:.9rem;letter-spacing:.01em}
+.creed span{font-size:.82rem;line-height:1.7;color:var(--cream-dim)}
+
+.end__cta{
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:1.4rem 2.4rem;
+  padding-top:2.4rem;border-top:1px solid var(--cream-faint);
+}
+.end__cta p{font-size:.95rem;color:var(--cream-dim);max-width:34rem;line-height:1.7}
+.end__mail{
+  font-family:var(--font-display);font-size:clamp(1.3rem,2.4vw,2rem);
+  color:var(--gold);
+  background-image:linear-gradient(var(--gold),var(--gold));
+  background-size:0 1px;background-position:0 100%;background-repeat:no-repeat;
+  transition:background-size 600ms var(--ease-lux);
+}
+.end__mail:hover{background-size:100% 1px}
+
+.end__foot{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;
+  padding-top:1.6rem;
+  font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;opacity:.4;
+}
+.end__links{display:flex;gap:1.6rem}
+.end__links a{transition:color 350ms ease}
+.end__links a:hover{color:var(--gold)}
+
+/* ── 10 · PORTFOLIO B ───────────────────────────────────────────────────── */
+/* lives entirely in assets/css/read.css — nothing about it is shared.      */
+
+/* ── 11 · REVEAL ENGINE ─────────────────────────────────────────────────── */
+/* anything with data-reveal fades + rises when its panel becomes active.
+   the number in data-reveal is just the stagger order.                     */
+[data-reveal]{
+  opacity:0;
+  transform:translate3d(0,1.6rem,0);
+  transition:opacity 900ms var(--ease-lux), transform 1000ms var(--ease-lux);
+}
+.panel.is-active [data-reveal]{opacity:1;transform:none}
+.panel.is-active [data-reveal="1"]{transition-delay:120ms}
+.panel.is-active [data-reveal="2"]{transition-delay:220ms}
+.panel.is-active [data-reveal="3"]{transition-delay:330ms}
+.panel.is-active [data-reveal="4"]{transition-delay:440ms}
+.panel.is-active [data-reveal="5"]{transition-delay:550ms}
+.panel.is-active [data-reveal="6"]{transition-delay:660ms}
+/* the ghost number drifts in too */
+.panel__ghost{transform:translate3d(0,3rem,0);opacity:0;transition:opacity 1400ms var(--ease-lux),transform 1600ms var(--ease-lux)}
+.panel.is-active .panel__ghost{opacity:.028;transform:none}
+
+/* ── 12 · RESPONSIVE ────────────────────────────────────────────────────── */
+@media (max-width:1024px){
+  :root{--thread-x:5vw;--gutter:2rem}
+  .panel{padding-left:calc(var(--thread-x) + 3.2rem)}
+  .case,.end__top{grid-template-columns:1fr;gap:2.6rem}
+  .case__plate{display:none}
+  .timeline{display:none}          /* desktop only, as specified */
+
+  .scrollcue{left:calc(var(--thread-x) + 3.2rem)}
+}
+@media (max-width:720px){
+  :root{--thread-x:.9rem;--gutter:1.5rem}
+
+  /* the bar gets tighter: the switcher loses its label at this width, so it
+     needs far less room, and the label must never wrap onto two lines */
+  .stage__bar{
+    padding:1.3rem 5.4rem 1.3rem var(--gutter);
+    font-size:.56rem; letter-spacing:.24em;
+    background:linear-gradient(to bottom, var(--ink) 58%, transparent);
+  }
+  .stage__back span{display:none}          /* the arrow says it on its own */
+  .stage__back svg{width:30px}
+  .stage__count{position:absolute;left:4.2rem;top:1.3rem}
+
+  /* four principles do not stack on a phone. they slide. */
+  .creed{
+    display:flex; gap:.7rem;
+    overflow-x:auto; overscroll-behavior-x:contain;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+    margin-right:calc(var(--gutter) * -1);
+    padding-right:var(--gutter);
+  }
+  .creed::-webkit-scrollbar{display:none}
+  .creed li{
+    flex:0 0 70%; scroll-snap-align:start;
+    padding:.9rem 1rem;
+    border:1px solid var(--cream-faint); border-left:1px solid var(--cream-faint);
+  }
+  .creed li:hover{border-color:var(--cream-faint)}
+  .creed b{font-size:.86rem}
+  .creed span{font-size:.78rem}
+  .hero{flex-direction:column}
+  /* the wordmark sits at the top and the hint at the bottom; the panels
+     have to start below one and end above the other */
+  .hero__panel{padding:3.3rem 0 2.4rem}
+  .hero__panel--light{padding-bottom:3.2rem}
+  .hero__inner{width:min(30rem,86%)}
+  .saber{
+    left:50%; top:50%; bottom:auto;
+    width:2.2rem; height:100vw;
+    transform:translate(-50%,-50%) rotate(90deg);
+    padding-bottom:1.4rem;
+    transition:top var(--dur-hero) var(--ease-lux);
+  }
+  .hero.hot-a .saber{left:50%;top:65%}
+  .hero.hot-b .saber{left:50%;top:35%}
+  .hero.pick-a .saber{left:50%;top:100%}
+  .hero.pick-b .saber{left:50%;top:0}
+  .saber__blade{height:44vw}
+  .saber__hilt{height:72px}
+  .hero__seam{
+    top:50%; left:0; right:0; bottom:auto;
+    width:auto; height:1px; margin:-.5px 0 0;
+    background:linear-gradient(to right,transparent,var(--hero-line),transparent);
+  }
+  .hero.pick-a .hero__panel--dark,
+  .hero.pick-b .hero__panel--light{flex-grow:2}
+  .panel{padding:5.5rem 1.5rem 5.5rem 3.1rem}
+  .panel__ghost{font-size:26vh;right:-.5rem}
+  .thread{opacity:.55}
+  .thread__label{display:none}
+  .stage.is-live .thread{opacity:.75}
+  .lede{font-size:.92rem;line-height:1.75}
+  .aside__line{margin-top:1.1rem;font-size:.86rem;line-height:1.7}
+  .notice{right:1.5rem;bottom:1.8rem;left:1.5rem;max-width:none}
+  .end{gap:1.4rem}
+  .end__copy{margin-top:1rem;font-size:.88rem;line-height:1.7}
+  .end__quote{margin-top:1.1rem;font-size:1.05rem}
+  .end__top{gap:1.4rem}
+  .end__cta{padding-top:1.2rem;gap:.8rem}
+  .end__cta p{font-size:.86rem;line-height:1.6}
+  .end__foot{justify-content:flex-start;gap:.5rem 1rem;padding-top:1.1rem;font-size:.56rem;letter-spacing:.18em}
+  .end__links{gap:1rem}
+  .panel--end{padding-top:5rem;padding-bottom:3.2rem}
+  .scrollcue{left:3.1rem;bottom:2.2rem;letter-spacing:.24em;gap:.7rem}
+  .scrollcue__line{width:2.4rem}
+  .creed li{padding:.7rem 0 .7rem 1rem}
+}
+
+/* ── 12b · SHORT SCREENS ────────────────────────────────────────────────
+   A phone is not one size. These are driven by HEIGHT, not width, because
+   what actually breaks on an older or smaller handset is vertical room:
+   a section is locked to 100vh, so when the type outgrows it the top slides
+   under the bar. Each step down trims type, leading and gaps together so
+   the rhythm holds instead of just shrinking.
+   --------------------------------------------------------------------- */
+@media (max-width:900px) and (max-height:790px){
+  :root{--gutter:1.35rem}
+  .panel{padding:4.7rem 1.35rem 4.3rem 2.9rem}
+  .panel--end{padding-top:4.4rem;padding-bottom:2.8rem}
+
+  .greet{font-size:clamp(1.6rem,7vw,2.4rem)}
+  .name{font-size:clamp(3.4rem,19vw,5.6rem)}
+  .role{margin-top:1rem;font-size:.58rem;letter-spacing:.3em}
+  .lede{margin-top:1.3rem;font-size:.84rem;line-height:1.62}
+  .lede--sub{margin-top:.7rem;font-size:.8rem}
+
+  .case__tag{margin-bottom:1rem;font-size:.55rem;letter-spacing:.26em}
+  .case__head{font-size:clamp(1.5rem,7.2vw,2.1rem);line-height:1.14}
+  .case__line{margin-top:1rem;font-size:.84rem;line-height:1.62}
+  .case__link{margin-top:1.4rem;padding:.78rem 1.15rem;font-size:.57rem;letter-spacing:.22em;gap:.75rem}
+  .case__link svg{width:22px}
+  .panel__ghost{font-size:19vh}
+
+  .end{gap:1rem}
+  .end__tag{margin-bottom:.9rem;font-size:.55rem}
+  .end__head{font-size:clamp(1.6rem,7.2vw,2.2rem)}
+  .end__copy{margin-top:.85rem;font-size:.82rem;line-height:1.62}
+  .end__quote{margin-top:.9rem;font-size:.95rem}
+  .end__cta{padding-top:1rem;gap:.6rem}
+  .end__cta p{font-size:.8rem}
+  .end__mail{font-size:1.15rem}
+  .end__foot{padding-top:.9rem;font-size:.54rem;letter-spacing:.16em}
+  .creed li{flex-basis:72%;padding:.75rem .9rem}
+  .creed b{font-size:.8rem}
+  .creed span{font-size:.73rem;line-height:1.6}
+
+  .scrollcue{bottom:1.6rem;font-size:.53rem;letter-spacing:.2em}
+  .scrollcue__line{width:2rem}
+}
+
+@media (max-width:900px) and (max-height:690px){
+  .panel{padding:4.2rem 1.3rem 3.8rem 2.7rem}
+  .greet{font-size:clamp(1.4rem,6.4vw,2rem);margin-bottom:.2rem}
+  .name{font-size:clamp(2.9rem,17vw,4.6rem)}
+  .lede{margin-top:1.05rem;font-size:.79rem;line-height:1.55}
+  .lede--sub{display:none}          /* it restates the line above it */
+
+  .case__head{font-size:clamp(1.32rem,6.4vw,1.8rem);line-height:1.16}
+  .case__line{margin-top:.8rem;font-size:.79rem;line-height:1.55}
+  .case__link{margin-top:1.1rem;padding:.68rem 1rem}
+
+  .end{gap:.8rem}
+  .end__head{font-size:clamp(1.42rem,6.4vw,1.9rem)}
+  .end__copy{font-size:.76rem;line-height:1.55}
+  .end__quote{font-size:.86rem;margin-top:.7rem}
+  .end__cta p{font-size:.76rem}
+  .end__mail{font-size:1rem}
+  .end__foot{font-size:.5rem;gap:.35rem .8rem}
+  .creed li{padding:.62rem .8rem}
+  .creed span{font-size:.7rem}
+  .scrollcue{display:none}
+  .stage__bar{padding-top:1rem;padding-bottom:1rem}
+}
+
+/* ── 13 · REDUCED MOTION ────────────────────────────────────────────────── */
+@media (prefers-reduced-motion:reduce){
+  :root{--dur-slide:1ms;--dur-hero:1ms}
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;
+                       transition-duration:.01ms !important}
+  [data-reveal]{opacity:1;transform:none}
+}

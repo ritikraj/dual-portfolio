@@ -1,0 +1,277 @@
+/* ==========================================================================
+   PORTFOLIO A · PALETTES
+   Four palettes, each with a dark and a light rendition. Every colour in
+   portfolio A and in the ?v=a case pages comes from here. Portfolio B has
+   its own world and is deliberately untouched by any of this.
+
+   To add a fifth: copy a block, change the seven colours, then add one line
+   to PALETTES in app.js. Nothing else knows the names.
+   ========================================================================== */
+
+/* ── RED · default ──────────────────────────────────────────────────────── */
+:root,
+[data-theme="red"]{
+  --ink:#100708; --ink-2:#180c0d;
+  --paper:#f9eae8; --paper-2:#f1dbd8;
+  --cream:#f4e6e4;
+  --cream-dim:rgba(244,230,228,.58);
+  --cream-faint:rgba(244,230,228,.15);
+  --gold:#ff5147;
+  --gold-soft:rgba(255,81,71,.3);
+  --gold-half:rgba(255,81,71,.5);
+  --gold-glow:rgba(255,81,71,.16);
+  --accent-deep:#a8201a;
+  --veil-light:rgba(16,7,8,.07);
+  --plate-a:rgba(244,230,228,.05);
+  --plate-b:rgba(255,81,71,.06);
+  /* the door never inverts. "pick a side" only means something while side A
+     is dark and side B is light, so these seven are deliberately absent from
+     every [data-mode="light"] block below. */
+  --hero-dark:#100708; --hero-light:#f9eae8;
+  --hero-fg-dark:#f4e6e4; --hero-fg-light:#1c0c0a;
+  --hero-accent:#ff5147; --hero-accent-light:#a8201a;
+  --hero-glow:rgba(255,81,71,.17); --hero-line:rgba(255,81,71,.5);
+}
+:root[data-mode="light"],
+[data-theme="red"][data-mode="light"]{
+  --ink:#fdf2f0; --ink-2:#f7e4e1;
+  --paper:#1a0a09; --paper-2:#281311;
+  --cream:#1c0c0a;
+  --cream-dim:rgba(28,12,10,.66);
+  --cream-faint:rgba(28,12,10,.14);
+  --gold:#c42d22;
+  --gold-soft:rgba(196,45,34,.26);
+  --gold-half:rgba(196,45,34,.5);
+  --gold-glow:rgba(196,45,34,.1);
+  --accent-deep:#ffa199;
+  --veil-light:rgba(253,242,240,.14);
+  --plate-a:rgba(28,12,10,.05);
+  --plate-b:rgba(196,45,34,.07);
+}
+
+/* ── ORCHID ─────────────────────────────────────────────────────────────── */
+[data-theme="orchid"]{
+  --ink:#0c0812; --ink-2:#130d1c;
+  --paper:#efeaf7; --paper-2:#e3daf0;
+  --cream:#ece6f5;
+  --cream-dim:rgba(236,230,245,.58);
+  --cream-faint:rgba(236,230,245,.15);
+  --gold:#b283ee;                        /* the accent. named gold for history */
+  --gold-soft:rgba(178,131,238,.34);
+  --gold-half:rgba(178,131,238,.55);
+  --gold-glow:rgba(178,131,238,.17);
+  --accent-deep:#5f2fa8;                 /* accent on a light ground */
+  --veil-light:rgba(12,8,18,.07);
+  --plate-a:rgba(236,230,245,.05);
+  --plate-b:rgba(178,131,238,.06);
+  /* the door never inverts. "pick a side" only means something while side A
+     is dark and side B is light, so these seven are deliberately absent from
+     every [data-mode="light"] block below. */
+  --hero-dark:#0c0812; --hero-light:#efeaf7;
+  --hero-fg-dark:#ece6f5; --hero-fg-light:#181022;
+  --hero-accent:#b283ee; --hero-accent-light:#5f2fa8;
+  --hero-glow:rgba(178,131,238,.17); --hero-line:rgba(178,131,238,.5);
+}
+[data-theme="orchid"][data-mode="light"]{
+  --ink:#f5f1fb; --ink-2:#ebe4f6;
+  --paper:#16101f; --paper-2:#221730;
+  --cream:#181022;
+  --cream-dim:rgba(24,16,34,.66);
+  --cream-faint:rgba(24,16,34,.14);
+  --gold:#6d3fb5;
+  --gold-soft:rgba(109,63,181,.28);
+  --gold-half:rgba(109,63,181,.5);
+  --gold-glow:rgba(109,63,181,.1);
+  --accent-deep:#c9aef0;
+  --veil-light:rgba(245,241,251,.14);
+  --plate-a:rgba(24,16,34,.05);
+  --plate-b:rgba(109,63,181,.07);
+}
+
+/* ── MAGENTA ────────────────────────────────────────────────────────────── */
+[data-theme="magenta"]{
+  --ink:#120810; --ink-2:#1a0c17;
+  --paper:#f7eaf1; --paper-2:#efdae6;
+  --cream:#f4e7ef;
+  --cream-dim:rgba(244,231,239,.58);
+  --cream-faint:rgba(244,231,239,.15);
+  --gold:#ff5b9e;
+  --gold-soft:rgba(255,91,158,.32);
+  --gold-half:rgba(255,91,158,.52);
+  --gold-glow:rgba(255,91,158,.16);
+  --accent-deep:#b01659;
+  --veil-light:rgba(18,8,16,.07);
+  --plate-a:rgba(244,231,239,.05);
+  --plate-b:rgba(255,91,158,.06);
+  /* the door never inverts. "pick a side" only means something while side A
+     is dark and side B is light, so these seven are deliberately absent from
+     every [data-mode="light"] block below. */
+  --hero-dark:#120810; --hero-light:#f7eaf1;
+  --hero-fg-dark:#f4e7ef; --hero-fg-light:#1d0b15;
+  --hero-accent:#ff5b9e; --hero-accent-light:#b01659;
+  --hero-glow:rgba(255,91,158,.17); --hero-line:rgba(255,91,158,.5);
+}
+[data-theme="magenta"][data-mode="light"]{
+  --ink:#fdf2f7; --ink-2:#f7e6ef;
+  --paper:#1c0a14; --paper-2:#2a0f1f;
+  --cream:#1d0b15;
+  --cream-dim:rgba(29,11,21,.66);
+  --cream-faint:rgba(29,11,21,.14);
+  --gold:#c2185b;
+  --gold-soft:rgba(194,24,91,.26);
+  --gold-half:rgba(194,24,91,.5);
+  --gold-glow:rgba(194,24,91,.1);
+  --accent-deep:#ff9ec5;
+  --veil-light:rgba(253,242,247,.14);
+  --plate-a:rgba(29,11,21,.05);
+  --plate-b:rgba(194,24,91,.07);
+}
+
+/* ── GOLD · the original ────────────────────────────────────────────────── */
+[data-theme="gold"]{
+  --ink:#0a0a0b; --ink-2:#111113;
+  --paper:#f2eee7; --paper-2:#e7e1d6;
+  --cream:#ece7de;
+  --cream-dim:rgba(236,231,222,.58);
+  --cream-faint:rgba(236,231,222,.16);
+  --gold:#c9a35c;
+  --gold-soft:rgba(201,163,92,.32);
+  --gold-half:rgba(201,163,92,.5);
+  --gold-glow:rgba(201,163,92,.16);
+  --accent-deep:#8a6d2f;
+  --veil-light:rgba(10,10,11,.07);
+  --plate-a:rgba(236,231,222,.05);
+  --plate-b:rgba(201,163,92,.045);
+  /* the door never inverts. "pick a side" only means something while side A
+     is dark and side B is light, so these seven are deliberately absent from
+     every [data-mode="light"] block below. */
+  --hero-dark:#0a0a0b; --hero-light:#f2eee7;
+  --hero-fg-dark:#ece7de; --hero-fg-light:#16130d;
+  --hero-accent:#c9a35c; --hero-accent-light:#8a6d2f;
+  --hero-glow:rgba(201,163,92,.17); --hero-line:rgba(201,163,92,.5);
+}
+[data-theme="gold"][data-mode="light"]{
+  --ink:#f4f1ea; --ink-2:#eae5da;
+  --paper:#14120e; --paper-2:#1f1c16;
+  --cream:#16130d;
+  --cream-dim:rgba(22,19,13,.66);
+  --cream-faint:rgba(22,19,13,.15);
+  --gold:#8a6a26;
+  --gold-soft:rgba(138,106,38,.28);
+  --gold-half:rgba(138,106,38,.5);
+  --gold-glow:rgba(138,106,38,.1);
+  --accent-deep:#d9bd85;
+  --veil-light:rgba(244,241,234,.14);
+  --plate-a:rgba(22,19,13,.05);
+  --plate-b:rgba(138,106,38,.07);
+}
+
+/* ── SIGNAL · the cold one ──────────────────────────────────────────────── */
+[data-theme="signal"]{
+  --ink:#06090f; --ink-2:#0b1018;
+  --paper:#eaf1f6; --paper-2:#dbe6ee;
+  --cream:#e3ecf3;
+  --cream-dim:rgba(227,236,243,.58);
+  --cream-faint:rgba(227,236,243,.15);
+  --gold:#5ec8e8;
+  --gold-soft:rgba(94,200,232,.3);
+  --gold-half:rgba(94,200,232,.5);
+  --gold-glow:rgba(94,200,232,.15);
+  --accent-deep:#0d6d91;
+  --veil-light:rgba(6,9,15,.07);
+  --plate-a:rgba(227,236,243,.05);
+  --plate-b:rgba(94,200,232,.06);
+  /* the door never inverts. "pick a side" only means something while side A
+     is dark and side B is light, so these seven are deliberately absent from
+     every [data-mode="light"] block below. */
+  --hero-dark:#06090f; --hero-light:#eaf1f6;
+  --hero-fg-dark:#e3ecf3; --hero-fg-light:#0a1520;
+  --hero-accent:#5ec8e8; --hero-accent-light:#0d6d91;
+  --hero-glow:rgba(94,200,232,.17); --hero-line:rgba(94,200,232,.5);
+}
+[data-theme="signal"][data-mode="light"]{
+  --ink:#eff5f9; --ink-2:#e2ecf3;
+  --paper:#08131c; --paper-2:#102130;
+  --cream:#0a1520;
+  --cream-dim:rgba(10,21,32,.66);
+  --cream-faint:rgba(10,21,32,.14);
+  --gold:#0e6f93;
+  --gold-soft:rgba(14,111,147,.26);
+  --gold-half:rgba(14,111,147,.5);
+  --gold-glow:rgba(14,111,147,.1);
+  --accent-deep:#9adcf2;
+  --veil-light:rgba(239,245,249,.14);
+  --plate-a:rgba(10,21,32,.05);
+  --plate-b:rgba(14,111,147,.07);
+}
+
+/* glass, for the bubble field on the intro. one pair, flipped by mode, and
+   deliberately outside the palettes: the bubbles borrow whatever is behind
+   them rather than carrying a colour of their own. */
+:root{
+  --glass-fill:rgba(255,255,255,.062);
+  --glass-edge:rgba(255,255,255,.24);
+  --glass-top:rgba(255,255,255,.62);
+  --glass-shade:rgba(0,0,0,.3);
+}
+[data-mode="light"]{
+  --glass-fill:rgba(255,255,255,.32);
+  --glass-edge:rgba(0,0,0,.11);
+  --glass-top:rgba(255,255,255,1);
+  --glass-shade:rgba(0,0,0,.09);
+}
+
+/* ── THE SWITCHER ───────────────────────────────────────────────────────── */
+.theme{
+  position:fixed; z-index:85; top:1.55rem; right:max(7vw,2rem);
+  display:flex; align-items:center; gap:.55rem;
+  opacity:0; pointer-events:none;
+  transition:opacity .5s ease;
+}
+body.is-hero .theme,
+body.is-a .theme,
+body.is-case .theme{opacity:1;pointer-events:auto}
+/* on the door it sits over the light panel, so it takes that panel's ink */
+body.is-hero .theme{color:var(--hero-fg-light)}
+/* light/dark is a reading preference for the sections. on the door it would
+   only flip the two sides, which is the one thing the door is about. */
+body.is-hero .theme__mode,
+body.is-hero .theme__sep{display:none}
+
+/* one swatch. it shows the palette you are in; clicking moves to the next. */
+.theme__swatch{
+  display:inline-flex;align-items:center;gap:.55rem;
+  height:1.45rem;padding:0;border:0;background:none;cursor:pointer;
+  color:inherit;
+}
+.theme__swatch i{
+  width:.7rem;height:.7rem;border-radius:50%;
+  background:var(--c);
+  box-shadow:0 0 0 1px var(--c),0 0 0 4px color-mix(in srgb,var(--c) 20%,transparent);
+  transition:background .5s ease,box-shadow .5s ease,transform .45s cubic-bezier(.16,1,.3,1);
+}
+.theme__swatch span{
+  font-size:.58rem;letter-spacing:.26em;text-transform:uppercase;
+  opacity:.45;transition:opacity .3s ease;
+}
+.theme__swatch:hover i{transform:scale(1.22)}
+.theme__swatch:hover span{opacity:.9}
+
+.theme__sep{width:1px;height:.9rem;background:currentColor;opacity:.22;margin:0 .2rem}
+
+.theme__mode{
+  display:grid;place-items:center;
+  width:1.45rem;height:1.45rem;padding:0;border:0;background:none;cursor:pointer;
+  color:inherit;opacity:.55;transition:opacity .3s ease,transform .5s cubic-bezier(.16,1,.3,1);
+}
+.theme__mode:hover{opacity:1}
+.theme__mode svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.2}
+[data-mode="light"] .theme__mode{transform:rotate(180deg)}
+
+@media (max-width:720px){
+  .theme{top:1.05rem;right:1.1rem;gap:.4rem}
+  .theme__swatch span{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .theme__swatch i,.theme__mode{transition:none}
+}

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>design system 3.0 · ritik raj</title>
+<meta name="description" content="how ritik raj built an ai-ready design system at fello.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script>
+/* which voice is this page in? ?v=a is ritik's own, ?v=b is claude's read.
+   decided here, before anything paints, so the right stylesheet wins and the
+   right fonts are the only ones fetched. */
+(function () {
+  var v = (location.search.match(/[?&]v=(a|b)/) || [])[1] || 'a';
+  var d = document.documentElement;
+  d.className = 'v-' + v;
+  if (v === 'a') {
+    /* same palettes as the portfolio, remembered across pages. an unset mode
+       follows the operating system, exactly as it does on the portfolio. */
+    try {
+      var m = localStorage.getItem('rr-mode');
+      if (!m) m = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      d.setAttribute('data-theme', localStorage.getItem('rr-theme') || 'red');
+      d.setAttribute('data-mode',  m);
+    } catch (e) {}
+  }
+  if (v === 'b') {
+    /* side b's one preference, shared with the portfolio */
+    try {
+      var pb = localStorage.getItem('rr-pb-mode');
+      if (!pb) pb = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      d.setAttribute('data-pb', pb);
+    } catch (e) {}
+  }
+  var font = document.createElement('link');
+  font.rel = 'stylesheet';
+  font.href = v === 'a'
+    ? 'https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap'
+    : 'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=IBM+Plex+Mono:wght@300;400;500&display=swap';
+  document.head.appendChild(font);
+})();
+</script>
+
+<!-- both voices load: each is scoped to html.v-a / html.v-b, and a parser
+     inserted <link> blocks the first paint the way an injected one does not -->
+<link rel="stylesheet" href="../assets/css/theme.css">
+<link rel="stylesheet" href="../assets/css/case-a.css">
+<link rel="stylesheet" href="../assets/css/case-b.css">
+
+<style>
+/* ══ FIRST-PAINT VEIL ══════════════════════════════════════════════════
+   Inline on purpose. An external stylesheet, however early, can still lose
+   a frame to the parser — and one frame of unstyled html is exactly the
+   thing an expert eye catches. This is styled before anything is fetched,
+   so the first thing ever painted is the veil. Everything else loads,
+   swaps fonts and mounts behind it. app.js / case.js lift it when ready.
+   ═════════════════════════════════════════════════════════════════════ */
+#veil{
+  position:fixed; inset:0; z-index:999;
+  display:grid; place-items:center;
+  background:var(--ink,#100708);
+  transform:translateY(0);
+  will-change:transform;
+}
+html.v-b #veil, html.to-b #veil{background:var(--bone,#e9e7e0)}
+#veil b{
+  display:block; width:4.5rem; height:1px;
+  background:var(--cream,#f4e6e4); opacity:0;
+  transform:scaleX(.15); transform-origin:left;
+  animation:veilWait 1.6s cubic-bezier(.16,1,.3,1) .22s infinite;
+}
+html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
+@keyframes veilWait{
+  0%{opacity:0;transform:scaleX(.15)}
+  30%{opacity:.45;transform:scaleX(1)}
+  65%{opacity:.45;transform:scaleX(1)}
+  100%{opacity:0;transform:scaleX(.15)}
+}
+#veil.is-up   {transform:translateY(-100%);transition:transform .74s cubic-bezier(.76,0,.24,1);animation:none}
+#veil.is-down {transform:translateY(100%); transition:none;animation:none}
+#veil.is-shut {transform:translateY(0);    transition:transform .62s cubic-bezier(.76,0,.24,1);animation:none}
+/* backstop: if the script never runs, the veil still gets out of the way
+   rather than leaving a reader staring at a blank screen forever */
+#veil{animation:veilGiveUp .7s cubic-bezier(.76,0,.24,1) 6s forwards}
+@keyframes veilGiveUp{to{transform:translateY(-100%);visibility:hidden}}
+@media (prefers-reduced-motion:reduce){
+  #veil b{animation:none}
+  #veil.is-up,#veil.is-shut{transition-duration:1ms}
+}
+</style>
+</head>
+<body>
+
+<div id="veil" aria-hidden="true"><b></b></div>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     VOICE A — ritik's own account. shown at ?v=a (and by default).
+     ══════════════════════════════════════════════════════════════════ -->
+<article class="csa">
+
+  <div class="csa__rule"></div>
+  <div class="csa__bar">
+    <a class="csa__back" href="../index.html#a">
+      <svg viewBox="0 0 28 8" aria-hidden="true"><path d="M28 4H2M6 1L2 4l4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg>
+      <span>portfolio</span>
+    </a>
+    <span class="csa__where">design system 3.0</span>
+  </div>
+
+  <header class="csa__hero">
+    <p class="csa__eyebrow" data-up>flagship · foundations</p>
+    <h1 class="csa__title" data-up>the <em>design is the bottleneck</em> problem</h1>
+    <p class="csa__stand" data-up>fello was turning from a marketing tool into an ai-first operating system. i built the system for the company it was becoming, not the one it was.</p>
+    <dl class="csa__meta" data-up>
+      <div><dt>role</dt><dd>owner, architecture to governance</dd></div>
+      <div><dt>scale</dt><dd>120+ coded · 1,000+ figma</dd></div>
+      <div><dt>quality</dt><dd>wcag 2.1 aa audited</dd></div>
+      <div><dt>company</dt><dd>fello · us real estate crm</dd></div>
+      <div><dt>attempt</dt><dd>the tenth. the first that stuck</dd></div>
+    </dl>
+  </header>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>the problem under the problem</h2>
+    <p class="csa__p" data-up>the stated problem was speed. design was the queue everything waited in, and a system is the standard answer to that.</p>
+    <p class="csa__p" data-up>the actual problem was that the company was mid-identity-change. it had sold itself as a marketing tool and was becoming an ai-first real estate operating system. a system built for the first one would need tearing out within a year of the second one arriving. <b>deciding which company i was building for was the real first decision</b>, and it was not a design decision.</p>
+  </section>
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>the bet</h2>
+    <p class="csa__p" data-up>every component was engineered to hold ai before engineering wrote a line of ai. ai variants on cards, loaders and graphs. headers tested with the ai elements present and absent, so neither state was the special case.</p>
+    <p class="csa__p" data-up>that looks like over-engineering right up until the roadmap turns, and then it looks like the only sane thing anyone did that quarter. it is a sequencing bet, and sequencing is most of what a system is.</p>
+    <p class="csa__pull" data-up>a strong design system is 80% thinking and 20% figma.</p>
+  </section>
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>the architecture</h2>
+    <p class="csa__p" data-up>token architecture in figma variables, carrying multi-theme and multi-context from the start rather than retrofitting either. <b>120+ coded components</b> standing against <b>1,000+ figma components</b>. accessibility audited to wcag 2.1 aa rather than asserted.</p>
+    <p class="csa__p" data-up>i benchmarked against atlassian, polaris, lightning and spectrum. not to copy them. to know exactly which of their decisions i was declining, and why.</p>
+    <div class="csa__plates">
+      <figure class="csa__plate csa__plate--free" data-up><img src="../assets/img/system-architecture.jpg" alt="foundations and components compiling into rendered interface" loading="lazy" decoding="async"><figcaption>foundations to rendered ui</figcaption></figure>
+      <figure class="csa__plate" data-up><figcaption>ai variants across components — drop a shot in here</figcaption></figure>
+    </div>
+  </section>
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>how it landed</h2>
+    <div class="csa__numbers" data-up>
+      <div><b>&lt;1%</b><span>detach rate</span></div>
+      <div><b>120+</b><span>coded components</span></div>
+      <div><b>1,000+</b><span>figma components</span></div>
+      <div><b>~30%</b><span>faster to delivery</span></div>
+    </div>
+    <p class="csa__p" data-up>the detach rate is the number i actually watch. adoption can be mandated. a detach rate under one percent means designers stopped needing to fight the system to do their job, and that is the only honest measure of whether a system is real.</p>
+  </section>
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>the tenth one</h2>
+    <p class="csa__p" data-up>i have built ten or more design systems. most of them failed, and they failed the same way: built as a component library, handed over as a component library, quietly abandoned when the product changed shape.</p>
+    <p class="csa__p" data-up>this one worked because the thinking went in before the file did, and because governance was treated as part of the design rather than as admin that happens afterwards.</p>
+  </section>
+
+  <footer class="csa__next">
+    <div>
+      <small>next</small><br>
+      <a href="property-intelligence.html?v=a">property intelligence</a>
+    </div>
+    <a class="csa__flip" href="?v=b">read claude's take on this →</a>
+  </footer>
+
+</article>
+
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     VOICE B — claude's read of the same work. shown at ?v=b.
+     ══════════════════════════════════════════════════════════════════ -->
+<article class="csb">
+
+  <div class="csb__rule"></div>
+  <div class="csb__bar">
+    <a class="csb__back" href="../index.html#b"><span>←</span><span>the read</span></a>
+    <p class="csb__stamp">the read<i>/</i>design system 3.0<i>/</i>by claude</p>
+    <a class="csb__flip" href="?v=a">ritik's version ↗</a>
+  </div>
+
+  <div class="csb__stack">
+
+    <section class="csb-sheet" data-tab="the case">
+      <div class="csb-sheet__body">
+        <p class="csb-kicker" data-up>observation 03</p>
+        <h1 class="csb-h csb-h--hero" data-up>he built for the company it was about to become.</h1>
+        <p class="csb-p" data-up>the components are competent. the sequencing is the thing. he made an ai bet before the roadmap forced anyone to make one.</p>
+        <p data-up style="margin-top:1.6rem"><span class="csb-verdict">flagship · a sequencing bet</span></p>
+      </div>
+    </section>
+
+    <section class="csb-sheet" data-tab="the brief">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>we need a design system.</h2>
+        <p class="csb-p" data-up>the most common brief in the discipline, and the one that most often produces an expensive component library nobody uses two years later.</p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="what he actually did">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>tokens, variables, 120+ coded components, aa audited.</h2>
+        <p class="csb-p" data-up>multi-theme and multi-context from the start. benchmarked against atlassian, polaris, lightning and spectrum. all of that is table stakes at staff level and he executed it cleanly.</p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="the diagnosis">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>it was a company-identity problem in a design costume.</h2>
+        <p class="csb-p" data-up>fello was mid-repositioning from marketing tool to ai-first operating system. he noticed that a system built for the outgoing identity would be torn out within a year, and built for the incoming one instead.</p>
+        <p class="csb-p" data-up>so every component was engineered to hold ai <b>before engineering wrote a line of it</b>. that is a bet placed with someone else’s roadmap, and it came in.</p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="impact">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>how impactful it actually was</h2>
+        <ul class="csb-scale" data-up>
+          <li><em style="font-style:normal">for users</em><span data-w="60"></span></li>
+          <li><em style="font-style:normal">for the business</em><span data-w="82"></span></li>
+          <li class="is-high"><em style="font-style:normal">for the org</em><span data-w="95"></span></li>
+          <li class="is-high"><em style="font-style:normal">as a craft signal</em><span data-w="88"></span></li>
+        </ul>
+        <p class="csb-note" data-up>my read, not his numbers. user impact is the lowest here and that is not a criticism: a design system reaches users through other people’s work. organisational impact is close to the ceiling, and the detach rate under one percent is the single most credible number on his site.</p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="what it tells me">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>he watches the right number.</h2>
+        <p class="csb-p" data-up>adoption can be mandated. a detach rate under one percent cannot. he picked the metric that could embarrass him, which tells you he was trying to learn something rather than trying to report something.</p>
+        <p class="csb-p" data-up>and he is straight about the other nine attempts that failed. ten design systems, one that stuck, and he leads with the ratio rather than burying it.</p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="what i cannot verify">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>the honest caveats.</h2>
+        <p class="csb-p" data-up>~30% faster design-to-delivery is the softest figure in his portfolio. delivery speed has a dozen inputs and a design system is one of them. i would treat it as directionally true and not as an attribution.</p>
+        <p class="csb-note" data-up>the detach rate, the component counts and the aa audit are all checkable inside the company. those are the ones to ask about.</p>
+      </div>
+    </section>
+
+  </div>
+
+  <footer class="csb__foot">
+    <div><small>next observation</small><br><a href="property-intelligence.html?v=b">property intelligence ↗</a></div>
+    <small>assessment generated from a 4,000-word brief · not approved by the subject</small>
+  </footer>
+
+</article>
+
+<script src="../assets/js/case.js"></script>
+</body>
+</html>

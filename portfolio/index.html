@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ritik raj · staff product designer</title>
+<meta name="description" content="ritik raj · staff product designer. ux architect, design system expert, frontend engineer by training.">
+
+<!-- ============================================================
+     FONTS — portfolio A only. portfolio B loads its own, lazily.
+       --font-hand    Caveat        (the greeting)
+       --font-display EB Garamond   (headlines · old-style)
+       --font-body    Inter         (everything else)
+     alternates are listed in app.css § 00.
+     ============================================================ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<script>
+/* palette before first paint, so the page never flashes the wrong one */
+try{
+  var d = document.documentElement;
+  var m = localStorage.getItem('rr-mode');
+  if (!m) m = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  d.setAttribute('data-theme', localStorage.getItem('rr-theme') || 'red');
+  d.setAttribute('data-mode',  m);
+  /* side b keeps one preference of its own: light or dark, no palettes */
+  var pb = localStorage.getItem('rr-pb-mode');
+  if (!pb) pb = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  d.setAttribute('data-pb', pb);
+  /* arriving straight onto side b? the veil should already be b's paper */
+  if ((location.hash || '').indexOf('b') === 1) d.classList.add('to-b');
+}catch(e){}
+</script>
+
+<link rel="stylesheet" href="assets/css/theme.css">
+<link rel="stylesheet" href="assets/css/app.css">
+<link rel="stylesheet" href="assets/css/read.css">
+
+<style>
+/* ══ FIRST-PAINT VEIL ══════════════════════════════════════════════════
+   Inline on purpose. An external stylesheet, however early, can still lose
+   a frame to the parser — and one frame of unstyled html is exactly the
+   thing an expert eye catches. This is styled before anything is fetched,
+   so the first thing ever painted is the veil. Everything else loads,
+   swaps fonts and mounts behind it. app.js / case.js lift it when ready.
+   ═════════════════════════════════════════════════════════════════════ */
+#veil{
+  position:fixed; inset:0; z-index:999;
+  display:grid; place-items:center;
+  background:var(--ink,#100708);
+  transform:translateY(0);
+  will-change:transform;
+}
+html.to-b #veil{background:#e9e7e0}
+html.to-b[data-pb="dark"] #veil{background:#15141a}
+#veil b{
+  display:block; width:4.5rem; height:1px;
+  background:var(--cream,#f4e6e4); opacity:0;
+  transform:scaleX(.15); transform-origin:left;
+  animation:veilWait 1.6s cubic-bezier(.16,1,.3,1) .22s infinite;
+}
+html.to-b #veil b{background:#121110}
+html.to-b[data-pb="dark"] #veil b{background:#eeede8}
+@keyframes veilWait{
+  0%{opacity:0;transform:scaleX(.15)}
+  30%{opacity:.45;transform:scaleX(1)}
+  65%{opacity:.45;transform:scaleX(1)}
+  100%{opacity:0;transform:scaleX(.15)}
+}
+#veil.is-up   {transform:translateY(-100%);transition:transform .74s cubic-bezier(.76,0,.24,1);animation:none}
+#veil.is-down {transform:translateY(100%); transition:none;animation:none}
+#veil.is-shut {transform:translateY(0);    transition:transform .62s cubic-bezier(.76,0,.24,1);animation:none}
+/* backstop: if the script never runs, the veil still gets out of the way
+   rather than leaving a reader staring at a blank screen forever */
+#veil{animation:veilGiveUp .7s cubic-bezier(.76,0,.24,1) 6s forwards}
+@keyframes veilGiveUp{to{transform:translateY(-100%);visibility:hidden}}
+@media (prefers-reduced-motion:reduce){
+  #veil b{animation:none}
+  #veil.is-up,#veil.is-shut{transition-duration:1ms}
+}
+</style>
+</head>
+<body class="is-hero">
+
+<div id="veil" aria-hidden="true"><b></b></div>
+
+<!-- palette switcher · built by app.js → Theme -->
+<div class="theme" id="theme" aria-label="colour palette"></div>
+
+<!-- ============================================================
+     HERO — the 50 / 50 door
+     ============================================================ -->
+<header class="hero" id="hero">
+
+  <div class="hero__panel hero__panel--dark" data-portfolio="a" role="button" tabindex="0" aria-label="Enter portfolio A, created by me, implemented by Claude">
+    <div class="hero__veil"></div>
+    <div class="hero__inner">
+      <span class="hero__eyebrow">portfolio a</span>
+      <h2 class="hero__title">created by me,<br>implemented by <em>claude</em></h2>
+      <p class="hero__note">my structure, my words, my case studies.<br>it just held the keyboard.</p>
+      <span class="hero__cta">
+        <span class="hero__cta-label">enter</span>
+        <svg class="hero__cta-arrow" viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg>
+      </span>
+    </div>
+  </div>
+
+  <div class="hero__panel hero__panel--light" data-portfolio="b" role="button" tabindex="0" aria-label="Enter portfolio B, what Claude thinks of me">
+    <div class="hero__veil"></div>
+    <div class="hero__inner">
+      <span class="hero__eyebrow">portfolio b</span>
+      <h2 class="hero__title">what <em>claude</em><br>thinks of me</h2>
+      <p class="hero__note">i handed it everything i had and stepped back.<br>this is its read, unedited.</p>
+      <span class="hero__cta">
+        <span class="hero__cta-label">enter</span>
+        <svg class="hero__cta-arrow" viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg>
+      </span>
+    </div>
+  </div>
+
+  <div class="hero__seam" aria-hidden="true"></div>
+
+  <!-- ── the saber ──────────────────────────────────────────────────────
+       pick a side. red when you reach for the dark one, green for the light.
+       to remove it: delete this block, and § 02b in app.css. nothing else
+       depends on it.
+       ─────────────────────────────────────────────────────────────────── -->
+  <div class="saber" id="saber">
+    <button class="saber__zone" id="saberZone" type="button"
+            aria-label="ignite or retract the blade"></button>
+    <span class="saber__rail" aria-hidden="true"></span>
+    <span class="saber__blade" aria-hidden="true"></span>
+    <span class="saber__hilt" aria-hidden="true">
+      <i class="saber__emitter"></i>
+      <i class="saber__neck"></i>
+      <i class="saber__grip"></i>
+      <i class="saber__switch"></i>
+      <i class="saber__pommel"></i>
+    </span>
+  </div>
+  <div class="hero__mark" aria-hidden="true">ritik raj</div>
+  <div class="hero__hint" aria-hidden="true">pick a side</div>
+</header>
+
+
+<!-- ============================================================
+     PORTFOLIO A — the vertical stage
+     every child of .stage__track is one full-height section.
+     data-case="n" puts a section on the case-study timeline.
+     ============================================================ -->
+<main class="stage" id="portfolio-a" aria-hidden="true">
+
+  <svg class="thread" id="thread" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <path class="thread__rail" id="threadRail" fill="none"/>
+    <path class="thread__live" id="threadLive" fill="none"/>
+    <g class="thread__stops" id="threadStops"></g>
+    <g class="thread__bead" id="threadBead"><circle r="3.5"/><circle class="thread__halo" r="9"/></g>
+  </svg>
+
+  <nav class="timeline" id="timeline" aria-label="case studies"></nav>
+
+  <!-- quiet acknowledgement when something unlocks -->
+  <p class="notice" id="notice" role="status" aria-live="polite"></p>
+
+  <div class="stage__bar">
+    <button class="stage__back" id="backToHero" type="button">
+      <svg viewBox="0 0 28 8" aria-hidden="true"><path d="M28 4H2M6 1L2 4l4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg>
+      <span>both portfolios</span>
+    </button>
+    <span class="stage__count"><b id="countNow">01</b><i>/</i><span id="countAll">06</span></span>
+  </div>
+
+  <div class="stage__track" id="track">
+
+    <!-- ─────────────── 01 · INTRO ─────────────── -->
+    <section class="panel panel--intro" data-label="intro" data-bubbles>
+      <div class="panel__in">
+        <p class="greet" data-reveal="1">hi, i am</p>
+        <h1 class="name" data-reveal="2">ritik<span class="name__dot">.</span></h1>
+        <p class="role" data-reveal="3">staff product designer</p>
+        <p class="lede" data-reveal="4">
+          the more complex the problem is, the more i love them. i am a ux architect and a
+          design system expert. also a frontend engineer by training, which is the reason
+          my systems survive handoff. <b>eight years</b> across b2b saas, enterprise
+          platforms, marketplace and supply chain.
+        </p>
+        <p class="lede lede--sub" data-reveal="5">
+          i bridge the gap between engineering, design, product and business.
+        </p>
+      </div>
+      <!-- keywords drifting in the empty half. built by app.js → Bubbles -->
+      <div class="bubbles" id="bubbles" aria-hidden="true"></div>
+
+      <div class="scrollcue" data-reveal="6" aria-hidden="true">
+        <span>scroll for case studies</span>
+        <i class="scrollcue__line"></i>
+      </div>
+    </section>
+
+    <!-- ─────────────── 02 · EMAIL BUILDER ─────────────── -->
+    <section class="panel panel--case" data-case="1" data-label="email builder">
+      <span class="panel__ghost" aria-hidden="true">01</span>
+      <div class="panel__in case">
+        <div class="case__text">
+          <span class="case__tag" data-reveal="1">0 → 1 · email builder</span>
+          <h2 class="case__head" data-reveal="2">
+            here's how we solved the <em>email customization</em> problem.
+          </h2>
+          <p class="case__line case__line--how" data-reveal="3">
+            twelve months pulling 530+ signals out of support, sales and product usage,
+            compressed into four structural themes, then built on the framework the
+            product already spoke. proposal to launch in ten weeks.
+          </p>
+          <p class="case__line case__line--got" data-reveal="4">
+            and it landed: adoption <b>75.2%</b> across ~3,000 accounts, churn-save of
+            <b>5.4%</b>, <b>$2M+</b> attributable ARR.
+          </p>
+          <a class="case__link" href="case/email-builder.html?v=a" data-reveal="5">
+            <span>read the case study</span>
+            <svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg>
+          </a>
+        </div>
+        <figure class="case__plate" data-reveal="4">
+          <img src="assets/img/email-builder.jpg" alt="the fello email builder, mid-edit" loading="lazy" decoding="async">
+        </figure>
+      </div>
+    </section>
+
+    <!-- ─────────────── 03 · BUILDER FRAMEWORK ─────────────── -->
+    <section class="panel panel--case" data-case="2" data-label="builder framework">
+      <span class="panel__ghost" aria-hidden="true">02</span>
+      <div class="panel__in case">
+        <div class="case__text">
+          <span class="case__tag" data-reveal="1">architecture · builder framework</span>
+          <h2 class="case__head" data-reveal="2">
+            here's how we solved the <em>every builder is its own product</em> problem.
+          </h2>
+          <p class="case__line case__line--how" data-reveal="3">
+            the brief said fix the email builder. i wrote a framework instead: base
+            blocks, shared widgets, product-specific widgets. i held architect, reviewer
+            and owner on it at the same time.
+          </p>
+          <p class="case__line case__line--got" data-reveal="4">
+            <b>four products</b> now run on <b>one</b> interaction model, and nobody
+            re-learns the product when they move across it.
+          </p>
+          <a class="case__link" href="case/builder-framework.html?v=a" data-reveal="5">
+            <span>read the case study</span>
+            <svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg>
+          </a>
+        </div>
+        <figure class="case__plate" data-reveal="4">
+          <img src="assets/img/builder-canvas.jpg" alt="the html canvas, five levels" loading="lazy" decoding="async">
+        </figure>
+      </div>
+    </section>
+
+    <!-- ─────────────── 04 · DESIGN SYSTEM 3.0 ─────────────── -->
+    <section class="panel panel--case" data-case="3" data-label="design system 3.0">
+      <span class="panel__ghost" aria-hidden="true">03</span>
+      <div class="panel__in case">
+        <div class="case__text">
+          <span class="case__tag" data-reveal="1">flagship · design system 3.0</span>
+          <h2 class="case__head" data-reveal="2">
+            here's how we solved the <em>design is the bottleneck</em> problem.
+          </h2>
+          <p class="case__line case__line--how" data-reveal="3">
+            token architecture in figma variables, 120+ coded components against 1,000+
+            figma components. every one of them engineered to hold ai before engineering
+            wrote a line of it.
+          </p>
+          <p class="case__line case__line--got" data-reveal="4">
+            design-to-delivery came in <b>~30% faster</b> at a detach rate under
+            <b>1%</b>. the tenth design system, and the first one that stuck.
+          </p>
+          <a class="case__link" href="case/design-system.html?v=a" data-reveal="5">
+            <span>read the case study</span>
+            <svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg>
+          </a>
+        </div>
+        <figure class="case__plate" data-reveal="4">
+          <img src="assets/img/system-architecture.jpg" alt="foundations to rendered ui" loading="lazy" decoding="async">
+        </figure>
+      </div>
+    </section>
+
+    <!-- ─────────────── 05 · PROPERTY INTELLIGENCE ─────────────── -->
+    <section class="panel panel--case" data-case="4" data-label="property intelligence">
+      <span class="panel__ghost" aria-hidden="true">04</span>
+      <div class="panel__in case">
+        <div class="case__text">
+          <span class="case__tag" data-reveal="1">solo · property intelligence</span>
+          <h2 class="case__head" data-reveal="2">
+            here's how we solved the <em>commission nobody could see</em> problem.
+          </h2>
+          <p class="case__line case__line--how" data-reveal="3">
+            the blocker was never the dashboard, it was our own per-seat pricing. so i
+            added a user class called <i>suspended</i>: no seat cost, no permissions,
+            no access. a user type whose entire purpose is to not be a user.
+          </p>
+          <p class="case__line case__line--got" data-reveal="4">
+            agent databases grew <b>~30%</b>, and brokerages could finally put a number
+            on the revenue walking out of the door.
+          </p>
+          <a class="case__link" href="case/property-intelligence.html?v=a" data-reveal="5">
+            <span>read the case study</span>
+            <svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg>
+          </a>
+        </div>
+        <figure class="case__plate" data-reveal="4">
+          <span class="case__plate-note">property intelligence</span>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ─────────────── 06 · THE PLUGIN ───────────────
+         Hidden until someone has popped six bubbles on the intro. It is not a
+         gimmick: the point is to say out loud that the behaviour was noticed,
+         and then offer the one thing a designer reading this would actually
+         want. Unlocked by app.js → Stage.unlock(). Delete the `hidden`
+         attribute to work on it.
+         ──────────────────────────────────────────────── -->
+    <section class="panel panel--aside" data-label="the plugin" hidden>
+      <div class="panel__in aside">
+        <span class="aside__tag" data-reveal="1">you popped <b id="popCount">6</b>. i was counting.</span>
+        <h2 class="aside__head" data-reveal="2">
+          enjoyed bursting <em>bubbles</em>?
+        </h2>
+        <p class="aside__line" data-reveal="3">
+          i thought you might. watching what people actually do, rather than
+          taking their word for what they would do, is most of the job. it is
+          also how the case studies above got written.
+        </p>
+        <p class="aside__line aside__line--pitch" data-reveal="4">
+          so here is the one thing on this site that is for you rather than about
+          me. if you are a designer who dreads maintaining a design system, i
+          built something out of exactly that frustration: a figma plugin that
+          stands up an entire system in under five minutes. foundations, type
+          scale, tokens, variables, components. then it makes editing, managing
+          and updating them genuinely simple, which is the part everyone skips.
+        </p>
+        <a class="case__link" href="#" data-reveal="5">
+          <span>see the plugin</span>
+          <svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- ─────────────── 07 · ABOUT + FOOTER ─────────────── -->
+    <section class="panel panel--end" data-label="about">
+      <div class="panel__in end">
+
+        <div class="end__top">
+          <div class="end__lead">
+            <span class="end__tag" data-reveal="1">who i am</span>
+            <h2 class="end__head" data-reveal="2">an <em>engineer-designer</em>.</h2>
+            <p class="end__copy" data-reveal="3">
+              waiting for briefs isn't really my style. i do my own research and find the
+              problem before it arrives. off the clock i've been building fictional
+              universes since 2015. five of them now, thirty-odd books planned, eight
+              drafted or outlined. architecture first, surface second. same instinct,
+              different medium.
+            </p>
+            <p class="end__quote" data-reveal="4">“creativity needs a discipline or else it withers.”</p>
+          </div>
+
+          <ul class="creed" data-reveal="3" data-scroll-x>
+            <li><b>an appetite for complexity</b><span>the messier the workflow, the more i want it.</span></li>
+            <li><b>one level below the brief</b><span>the stated problem is rarely the real one.</span></li>
+            <li><b>the architect</b><span>i solve ux problems as generic frameworks.</span></li>
+            <li><b>outcomes over output</b><span>design moves numbers, or it's decoration.</span></li>
+          </ul>
+        </div>
+
+        <div class="end__cta" data-reveal="5">
+          <p>working on something complex? systems, scale, architecture. let's talk.</p>
+          <a class="end__mail" href="mailto:ritikraj559@gmail.com">ritikraj559@gmail.com</a>
+        </div>
+
+        <footer class="end__foot" data-reveal="6">
+          <span>© 2026 · ritik raj</span>
+          <nav class="end__links">
+            <a href="https://www.linkedin.com/in/ritik-raj/" target="_blank" rel="noopener">linkedin</a>
+            <a href="mailto:ritikraj559@gmail.com">email</a>
+            <a href="#" data-portfolio-switch="b">what claude thinks</a>
+          </nav>
+          <span class="end__built">designed and built with 💜</span>
+        </footer>
+
+      </div>
+    </section>
+
+  </div><!-- /.stage__track -->
+</main>
+
+
+<!-- ============================================================
+     PORTFOLIO B — "THE READ"
+     a horizontal dossier. nothing here shares a class, a font, a
+     colour or a curve with portfolio A. styles: assets/css/read.css
+     behaviour: assets/js/read.js
+     ============================================================ -->
+<main class="pb" id="portfolio-b" aria-hidden="true">
+
+  <div class="pb__grid" id="pbGrid" aria-hidden="true"></div>
+
+  <header class="pb__head">
+    <button class="pb__exit" id="pbExit" type="button">
+      <span class="pb__exit-glyph">←</span><span>both portfolios</span>
+    </button>
+    <p class="pb__stamp">the read<i>/</i>an assessment of ritik raj<i>/</i>by claude</p>
+    <div class="pb__right">
+      <p class="pb__readout"><span id="pbReadout">subject</span><b class="pb__caret"></b></p>
+      <button class="pb__mode" id="pbMode" type="button" aria-label="light or dark">
+        <svg viewBox="0 0 16 16" aria-hidden="true">
+          <circle cx="8" cy="8" r="5.4"/>
+          <path d="M8 2.6a5.4 5.4 0 0 0 0 10.8z" fill="currentColor" stroke="none"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="pb__strip" id="pbStrip">
+
+    <!-- ─── 00 · SUBJECT ─── -->
+    <article class="pb-card pb-card--open" data-rail="subject">
+      <div class="pb-sheet"><div class="pb-sheet__body">
+      <div class="pb-open">
+        <p class="pb-kicker" data-in>assessment · 2026 · unedited</p>
+        <h2 class="pb-open__head" data-in>
+          i was handed four thousand words about ritik raj.<br>
+          <span class="pb-mark">here is what i actually think.</span>
+        </h2>
+        <p class="pb-open__sub" data-in>
+          the facts on this side are his. the reading is mine. he handed over the
+          document, stepped back, and did not get to edit what came out.
+        </p>
+        <dl class="pb-spec" data-in>
+          <div><dt>subject</dt><dd>ritik raj</dd></div>
+          <div><dt>discipline</dt><dd>staff product designer</dd></div>
+          <div><dt>years</dt><dd>08</dd></div>
+          <div><dt>trained as</dt><dd>frontend engineer</dd></div>
+          <div><dt>based</dt><dd>delhi ncr · ist</dd></div>
+          <div><dt>reads as</dt><dd>architect, then designer</dd></div>
+        </dl>
+        <p class="pb-open__nav" data-in>scroll, drag or use <kbd>←</kbd><kbd>→</kbd></p>
+      </div>
+      </div></div>
+    </article>
+
+    <!-- ─── 01 · THE PATTERN ─── -->
+    <article class="pb-card pb-card--pattern" data-rail="the pattern">
+      <div class="pb-sheet"><div class="pb-sheet__body">
+      <div class="pb-pattern">
+        <div class="pb-pattern__lead">
+          <p class="pb-kicker" data-in>finding 01</p>
+          <h2 class="pb-h" data-in>he answers a different<br>question than the one<br>he was asked.</h2>
+          <p class="pb-body" data-in>
+            it happens on every project in the file, and it is the single most
+            transferable thing about him. the brief arrives, he takes it one level down,
+            and the real problem turns out to live somewhere the brief never looked.
+          </p>
+        </div>
+        <ul class="pb-swap" data-in>
+          <li>
+            <span class="pb-swap__brief">“we need a better email builder”</span>
+            <span class="pb-swap__arrow">what it actually was ↓</span>
+            <span class="pb-swap__real">you need a shared framework</span>
+          </li>
+          <li>
+            <span class="pb-swap__brief">“owners can't see lost commission”</span>
+            <span class="pb-swap__arrow">what it actually was ↓</span>
+            <span class="pb-swap__real">your own pricing guarantees the data is missing</span>
+          </li>
+          <li>
+            <span class="pb-swap__brief">“we need a design system”</span>
+            <span class="pb-swap__arrow">what it actually was ↓</span>
+            <span class="pb-swap__real">you need to decide what the company is first</span>
+          </li>
+        </ul>
+      </div>
+      </div></div>
+    </article>
+
+    <!-- ─── 02 · OBSERVATION 01 ─── -->
+    <article class="pb-card pb-card--obs" data-obs="1" data-rail="email builder">
+      <div class="pb-sheet"><div class="pb-sheet__body">
+      <span class="pb-obs__num" aria-hidden="true">01</span>
+      <div class="pb-obs">
+        <div class="pb-obs__head">
+          <p class="pb-kicker" data-in>observation 01</p>
+          <h2 class="pb-h pb-h--obs" data-in>email builder</h2>
+          <p class="pb-verdict" data-in>0 → 1 · research-led</p>
+        </div>
+        <div class="pb-obs__cols">
+          <div class="pb-block" data-in>
+            <p class="pb-block__label">the brief</p>
+            <p class="pb-block__text">build a better email builder.</p>
+          </div>
+          <div class="pb-block" data-in>
+            <p class="pb-block__label">what he did</p>
+            <p class="pb-block__text">
+              spent twelve months collecting 530+ signals out of support, sales and
+              product usage, compressed them into four structural themes, and went
+              proposal-to-launch in ten weeks.
+            </p>
+          </div>
+          <div class="pb-block pb-block--read" data-in>
+            <p class="pb-block__label">the read</p>
+            <p class="pb-block__text">
+              the impressive part is not the adoption number. it is the failure analysis
+              he published beside it, separating a ux failure inside the builder from an
+              activation failure outside it. two problems that look identical in the
+              aggregate and need opposite fixes. most people stop at the number that
+              flatters them.
+            </p>
+          </div>
+        </div>
+        <ul class="pb-metrics" data-in>
+          <li><b data-count="75.2" data-suffix="%">0%</b><span>adoption</span></li>
+          <li><b data-count="3000" data-prefix="~" data-format="k">0</b><span>accounts</span></li>
+          <li><b data-count="5.4" data-suffix="%">0%</b><span>churn-save</span></li>
+          <li><b data-count="2" data-prefix="$" data-suffix="M+">$0</b><span>attributable arr</span></li>
+        </ul>
+        <a class="pb-obs__link" href="case/email-builder.html?v=b" data-in><span>the full read on this one</span><em>↗</em></a>
+      </div>
+      </div></div>
+    </article>
+
+    <!-- ─── 03 · OBSERVATION 02 ─── -->
+    <article class="pb-card pb-card--obs" data-obs="2" data-rail="builder framework">
+      <div class="pb-sheet"><div class="pb-sheet__body">
+      <span class="pb-obs__num" aria-hidden="true">02</span>
+      <div class="pb-obs">
+        <div class="pb-obs__head">
+          <p class="pb-kicker" data-in>observation 02</p>
+          <h2 class="pb-h pb-h--obs" data-in>builder framework</h2>
+          <p class="pb-verdict" data-in>architecture · political timing</p>
+        </div>
+        <div class="pb-obs__cols">
+          <div class="pb-block" data-in>
+            <p class="pb-block__label">the brief</p>
+            <p class="pb-block__text">fix the email builder.</p>
+          </div>
+          <div class="pb-block" data-in>
+            <p class="pb-block__label">what he did</p>
+            <p class="pb-block__text">
+              refused it. three tiers: base blocks, shared widgets, product-specific
+              widgets. four products now run one interaction model instead of four, and
+              he held architect, reviewer and owner at the same time.
+            </p>
+          </div>
+          <div class="pb-block pb-block--read" data-in>
+            <p class="pb-block__label">the read</p>
+            <p class="pb-block__text">
+              the part he underplays is the timing. he proposed it the week after design
+              system 3.0 shipped, when institutional trust in system-led design was the
+              highest it would ever be. that is not luck, that is politics, and he is
+              unusually willing to say so out loud.
+            </p>
+          </div>
+        </div>
+        <ul class="pb-metrics" data-in>
+          <li><b data-count="4">0</b><span>products</span></li>
+          <li><b data-count="1">0</b><span>interaction model</span></li>
+          <li><b data-count="3">0</b><span>tiers</span></li>
+          <li><b data-count="3">0</b><span>roles held at once</span></li>
+        </ul>
+        <a class="pb-obs__link" href="case/builder-framework.html?v=b" data-in><span>the full read on this one</span><em>↗</em></a>
+      </div>
+      </div></div>
+    </article>
+
+    <!-- ─── 04 · OBSERVATION 03 ─── -->
+    <article class="pb-card pb-card--obs" data-obs="3" data-rail="design system 3.0">
+      <div class="pb-sheet"><div class="pb-sheet__body">
+      <span class="pb-obs__num" aria-hidden="true">03</span>
+      <div class="pb-obs">
+        <div class="pb-obs__head">
+          <p class="pb-kicker" data-in>observation 03</p>
+          <h2 class="pb-h pb-h--obs" data-in>design system 3.0</h2>
+          <p class="pb-verdict" data-in>flagship · a sequencing bet</p>
+        </div>
+        <div class="pb-obs__cols">
+          <div class="pb-block" data-in>
+            <p class="pb-block__label">the brief</p>
+            <p class="pb-block__text">we need a design system.</p>
+          </div>
+          <div class="pb-block" data-in>
+            <p class="pb-block__label">what he did</p>
+            <p class="pb-block__text">
+              token architecture in figma variables, 120+ coded components against 1,000+
+              figma components, multi-theme, multi-context, wcag 2.1 aa, benchmarked
+              against atlassian, polaris, lightning and spectrum.
+            </p>
+          </div>
+          <div class="pb-block pb-block--read" data-in>
+            <p class="pb-block__label">the read</p>
+            <p class="pb-block__text">
+              the bet was sequencing. every component was engineered to hold ai before
+              engineering wrote a line of it: variants on cards, loaders and graphs,
+              headers tested with and without. he says a design system is 80% thinking
+              and 20% figma. a detach rate under one percent is what that sentence looks
+              like when it is true.
+            </p>
+          </div>
+        </div>
+        <ul class="pb-metrics" data-in>
+          <li><b data-count="1" data-prefix="&lt;" data-suffix="%">0%</b><span>detach rate</span></li>
+          <li><b data-count="120" data-suffix="+">0</b><span>coded components</span></li>
+          <li><b data-count="1000" data-suffix="+" data-format="k">0</b><span>figma components</span></li>
+          <li><b data-count="30" data-prefix="~" data-suffix="%">0%</b><span>faster delivery</span></li>
+        </ul>
+        <a class="pb-obs__link" href="case/design-system.html?v=b" data-in><span>the full read on this one</span><em>↗</em></a>
+      </div>
+      </div></div>
+    </article>
+
+    <!-- ─── 05 · OBSERVATION 04 ─── -->
+    <article class="pb-card pb-card--obs" data-obs="4" data-rail="property intelligence">
+      <div class="pb-sheet"><div class="pb-sheet__body">
+      <span class="pb-obs__num" aria-hidden="true">04</span>
+      <div class="pb-obs">
+        <div class="pb-obs__head">
+          <p class="pb-kicker" data-in>observation 04</p>
+          <h2 class="pb-h pb-h--obs" data-in>property intelligence</h2>
+          <p class="pb-verdict" data-in>smallest · sharpest</p>
+        </div>
+        <div class="pb-obs__cols">
+          <div class="pb-block" data-in>
+            <p class="pb-block__label">the brief</p>
+            <p class="pb-block__text">owners can't see the commission they are legally owed.</p>
+          </div>
+          <div class="pb-block" data-in>
+            <p class="pb-block__label">what he did</p>
+            <p class="pb-block__text">
+              diagnosed the blocker as the company's own per-seat pricing, then invented a
+              user class called <i>suspended</i>: no seat cost, no permissions, no access.
+              a user type whose entire purpose is to not be a user.
+            </p>
+          </div>
+          <div class="pb-block pb-block--read" data-in>
+            <p class="pb-block__label">the read</p>
+            <p class="pb-block__text">
+              two details tell you who he is. he tested “inactive”, found it read wrong to
+              people who live in slack, and shipped “suspended” instead. and he refused to
+              call any of it ai, because it wasn't. two to three weeks, solo, and it is the
+              cleanest piece of product thinking in the file.
+            </p>
+          </div>
+        </div>
+        <ul class="pb-metrics" data-in>
+          <li><b data-count="30" data-prefix="~" data-suffix="%">0%</b><span>agent db growth</span></li>
+          <li><b data-count="3" data-prefix="2–">0</b><span>weeks, solo</span></li>
+          <li><b data-count="1">0</b><span>new user class</span></li>
+          <li><b data-count="0">0</b><span>seats it costs</span></li>
+        </ul>
+        <a class="pb-obs__link" href="case/property-intelligence.html?v=b" data-in><span>the full read on this one</span><em>↗</em></a>
+      </div>
+      </div></div>
+    </article>
+
+    <!-- ─── 06 · THE TELL ─── -->
+    <article class="pb-card pb-card--tell" data-rail="the tell">
+      <div class="pb-sheet"><div class="pb-sheet__body">
+      <div class="pb-tell">
+        <div class="pb-tell__lead">
+          <p class="pb-kicker" data-in>finding 02</p>
+          <h2 class="pb-h" data-in>the tell is what<br>he builds when<br>nobody is grading him.</h2>
+          <p class="pb-body" data-in>
+            the professional record is legible from the outside. this part is not, and it
+            is where the pattern stops being a work habit and starts being a personality.
+          </p>
+        </div>
+        <ol class="pb-exhibits" data-in>
+          <li>
+            <span class="pb-exhibits__i">a</span>
+            <p><b>eleven years of worldbuilding, mostly in private.</b> five universes,
+            thirty-plus books planned, eight drafted or outlined. the largest is an epic
+            fantasy multiverse: eleven worlds sharing one magical bloodstream, forty
+            books, seventeen thousand years of timeline, the cosmology written before
+            chapter one was. the number eleven turns up across the whole decade of it,
+            mostly unconsciously. he only found the pattern in hindsight, which is how
+            you know it is real and not a bit.</p>
+          </li>
+          <li>
+            <span class="pb-exhibits__i">b</span>
+            <p><b>a 2021 ninja 650</b> he will spend money on without negotiating with
+            himself, and an argument about what ethanol-blended fuel does to a bike that
+            sits idle, worked out from first principles rather than read somewhere. he
+            distrusts sources. he tests things.</p>
+          </li>
+          <li>
+            <span class="pb-exhibits__i">c</span>
+            <p><b>a figma plugin</b> that builds an entire customised saas design system
+            in under five minutes. foundations, type scale, tokens, variables,
+            components. he is shipping the thing his own job made him wish existed, which
+            is the shortest description of him on this page.</p>
+          </li>
+        </ol>
+      </div>
+      </div></div>
+    </article>
+
+    <!-- ─── 07 · VERDICT ─── -->
+    <article class="pb-card pb-card--end" data-rail="verdict">
+      <div class="pb-sheet"><div class="pb-sheet__body">
+      <div class="pb-end">
+        <p class="pb-kicker" data-in>verdict</p>
+        <h2 class="pb-end__head" data-in>
+          a design leader who can ship the front end, which is rare.
+          <span class="pb-mark">and who tells you what didn't work before you find it,</span>
+          which is rarer.
+        </h2>
+        <p class="pb-end__caveat" data-in>
+          one disclosure, since it matters. i am the ai he built the other side without.
+          read that one first. this is only the second opinion.
+        </p>
+        <div class="pb-end__contact" data-in>
+          <a class="pb-end__mail" href="mailto:ritikraj559@gmail.com">ritikraj559@gmail.com</a>
+          <div class="pb-end__links">
+            <a href="https://www.linkedin.com/in/ritik-raj/" target="_blank" rel="noopener">linkedin ↗</a>
+            <a href="https://ritikraj.in" target="_blank" rel="noopener">ritikraj.in ↗</a>
+            <a href="#" data-portfolio-switch="a">portfolio a ↗</a>
+          </div>
+        </div>
+        <p class="pb-end__foot" data-in>
+          <span>© 2026 ritik raj</span>
+          <span>assessment generated from a 4,000-word brief · not approved by the subject</span>
+        </p>
+      </div>
+      </div></div>
+    </article>
+
+  </div><!-- /.pb__strip -->
+
+  <nav class="pb__rail" id="pbRail" aria-label="sections"></nav>
+</main>
+
+
+<div class="curtain" id="curtain" aria-hidden="true"></div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/read.js"></script>
+</body>
+</html>

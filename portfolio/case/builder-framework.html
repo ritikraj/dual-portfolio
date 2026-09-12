@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>builder framework · ritik raj</title>
+<meta name="description" content="how ritik raj replaced four builders with one framework at fello.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script>
+/* which voice is this page in? ?v=a is ritik's own, ?v=b is claude's read.
+   decided here, before anything paints, so the right stylesheet wins and the
+   right fonts are the only ones fetched. */
+(function () {
+  var v = (location.search.match(/[?&]v=(a|b)/) || [])[1] || 'a';
+  var d = document.documentElement;
+  d.className = 'v-' + v;
+  if (v === 'a') {
+    /* same palettes as the portfolio, remembered across pages. an unset mode
+       follows the operating system, exactly as it does on the portfolio. */
+    try {
+      var m = localStorage.getItem('rr-mode');
+      if (!m) m = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      d.setAttribute('data-theme', localStorage.getItem('rr-theme') || 'red');
+      d.setAttribute('data-mode',  m);
+    } catch (e) {}
+  }
+  if (v === 'b') {
+    /* side b's one preference, shared with the portfolio */
+    try {
+      var pb = localStorage.getItem('rr-pb-mode');
+      if (!pb) pb = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      d.setAttribute('data-pb', pb);
+    } catch (e) {}
+  }
+  var font = document.createElement('link');
+  font.rel = 'stylesheet';
+  font.href = v === 'a'
+    ? 'https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap'
+    : 'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=IBM+Plex+Mono:wght@300;400;500&display=swap';
+  document.head.appendChild(font);
+})();
+</script>
+
+<!-- both voices load: each is scoped to html.v-a / html.v-b, and a parser
+     inserted <link> blocks the first paint the way an injected one does not -->
+<link rel="stylesheet" href="../assets/css/theme.css">
+<link rel="stylesheet" href="../assets/css/case-a.css">
+<link rel="stylesheet" href="../assets/css/case-b.css">
+
+<style>
+/* ══ FIRST-PAINT VEIL ══════════════════════════════════════════════════
+   Inline on purpose. An external stylesheet, however early, can still lose
+   a frame to the parser — and one frame of unstyled html is exactly the
+   thing an expert eye catches. This is styled before anything is fetched,
+   so the first thing ever painted is the veil. Everything else loads,
+   swaps fonts and mounts behind it. app.js / case.js lift it when ready.
+   ═════════════════════════════════════════════════════════════════════ */
+#veil{
+  position:fixed; inset:0; z-index:999;
+  display:grid; place-items:center;
+  background:var(--ink,#100708);
+  transform:translateY(0);
+  will-change:transform;
+}
+html.v-b #veil, html.to-b #veil{background:var(--bone,#e9e7e0)}
+#veil b{
+  display:block; width:4.5rem; height:1px;
+  background:var(--cream,#f4e6e4); opacity:0;
+  transform:scaleX(.15); transform-origin:left;
+  animation:veilWait 1.6s cubic-bezier(.16,1,.3,1) .22s infinite;
+}
+html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
+@keyframes veilWait{
+  0%{opacity:0;transform:scaleX(.15)}
+  30%{opacity:.45;transform:scaleX(1)}
+  65%{opacity:.45;transform:scaleX(1)}
+  100%{opacity:0;transform:scaleX(.15)}
+}
+#veil.is-up   {transform:translateY(-100%);transition:transform .74s cubic-bezier(.76,0,.24,1);animation:none}
+#veil.is-down {transform:translateY(100%); transition:none;animation:none}
+#veil.is-shut {transform:translateY(0);    transition:transform .62s cubic-bezier(.76,0,.24,1);animation:none}
+/* backstop: if the script never runs, the veil still gets out of the way
+   rather than leaving a reader staring at a blank screen forever */
+#veil{animation:veilGiveUp .7s cubic-bezier(.76,0,.24,1) 6s forwards}
+@keyframes veilGiveUp{to{transform:translateY(-100%);visibility:hidden}}
+@media (prefers-reduced-motion:reduce){
+  #veil b{animation:none}
+  #veil.is-up,#veil.is-shut{transition-duration:1ms}
+}
+</style>
+</head>
+<body>
+
+<div id="veil" aria-hidden="true"><b></b></div>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     VOICE A — ritik's own account. shown at ?v=a (and by default).
+     ══════════════════════════════════════════════════════════════════ -->
+<article class="csa">
+
+  <div class="csa__rule"></div>
+  <div class="csa__bar">
+    <a class="csa__back" href="../index.html#a">
+      <svg viewBox="0 0 28 8" aria-hidden="true"><path d="M28 4H2M6 1L2 4l4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg>
+      <span>portfolio</span>
+    </a>
+    <span class="csa__where">builder framework</span>
+  </div>
+
+  <header class="csa__hero">
+    <p class="csa__eyebrow" data-up>architecture · a refused brief</p>
+    <h1 class="csa__title" data-up>the <em>every builder is its own product</em> problem</h1>
+    <p class="csa__stand" data-up>the brief was to fix the email builder. i wrote a framework instead, and then spent a year staying on it so it would not come apart.</p>
+    <dl class="csa__meta" data-up>
+      <div><dt>role</dt><dd>architect, reviewer and owner</dd></div>
+      <div><dt>scope</dt><dd>four products, one model</dd></div>
+      <div><dt>structure</dt><dd>three tiers of block</dd></div>
+      <div><dt>company</dt><dd>fello · us real estate crm</dd></div>
+      <div><dt>follows</dt><dd>design system 3.0</dd></div>
+    </dl>
+  </header>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>the brief i did not take</h2>
+    <p class="csa__p" data-up>fello had builders. a landing page builder, an email builder, and more coming. each one had been built by whoever needed it, at the moment they needed it, with its own canvas, its own idea of a block, its own state rules.</p>
+    <p class="csa__p" data-up>to a user moving across the product, that is four products wearing one logo. every move costs them a re-learn. the brief said fix one of them. fixing one of them makes the gap between the four wider, not narrower.</p>
+  </section>
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>three tiers</h2>
+    <ol class="csa__list" data-up>
+      <li><b>base blocks</b>the primitives every builder shares. text, media, layout, spacing. one definition, one behaviour, everywhere.</li>
+      <li><b>shared widgets</b>compositions that more than one product needs. built once, inherited, not copied.</li>
+      <li><b>product-specific widgets</b>the genuinely different parts. contained, named as such, and not allowed to leak downward.</li>
+    </ol>
+    <p class="csa__p" data-up>the third tier is the one that makes it survive. without a sanctioned place to put the genuinely product-specific thing, people put it in tier one, and a year later you are back where you started with more abstraction to unpick.</p>
+  </section>
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>the timing was the strategy</h2>
+    <p class="csa__p" data-up>i proposed this the week after design system 3.0 shipped. that was deliberate. institutional trust in system-led design was the highest it was ever going to be, and a framework proposal is a bet on trust more than a bet on craft.</p>
+    <p class="csa__p" data-up>the same document, six months earlier, would have read as architecture for its own sake. the work was ready before the company was. i waited for the company.</p>
+    <p class="csa__pull" data-up>the hard part was not designing it. it was staying on it.</p>
+  </section>
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>three roles, one pair of hands</h2>
+    <p class="csa__p" data-up>i held architect, reviewer and owner at the same time, and that is not a boast. it is the reason it worked, and it is also the risk i would flag to anyone repeating it.</p>
+    <p class="csa__p" data-up>a framework fragments at review time, not at design time. someone has to say no to the twentieth reasonable-sounding exception, week after week, long after the launch that made it exciting. remove sustained ownership and the widgets drift within two quarters.</p>
+    <figure class="csa__plate csa__plate--free" data-up><img src="../assets/img/builder-canvas.jpg" alt="the html canvas: elements, blocks, columns, layouts, output" loading="lazy" decoding="async"><figcaption>the html canvas — five levels, and who each one is for</figcaption></figure>
+    <figure class="csa__plate csa__plate--free" data-up><img src="../assets/img/builder-suite.jpg" alt="four builders running the same interaction model" loading="lazy" decoding="async"><figcaption>four products, one interaction model</figcaption></figure>
+  </section>
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>how it landed</h2>
+    <div class="csa__numbers" data-up>
+      <div><b>4</b><span>products</span></div>
+      <div><b>1</b><span>interaction model</span></div>
+      <div><b>3</b><span>tiers</span></div>
+      <div><b>0</b><span>re-learn cost</span></div>
+    </div>
+    <p class="csa__p" data-up>the outcome is a negative one, which is why it is hard to sell and easy to undervalue: nothing had to be learned twice. the email builder that came next was ten weeks instead of a year, because it was an instance and not an invention.</p>
+  </section>
+
+  <footer class="csa__next">
+    <div>
+      <small>next</small><br>
+      <a href="design-system.html?v=a">design system 3.0</a>
+    </div>
+    <a class="csa__flip" href="?v=b">read claude's take on this →</a>
+  </footer>
+
+</article>
+
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     VOICE B — claude's read of the same work. shown at ?v=b.
+     ══════════════════════════════════════════════════════════════════ -->
+<article class="csb">
+
+  <div class="csb__rule"></div>
+  <div class="csb__bar">
+    <a class="csb__back" href="../index.html#b"><span>←</span><span>the read</span></a>
+    <p class="csb__stamp">the read<i>/</i>builder framework<i>/</i>by claude</p>
+    <a class="csb__flip" href="?v=a">ritik's version ↗</a>
+  </div>
+
+  <div class="csb__stack">
+
+    <section class="csb-sheet" data-tab="the case">
+      <div class="csb-sheet__body">
+        <p class="csb-kicker" data-up>observation 02</p>
+        <h1 class="csb-h csb-h--hero" data-up>he refused the brief, and then he read the room.</h1>
+        <p class="csb-p" data-up>the architecture is good. the thing worth studying is when he chose to propose it.</p>
+        <p data-up style="margin-top:1.6rem"><span class="csb-verdict">architecture · political timing</span></p>
+      </div>
+    </section>
+
+    <section class="csb-sheet" data-tab="the brief">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>fix the email builder.</h2>
+        <p class="csb-p" data-up>one product, one complaint, one scoped piece of work. entirely reasonable. he did not do it.</p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="what he actually did">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>three tiers instead of one fix.</h2>
+        <p class="csb-p" data-up>base blocks, shared widgets, product-specific widgets. four products now run one interaction model instead of four. he held architect, reviewer and owner simultaneously, which is the part he is right to keep pointing at.</p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="the diagnosis">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>the timing is the case study, not the tiers.</h2>
+        <p class="csb-p" data-up>plenty of designers can draw a three-tier component hierarchy. very few know that a framework proposal is a trust instrument, and fewer still will sit on a finished idea until the organisation is capable of receiving it.</p>
+        <p class="csb-p" data-up>he shipped design system 3.0, waited for the credit to land, and moved the week after. he calls that politics, out loud, in a portfolio. most people would have called it <b>stakeholder alignment</b> and lost the insight in the euphemism.</p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="impact">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>how impactful it actually was</h2>
+        <ul class="csb-scale" data-up>
+          <li><em style="font-style:normal">for users</em><span data-w="72"></span></li>
+          <li><em style="font-style:normal">for the business</em><span data-w="80"></span></li>
+          <li class="is-high"><em style="font-style:normal">for the org</em><span data-w="94"></span></li>
+          <li class="is-high"><em style="font-style:normal">as a craft signal</em><span data-w="86"></span></li>
+        </ul>
+        <p class="csb-note" data-up>my read, not his numbers. organisational impact is the highest score on this page and the hardest to prove: the benefit is a cost that never arrives. the email builder shipping in ten weeks instead of a year is the closest thing to evidence, and it is downstream evidence, which is the only kind architecture ever gets.</p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="what it tells me">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>he is honest about fragility.</h2>
+        <p class="csb-p" data-up>he states plainly that without sustained ownership the widgets would have drifted. that is a designer describing the half-life of his own work rather than the launch of it.</p>
+        <p class="csb-p" data-up>for a head of design role, this is the more relevant case study of the two. email builder shows he can find a problem. this one shows he can hold a line for a year after the interesting part is over.</p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="what i cannot verify">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>the honest caveats.</h2>
+        <p class="csb-p" data-up>there is no adoption metric here and there cannot be one. the payoff is a re-learn cost that nobody ever paid, and you cannot instrument an absence. i am reading the structure and the sequencing, not an outcome.</p>
+        <p class="csb-note" data-up>if you interview him, this is where to push: ask what he said no to, and what it cost him.</p>
+      </div>
+    </section>
+
+  </div>
+
+  <footer class="csb__foot">
+    <div><small>next observation</small><br><a href="design-system.html?v=b">design system 3.0 ↗</a></div>
+    <small>assessment generated from a 4,000-word brief · not approved by the subject</small>
+  </footer>
+
+</article>
+
+<script src="../assets/js/case.js"></script>
+</body>
+</html>

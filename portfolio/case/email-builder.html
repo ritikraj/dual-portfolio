@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>email builder · ritik raj</title>
+<meta name="description" content="how ritik raj solved the email customization problem at fello.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script>
+/* which voice is this page in? ?v=a is ritik's own, ?v=b is claude's read.
+   decided here, before anything paints, so the right stylesheet wins and the
+   right fonts are the only ones fetched. */
+(function () {
+  var v = (location.search.match(/[?&]v=(a|b)/) || [])[1] || 'a';
+  var d = document.documentElement;
+  d.className = 'v-' + v;
+  if (v === 'a') {
+    /* same palettes as the portfolio, remembered across pages. an unset mode
+       follows the operating system, exactly as it does on the portfolio. */
+    try {
+      var m = localStorage.getItem('rr-mode');
+      if (!m) m = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      d.setAttribute('data-theme', localStorage.getItem('rr-theme') || 'red');
+      d.setAttribute('data-mode',  m);
+    } catch (e) {}
+  }
+  if (v === 'b') {
+    /* side b's one preference, shared with the portfolio */
+    try {
+      var pb = localStorage.getItem('rr-pb-mode');
+      if (!pb) pb = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      d.setAttribute('data-pb', pb);
+    } catch (e) {}
+  }
+  var font = document.createElement('link');
+  font.rel = 'stylesheet';
+  font.href = v === 'a'
+    ? 'https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap'
+    : 'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=IBM+Plex+Mono:wght@300;400;500&display=swap';
+  document.head.appendChild(font);
+})();
+</script>
+
+<!-- both voices load: each is scoped to html.v-a / html.v-b, and a parser
+     inserted <link> blocks the first paint the way an injected one does not -->
+<link rel="stylesheet" href="../assets/css/theme.css">
+<link rel="stylesheet" href="../assets/css/case-a.css">
+<link rel="stylesheet" href="../assets/css/case-b.css">
+
+<style>
+/* ══ FIRST-PAINT VEIL ══════════════════════════════════════════════════
+   Inline on purpose. An external stylesheet, however early, can still lose
+   a frame to the parser — and one frame of unstyled html is exactly the
+   thing an expert eye catches. This is styled before anything is fetched,
+   so the first thing ever painted is the veil. Everything else loads,
+   swaps fonts and mounts behind it. app.js / case.js lift it when ready.
+   ═════════════════════════════════════════════════════════════════════ */
+#veil{
+  position:fixed; inset:0; z-index:999;
+  display:grid; place-items:center;
+  background:var(--ink,#100708);
+  transform:translateY(0);
+  will-change:transform;
+}
+html.v-b #veil, html.to-b #veil{background:var(--bone,#e9e7e0)}
+#veil b{
+  display:block; width:4.5rem; height:1px;
+  background:var(--cream,#f4e6e4); opacity:0;
+  transform:scaleX(.15); transform-origin:left;
+  animation:veilWait 1.6s cubic-bezier(.16,1,.3,1) .22s infinite;
+}
+html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
+@keyframes veilWait{
+  0%{opacity:0;transform:scaleX(.15)}
+  30%{opacity:.45;transform:scaleX(1)}
+  65%{opacity:.45;transform:scaleX(1)}
+  100%{opacity:0;transform:scaleX(.15)}
+}
+#veil.is-up   {transform:translateY(-100%);transition:transform .74s cubic-bezier(.76,0,.24,1);animation:none}
+#veil.is-down {transform:translateY(100%); transition:none;animation:none}
+#veil.is-shut {transform:translateY(0);    transition:transform .62s cubic-bezier(.76,0,.24,1);animation:none}
+/* backstop: if the script never runs, the veil still gets out of the way
+   rather than leaving a reader staring at a blank screen forever */
+#veil{animation:veilGiveUp .7s cubic-bezier(.76,0,.24,1) 6s forwards}
+@keyframes veilGiveUp{to{transform:translateY(-100%);visibility:hidden}}
+@media (prefers-reduced-motion:reduce){
+  #veil b{animation:none}
+  #veil.is-up,#veil.is-shut{transition-duration:1ms}
+}
+</style>
+</head>
+<body>
+
+<div id="veil" aria-hidden="true"><b></b></div>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     VOICE A — ritik's own account. shown at ?v=a (and by default).
+     ══════════════════════════════════════════════════════════════════ -->
+<article class="csa">
+
+  <div class="csa__rule"></div>
+  <div class="csa__bar">
+    <a class="csa__back" href="../index.html#a">
+      <svg viewBox="0 0 28 8" aria-hidden="true"><path d="M28 4H2M6 1L2 4l4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg>
+      <span>portfolio</span>
+    </a>
+    <span class="csa__where">email builder</span>
+  </div>
+
+  <header class="csa__hero">
+    <p class="csa__eyebrow" data-up>flagship · 0 → 1</p>
+    <h1 class="csa__title" data-up>the <em>email customization</em> problem</h1>
+    <p class="csa__stand" data-up>fello’s customers could send email. they could not make it look like theirs. i spent twelve months listening before i drew a single screen.</p>
+    <dl class="csa__meta" data-up>
+      <div><dt>role</dt><dd>staff product designer, 0→1 owner</dd></div>
+      <div><dt>research</dt><dd>530+ signals over 12 months</dd></div>
+      <div><dt>build</dt><dd>proposal to launch in 10 weeks</dd></div>
+      <div><dt>company</dt><dd>fello · us real estate crm</dd></div>
+      <div><dt>surface</dt><dd>web app</dd></div>
+    </dl>
+  </header>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>the problem</h2>
+    <p class="csa__p" data-up>fello sold marketing to real estate brokerages. the email going out of it carried fello’s shape, not the brokerage’s. every account said the same thing in a different accent: <b>this does not look like us</b>.</p>
+    <p class="csa__p" data-up>that reads like a template problem. buy more templates, ship more templates, move on. it was not a template problem, and the fastest way to prove that was to stop guessing and go count.</p>
+  </section>
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>how i found it</h2>
+    <p class="csa__p" data-up>i did not run a survey. the company was already drowning in evidence it had never read in one place: support tickets, sales call notes, churn interviews, product usage. over twelve months i pulled <b>530+ signals</b> out of those and sorted them until they stopped being complaints and started being structure.</p>
+    <p class="csa__p" data-up>four themes came out of it. only one of them was about templates. that is the whole case study in one sentence, and it took a year of listening to earn it.</p>
+    <!-- the four themes, in your own words. uncomment and fill.
+    <ol class="csa__list" data-up>
+      <li><b>theme one</b>one line on what it actually was.</li>
+      <li><b>theme two</b>one line on what it actually was.</li>
+      <li><b>theme three</b>one line on what it actually was.</li>
+      <li><b>theme four</b>one line on what it actually was.</li>
+    </ol> -->
+    <p class="csa__pull" data-up>the brief was a better email builder. the evidence said something else.</p>
+  </section>
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>what i built</h2>
+    <p class="csa__p" data-up>the builder came out of the <b>builder framework</b> rather than getting bolted on beside it. same canvas grammar, same slot model, same state rules as every other builder in the suite. what a user learned in one place still worked here.</p>
+    <p class="csa__p" data-up>that decision is why ten weeks was possible. i was not designing a product, i was instantiating one.</p>
+      <figure class="csa__plate csa__plate--free" data-up><img src="../assets/img/email-builder.jpg" alt="the fello email builder with the block library open" loading="lazy" decoding="async"><figcaption>the builder, mid-edit</figcaption></figure>
+      <figure class="csa__plate csa__plate--free" data-up><img src="../assets/img/builder-suite.jpg" alt="the same block language across four builders" loading="lazy" decoding="async"><figcaption>the same grammar, four products</figcaption></figure>
+    <figure class="csa__plate csa__plate--free" data-up><img src="../assets/img/builder-montage.jpg" alt="templates and states across the builder" loading="lazy" decoding="async"><figcaption>states, templates, and the send</figcaption></figure>
+  </section>
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>how it landed</h2>
+    <div class="csa__numbers" data-up>
+      <div><b>75.2%</b><span>adoption</span></div>
+      <div><b>~3,000</b><span>accounts</span></div>
+      <div><b>6,200+</b><span>emails in beta</span></div>
+      <div><b>5.4%</b><span>churn-save</span></div>
+      <div><b>$2M+</b><span>attributable arr</span></div>
+    </div>
+    <p class="csa__p" data-up>i tracked it at step level in mixpanel rather than at the top line. step retention held between <b>79% and 85%</b> through the flow, with one visible cliff. completion came in at <b>29%</b> for automated sends and <b>19%</b> for one-time sends.</p>
+    <p class="csa__p" data-up>beta numbers are labelled beta numbers here, because that is what they are.</p>
+  </section>
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>what did not work</h2>
+    <p class="csa__p" data-up>the gap between 85% step retention and 29% completion is the interesting part, and the aggregate number hides the fact that it is two different failures wearing the same face.</p>
+    <p class="csa__p" data-up><b>one is a ux failure inside the builder.</b> a person opened it, started, and could not finish. that is mine, and design fixes it.</p>
+    <p class="csa__p" data-up><b>one is an activation failure outside it.</b> a person never had a reason to be in there in the first place. that is not a builder problem and no amount of interface work moves it. it is lifecycle, onboarding and sales motion.</p>
+    <p class="csa__p" data-up>they look identical in a funnel chart. they need opposite fixes. separating them is the most useful thing i did after launch.</p>
+  </section>
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>what is left</h2>
+    <p class="csa__p" data-up>the activation half is still open. the builder half has a known cliff with a queue of work behind it. neither of those is a reason to round the story up.</p>
+    <p class="csa__pull" data-up>the best design work is not finished. it is honest about what is left.</p>
+  </section>
+
+  <footer class="csa__next">
+    <div>
+      <small>next</small><br>
+      <a href="builder-framework.html?v=a">builder framework</a>
+    </div>
+    <a class="csa__flip" href="?v=b">read claude's take on this →</a>
+  </footer>
+
+</article>
+
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     VOICE B — claude's read of the same work. shown at ?v=b.
+     ══════════════════════════════════════════════════════════════════ -->
+<article class="csb">
+
+  <div class="csb__rule"></div>
+  <div class="csb__bar">
+    <a class="csb__back" href="../index.html#b"><span>←</span><span>the read</span></a>
+    <p class="csb__stamp">the read<i>/</i>email builder<i>/</i>by claude</p>
+    <a class="csb__flip" href="?v=a">ritik's version ↗</a>
+  </div>
+
+  <div class="csb__stack">
+
+    <section class="csb-sheet" data-tab="the case">
+      <div class="csb-sheet__body">
+        <p class="csb-kicker" data-up>observation 01</p>
+        <h1 class="csb-h csb-h--hero" data-up>a designer who published the number that does not flatter him.</h1>
+        <p class="csb-p" data-up>adoption at 75.2% is the headline. the failure analysis printed underneath it is the reason this case study is the strongest thing in his file.</p>
+        <p data-up style="margin-top:1.6rem"><span class="csb-verdict">0 → 1 · research-led</span></p>
+      </div>
+    </section>
+
+    <section class="csb-sheet" data-tab="the brief">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>build a better email builder.</h2>
+        <p class="csb-p" data-up>that is the whole brief. a feature request, arriving the way feature requests arrive: as a solution with the problem already assumed.</p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="what he actually did">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>he spent a year counting before he drew anything.</h2>
+        <p class="csb-p" data-up>530+ signals out of support, sales and product usage, gathered over twelve months and compressed into four structural themes. then proposal to launch in ten weeks, on top of the builder framework he had already argued into existence.</p>
+        <p class="csb-p" data-up>the speed at the end is entirely bought by the patience at the front. people read the ten weeks and miss the twelve months.</p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="the diagnosis">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>only one of the four themes was about templates.</h2>
+        <p class="csb-p" data-up>the presenting complaint was cosmetic. the structural finding was not. this is the move that repeats across every project in his file: <b>take the brief one level down and the real problem turns out to live somewhere the brief never looked.</b></p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="impact">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>how impactful it actually was</h2>
+        <ul class="csb-scale" data-up>
+          <li><em style="font-style:normal">for users</em><span data-w="78"></span></li>
+          <li class="is-high"><em style="font-style:normal">for the business</em><span data-w="90"></span></li>
+          <li><em style="font-style:normal">for the org</em><span data-w="70"></span></li>
+          <li class="is-high"><em style="font-style:normal">as a craft signal</em><span data-w="92"></span></li>
+        </ul>
+        <p class="csb-note" data-up>my read, not his numbers. the business case is the easiest to defend: adoption at that scale plus a churn-save is a retention story, not a feature story. the craft signal scores highest because of what he did after launch, not during it.</p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="what it tells me">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>he separates two failures that look identical.</h2>
+        <p class="csb-p" data-up>a ux failure inside the builder and an activation failure outside it produce the same shape in a funnel and need opposite fixes. most designers stop at the aggregate number, because the aggregate number was good.</p>
+        <p class="csb-p" data-up>he published the split. on his own case study. unprompted. that is a person who wants to be correct more than he wants to look correct, which is the rarest thing you can hire for and the hardest to test in an interview.</p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="what i cannot verify">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>the honest caveats.</h2>
+        <p class="csb-p" data-up>beta numbers are labelled beta by him, which is already more discipline than most. attributable arr is a modelled figure in every company that reports one, including this one. i have not seen the mixpanel board and i am taking the funnel on trust.</p>
+        <p class="csb-note" data-up>none of that changes the read. the reasoning is legible even where the numbers are not auditable, and the reasoning is what you are hiring.</p>
+      </div>
+    </section>
+
+  </div>
+
+  <footer class="csb__foot">
+    <div><small>next observation</small><br><a href="builder-framework.html?v=b">builder framework ↗</a></div>
+    <small>assessment generated from a 4,000-word brief · not approved by the subject</small>
+  </footer>
+
+</article>
+
+<script src="../assets/js/case.js"></script>
+</body>
+</html>
