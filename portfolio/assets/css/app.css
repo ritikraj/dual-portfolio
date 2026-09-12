@@ -385,15 +385,23 @@ em{font-style:italic}
   transition:opacity 420ms var(--ease-lux), transform 480ms var(--ease-lux), fill 420ms;
 }
 .thread__stop:hover .thread__pip{opacity:.75;transform:scale(1.5)}
-.thread__stop.is-on .thread__pip{fill:var(--gold);opacity:1;transform:scale(1.35)}
+
+/* the label and the scrim it needs to sit on */
+.thread__tip{
+  opacity:0; pointer-events:none;
+  transition:opacity 340ms ease;
+}
+.thread__stop:hover .thread__tip{opacity:1}
+.thread__chip{
+  fill:var(--ink); fill-opacity:.93;
+  stroke:var(--cream-faint); stroke-width:1;
+}
 .thread__label{
-  fill:var(--cream); opacity:0;
+  fill:var(--cream); fill-opacity:.62;
   font-family:var(--font-body); font-size:9px; letter-spacing:.22em;
   text-transform:uppercase;
-  transition:opacity 360ms ease;
-  pointer-events:none;
 }
-.thread__stop:hover .thread__label{opacity:.55}
+.thread__stop.is-on .thread__pip{fill:var(--gold);opacity:1;transform:scale(1.35)}
 
 /* ── 05 · CASE-STUDY TIMELINE ───────────────────────────────────────────── */
 .timeline{
@@ -890,7 +898,7 @@ em{font-style:italic}
   .panel{padding:5.5rem 1.5rem 5.5rem 3.1rem}
   .panel__ghost{font-size:26vh;right:-.5rem}
   .thread{opacity:.55}
-  .thread__label{display:none}
+  .thread__tip{display:none}
   .stage.is-live .thread{opacity:.75}
   .lede{font-size:.92rem;line-height:1.75}
   .aside__line{margin-top:1.1rem;font-size:.86rem;line-height:1.7}

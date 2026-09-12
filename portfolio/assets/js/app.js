@@ -78,6 +78,10 @@
       this.$stops.on('click', '.thread__stop', function () {
         Stage.goTo(parseInt(this.getAttribute('data-go'), 10));
       });
+      // the first measurement happens before the webfont lands, so take it again
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(function () { self.fit(); });
+      }
       this.draw();
       this.set(0, true);
     },
@@ -99,7 +103,7 @@
        to rest on it. the visible pip is 2.2px; the circle that catches the
        click is 11px, which is the whole point. */
     stops: function (labels) {
-      if (!labels || !this.len) return;
+      if (!labels || !labels.length || !this.len) return;
       this.labels = labels;
 
       var n = labels.length, html = '', i, pt, p;
@@ -110,11 +114,31 @@
                   'transform="translate(' + pt.x.toFixed(1) + ',' + pt.y.toFixed(1) + ')">' +
                   '<circle class="thread__hit" r="11"/>' +
                   '<circle class="thread__pip" r="2.2"/>' +
-                  '<text class="thread__label" x="17" y="3.5">' + (labels[i] || '') + '</text>' +
+                  '<g class="thread__tip">' +
+                    '<rect class="thread__chip" rx="3"/>' +
+                    '<text class="thread__label" x="18" y="3.4">' + (labels[i] || '') + '</text>' +
+                  '</g>' +
                 '</g>';
       }
       this.$stops.html(html);
+      this.fit();
       this.mark(this.at);
+    },
+
+    /* the label sits over whatever section is behind it, so it needs a scrim.
+       sizing it by hand would break the moment a section is renamed, so the
+       rect is measured off the text it has to cover. */
+    fit: function () {
+      this.$stops.children().each(function () {
+        var t = this.querySelector('.thread__label'),
+            r = this.querySelector('.thread__chip');
+        if (!t || !r) return;
+        var b = t.getBBox();
+        r.setAttribute('x',      (b.x - 9).toFixed(1));
+        r.setAttribute('y',      (b.y - 6).toFixed(1));
+        r.setAttribute('width',  (b.width + 18).toFixed(1));
+        r.setAttribute('height', (b.height + 12).toFixed(1));
+      });
     },
 
     mark: function (i) {

@@ -99,8 +99,10 @@ them; change the token and the Google Fonts `<link>` in `index.html`.
 
 **The thread's beads** are one stop per section, sitting exactly where the
 progress bead comes to rest. The visible pip is 2.2px; the circle that catches
-the click is 11px, which is the whole point. Labels appear on hover (desktop
-only). Built by `Thread.stops()` from the section labels, rebuilt whenever the
+the click is 11px, which is the whole point. The label on hover sits on a scrim that is **measured off the text** with
+`getBBox()` rather than sized by hand, so renaming a section can never leave it
+half-covered; it is re-measured once `document.fonts.ready` resolves, since the
+first pass runs before the webfont lands. Desktop only. Built by `Thread.stops()` from the section labels, rebuilt whenever the
 running order changes — including when the plugin section unlocks — so there is
 nothing to keep in sync. The SVG is twice `--thread-x` wide so a hit area has
 room on both sides of the line without spilling out of it.
