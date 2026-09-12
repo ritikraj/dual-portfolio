@@ -110,6 +110,10 @@ room on both sides of the line without spilling out of it.
 **Layout** `--thread-x` moves the thread and the timeline dots together.
 `--gutter` is the page margin.
 
+There are five case studies and they must stay matched across both sides.
+`case/<slug>.html` files chain to each other through their "next" links, so
+inserting one means retargeting the two links on either side of it.
+
 **Adding a case study** — copy a `<section class="panel panel--case">`, bump
 `data-case` and `data-label`. The dots, counter, thread progress and section
 count all read the DOM at boot. Nothing to register.

@@ -289,6 +289,7 @@
       // someone who pops six is paying attention. say so.
       // the tally is plain memory: a reload is a clean slate.
       this.pops = (this.pops || 0) + 1;
+      $('#popCount').text(this.pops);          // the real number, not the threshold
       if (this.pops === CONFIG.popsToOpen) Stage.unlock(true);
     },
 
@@ -375,7 +376,6 @@
       var $new = this.$track.children('.panel--aside');
       if (!$new.length || !$new.prop('hidden')) return;
 
-      $('#popCount').text(Bubbles.pops || CONFIG.popsToOpen);
       $new.prop('hidden', false);
       this.read();
       this.layout();
@@ -723,6 +723,7 @@
       });
 
       $('#backToHero').on('click', function () { Hero.back(); });
+      $('#heroSkip').on('click', function () { self.enter('a'); });
 
       // esc is the way out of either portfolio, always
       $(document).on('keydown', function (e) {

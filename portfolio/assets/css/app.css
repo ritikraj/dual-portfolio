@@ -154,6 +154,20 @@ em{font-style:italic}
 /* same top and same height as .theme, so the two sit on one line */
 .hero__mark{top:1.55rem}
 .hero__hint{bottom:.85rem;height:auto;opacity:.6}
+
+/* a way past the door for anyone who has forty seconds and wants the work.
+   quiet, tertiary, and off to one side: the door is still the front door. */
+.hero__skip{
+  position:absolute; z-index:7; right:max(7vw,2rem); bottom:2.4rem;
+  padding:.6rem .9rem;
+  border:1px solid transparent;
+  font-size:.58rem; letter-spacing:.26em; text-transform:uppercase;
+  color:var(--hero-fg-light); opacity:.4;
+  transition:opacity 400ms ease, border-color 400ms ease;
+}
+.hero__skip:hover{opacity:.9;border-color:var(--hero-accent-light)}
+.hero.is-hovering .hero__skip,
+.hero.is-leaving .hero__skip{opacity:0;pointer-events:none}
 .hero.is-hovering .hero__hint{opacity:0}
 
 /* — the grand exit — */
@@ -888,6 +902,7 @@ em{font-style:italic}
   .hero.pick-b .saber{left:50%;top:0}
   .saber__blade{height:44vw}
   .saber__hilt{height:72px}
+  .hero__skip{right:auto;left:50%;transform:translateX(-50%);bottom:3.4rem;font-size:.54rem}
   .hero__seam{
     top:50%; left:0; right:0; bottom:auto;
     width:auto; height:1px; margin:-.5px 0 0;
