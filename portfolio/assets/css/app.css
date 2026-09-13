@@ -154,6 +154,22 @@ em{font-style:italic}
   border-color:color-mix(in srgb, var(--hero-accent-light) 55%, transparent);
 }
 .hero__panel.is-hot .hero__cta{opacity:1;transform:none}
+
+/* the fill: sweeps in from the left when the button itself is hovered, the
+   same move as .case__link. the panel reveals the outline; the button fills. */
+.hero__cta{position:relative;overflow:hidden}
+.hero__cta > *{position:relative;z-index:1}
+.hero__cta::before{
+  content:""; position:absolute; inset:0;
+  transform:scaleX(0); transform-origin:left;
+  transition:transform 560ms var(--ease-lux);
+}
+.hero__panel.is-ink   .hero__cta::before{background:var(--hero-accent)}
+.hero__panel.is-paper .hero__cta::before{background:var(--hero-accent-light)}
+.hero__cta:hover::before{transform:scaleX(1)}
+.hero__cta{transition:opacity 700ms var(--ease-lux), transform 700ms var(--ease-lux), color 420ms var(--ease-lux), border-color 420ms var(--ease-lux)}
+.hero__panel.is-ink   .hero__cta:hover{color:var(--hero-dark);  border-color:var(--hero-accent)}
+.hero__panel.is-paper .hero__cta:hover{color:var(--hero-light); border-color:var(--hero-accent-light)}
 .hero__cta-arrow{width:28px;height:8px;overflow:visible;transition:transform 600ms var(--ease-lux)}
 .hero__panel.is-hot .hero__cta-arrow{transform:translateX(6px)}
 
