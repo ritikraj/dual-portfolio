@@ -1,0 +1,192 @@
+/* ==========================================================================
+   THE PLUGIN · a marketing page inside portfolio a
+   Chrome, type, reveal and colour tokens come from case-a.css and theme.css,
+   exactly like journey.html. The only difference is the palette: this page
+   sets data-theme="red" in its head, because it is a product, not a chapter.
+   namespace: .pl-*
+   ========================================================================== */
+
+/* ── bar: the light/dark switch sits beside the page name ────────────── */
+.pl-bar__right{display:inline-flex;align-items:center;gap:1rem}
+.pl-bar__right .theme__mode{color:var(--cream)}
+
+/* ── screens: the plugin is a white window, so it gets a frame ───────── */
+.pl-shot{
+  display:block; width:100%; height:auto;
+  border-radius:10px;
+  border:1px solid var(--cream-faint);
+  box-shadow:0 30px 60px -30px rgba(0,0,0,.55), 0 0 0 6px var(--gold-glow);
+  background:#fff;
+}
+
+/* ── hero ────────────────────────────────────────────────────────────── */
+.pl-hero{
+  display:grid; grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);
+  gap:4rem; align-items:center;
+  padding:9rem var(--pad) 0; max-width:82rem;
+}
+.pl-hero__title{max-width:14ch}
+.pl-hero__cta{margin-top:.6rem;display:flex;flex-wrap:wrap;align-items:center;gap:1.6rem}
+.pl-quiet{
+  margin-top:1.4rem;
+  font-size:.6rem;letter-spacing:.26em;text-transform:uppercase;
+  color:var(--cream-dim);border-bottom:1px solid var(--cream-faint);padding-bottom:.35rem;
+  transition:color .3s ease,border-color .3s ease;
+}
+.pl-quiet:hover{color:var(--gold);border-color:var(--gold-half)}
+
+.pl-hero__stack{position:relative;aspect-ratio:1/1.05;max-width:30rem;justify-self:end;width:100%}
+.pl-hero__stack .pl-shot{position:absolute;width:62%}
+.pl-shot--back {top:0;   left:0;  transform:rotate(-4deg);opacity:.9}
+.pl-shot--front{bottom:0;right:0; transform:rotate(3deg)}
+.pl-hero__stack.is-in .pl-shot--back {animation:plDrift 9s ease-in-out infinite alternate}
+.pl-hero__stack.is-in .pl-shot--front{animation:plDrift 11s ease-in-out -4s infinite alternate-reverse}
+@keyframes plDrift{
+  from{translate:0 0}
+  to  {translate:0 -12px}
+}
+
+/* ── numbers ─────────────────────────────────────────────────────────── */
+.pl-numbers{grid-template-columns:repeat(4,minmax(0,1fr))}
+.pl-fine{
+  margin-top:1rem;max-width:44rem;
+  font-size:.74rem;line-height:1.7;color:var(--cream-dim);opacity:.75;
+}
+
+/* ── how it works: copy beside the screen, alternating ───────────────── */
+.pl-step{
+  display:grid; grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);
+  gap:4rem; align-items:center;
+  padding:3.4rem 0;
+  border-bottom:1px solid var(--cream-faint);
+}
+.pl-step:last-child{border-bottom:0}
+.pl-step:nth-of-type(even) .pl-step__copy{order:2}
+.pl-step .pl-shot{max-width:22rem;justify-self:center}
+.pl-step__n{
+  display:block;margin-bottom:.9rem;
+  font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);
+}
+.pl-step__h{
+  margin:0 0 1.1rem;
+  font-family:var(--font-display);font-weight:400;
+  font-size:clamp(1.35rem,2.1vw,1.8rem);line-height:1.25;letter-spacing:-.01em;
+}
+
+/* step 04 has no screen worth showing, so it shows the collections instead */
+.pl-tokens{
+  margin:0;padding:0;list-style:none;
+  display:grid;gap:1px;background:var(--cream-faint);border:1px solid var(--cream-faint);
+}
+.pl-tokens li{
+  display:grid;grid-template-columns:4.2rem 1fr;align-items:baseline;column-gap:1rem;
+  padding:.85rem 1.1rem;background:var(--ink);
+}
+.pl-tokens b{grid-row:span 2;font-family:var(--font-display);font-weight:400;font-size:1.6rem;line-height:1;color:var(--gold)}
+.pl-tokens span{font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--cream)}
+.pl-tokens i{font-style:normal;font-size:.8rem;color:var(--cream-dim);margin-top:.2rem}
+
+/* ── what makes it different ─────────────────────────────────────────── */
+.pl-cards{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:1px;background:var(--cream-faint);border:1px solid var(--cream-faint);
+}
+.pl-card{background:var(--ink);padding:1.8rem 1.6rem 2rem;transition:background .5s var(--ease)}
+.pl-card:hover{background:linear-gradient(160deg,var(--gold-glow),var(--ink) 70%)}
+.pl-card h3{
+  margin:0 0 .8rem;
+  font-family:var(--font-display);font-weight:400;font-size:1.25rem;line-height:1.3;
+}
+.pl-card p{font-size:.88rem;line-height:1.75;color:var(--cream-dim)}
+
+/* ── the library ─────────────────────────────────────────────────────── */
+.pl-lib{margin:0;border-top:1px solid var(--cream-faint)}
+.pl-lib > div{
+  display:grid;grid-template-columns:11rem 1fr;gap:1.5rem;
+  padding:1rem 0;border-bottom:1px solid var(--cream-faint);
+}
+.pl-lib dt{font-size:.6rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);padding-top:.2rem}
+.pl-lib dd{margin:0;font-size:.95rem;line-height:1.7;color:var(--cream)}
+.pl-lib .is-next dt{color:var(--cream-dim)}
+.pl-lib .is-next dd{color:var(--cream-dim);border-left:1px dashed var(--cream-faint);padding-left:1rem}
+
+/* ── charts ──────────────────────────────────────────────────────────── */
+.pl-charts{display:grid;grid-template-columns:auto 1fr;gap:4rem;align-items:start}
+.pl-charts__big{position:sticky;top:7rem}
+.pl-charts__big b{
+  display:block;font-family:var(--font-display);font-weight:400;
+  font-size:clamp(4rem,9vw,7.5rem);line-height:.9;color:var(--gold);letter-spacing:-.03em;
+}
+.pl-charts__big span{display:block;margin-top:.8rem;font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--cream-dim)}
+
+/* ── before and after ────────────────────────────────────────────────── */
+.pl-ba{border-top:1px solid var(--cream-faint)}
+.pl-ba__row{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--cream-faint)}
+.pl-ba__row p{padding:1.3rem 1.6rem 1.4rem 0;font-size:.95rem;line-height:1.7;color:var(--cream-dim)}
+.pl-ba__row p + p{padding-left:1.6rem;border-left:1px solid var(--cream-faint);color:var(--cream)}
+.pl-ba small{display:block;margin-bottom:.4rem;font-size:.56rem;letter-spacing:.28em;text-transform:uppercase;opacity:.6}
+.pl-ba__row p + p small{color:var(--gold);opacity:1}
+.pl-who{margin-top:3rem}
+
+/* ── questions ───────────────────────────────────────────────────────── */
+.pl-faq{border-top:1px solid var(--cream-faint);max-width:52rem}
+.pl-faq details{border-bottom:1px solid var(--cream-faint)}
+.pl-faq summary{
+  list-style:none;cursor:pointer;
+  display:flex;justify-content:space-between;align-items:center;gap:1rem;
+  padding:1.2rem 0;
+  font-family:var(--font-display);font-size:1.2rem;color:var(--cream);
+}
+.pl-faq summary::-webkit-details-marker{display:none}
+.pl-faq summary::after{
+  content:"+";font-family:var(--font-body);font-weight:300;font-size:1.2rem;color:var(--gold);
+  transition:transform .45s var(--ease);
+}
+.pl-faq details[open] summary::after{transform:rotate(45deg)}
+.pl-faq details p{padding:0 0 1.4rem;max-width:var(--measure);font-size:.95rem;line-height:1.8;color:var(--cream-dim)}
+
+/* ── the screens strip ───────────────────────────────────────────────── */
+.pl-screens{max-width:none;padding-right:0}
+.pl-screens .csa__h{max-width:calc(72rem - var(--pad) * 2);margin-right:var(--pad)}
+.pl-strip{
+  display:flex;gap:1.6rem;overflow-x:auto;
+  padding:1rem var(--pad) 1.6rem 0;
+  scroll-snap-type:x mandatory;scrollbar-width:thin;
+  scrollbar-color:var(--gold-half) transparent;
+}
+.pl-strip:focus-visible{outline:1px solid var(--gold-half);outline-offset:4px}
+.pl-strip figure{flex:0 0 auto;width:clamp(14rem,22vw,19rem);scroll-snap-align:start}
+.pl-strip img{
+  display:block;width:100%;aspect-ratio:480/700;object-fit:cover;object-position:top;
+  border-radius:10px;border:1px solid var(--cream-faint);background:#fff;
+  transition:transform .6s var(--ease);
+}
+.pl-strip figure:hover img{transform:translateY(-6px)}
+.pl-strip figcaption{margin-top:.8rem;font-size:.58rem;letter-spacing:.26em;text-transform:uppercase;color:var(--cream-dim)}
+.pl-close{padding:0 var(--pad) 0 0;margin-top:3.4rem}
+
+/* ── tablet and phone ────────────────────────────────────────────────── */
+@media (max-width:960px){
+  .pl-hero{grid-template-columns:1fr;gap:3rem}
+  .pl-hero__stack{justify-self:start;max-width:24rem}
+  .pl-cards{grid-template-columns:1fr 1fr}
+  .pl-charts{grid-template-columns:1fr;gap:1.6rem}
+  .pl-charts__big{position:static}
+}
+@media (max-width:720px){
+  .pl-hero{padding-top:7rem}
+  .pl-hero__stack{max-width:19rem}
+  .pl-numbers{grid-template-columns:1fr 1fr}
+  .pl-step{grid-template-columns:1fr;gap:2rem;padding:2.6rem 0}
+  .pl-step:nth-of-type(even) .pl-step__copy{order:0}
+  .pl-step .pl-shot{max-width:17rem;justify-self:start}
+  .pl-cards{grid-template-columns:1fr}
+  .pl-lib > div{grid-template-columns:1fr;gap:.35rem}
+  .pl-ba__row{grid-template-columns:1fr}
+  .pl-ba__row p{padding-right:0}
+  .pl-ba__row p + p{padding:0 0 1.3rem;border-left:0}
+  .pl-strip figure{width:13rem}
+}
+@media (prefers-reduced-motion:reduce){
+  .pl-hero__stack .pl-shot{animation:none !important}
+}

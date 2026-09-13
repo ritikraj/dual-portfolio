@@ -719,7 +719,7 @@
 
       // anything with data-portfolio-switch jumps worlds
       // every link into a case study wipes out instead of cutting
-      $(document).on('click', 'a[href^="case/"], a[href^="journey.html"]', function (e) {
+      $(document).on('click', 'a[href^="case/"], a[href^="journey.html"], a[href^="plugin.html"]', function (e) {
         e.preventDefault();
         var href = $(this).attr('href');
         Hero.wipeTo(href, href.indexOf('v=b') > -1);
@@ -784,7 +784,15 @@
       setTimeout(function () {
         self.$el.addClass('is-gone').css('pointer-events', 'none');
         $body.removeClass('is-hero').addClass('is-' + which);
-        if (which === 'a') { Stage.start(slug ? Stage.indexOfSlug(slug) : 0); }
+        if (which === 'a') {
+          // back from the plugin page: the section was earned before the page
+          // change, so reopen it quietly. the count reset with the reload.
+          if (slug === 'plugin') {
+            Stage.unlock(false);
+            $('.panel--aside .aside__tag').text('you burst them earlier. i was still counting.');
+          }
+          Stage.start(slug ? Stage.indexOfSlug(slug) : 0);
+        }
         else if (window.TheRead) { window.TheRead.start(slug ? window.TheRead.indexOfSlug(slug) : 0); }
 
         if (instant) {

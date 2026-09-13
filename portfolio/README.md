@@ -303,6 +303,19 @@ where there is no empty half left. Glass colours are `--glass-*` in `theme.css`
 — one pair, flipped by mode, deliberately outside the palettes so the bubbles
 borrow whatever is behind them.
 
+## the plugin page
+
+`plugin.html` is where "see the plugin" in the unlockable bubbles section goes.
+It is Portfolio A's reading chrome (`case-a.css`) plus `plugin.css` (`.pl-*`),
+and it is the one A page that is **red**: its head sets `data-theme="red"`.
+It carries its own light/dark button in the top bar, sharing `rr-mode`.
+
+Every number on it comes from the plugin's product brief. The brief rules out
+build-time claims, code export, "ai" and accessibility claims; keep it that way.
+Screens are 2x PNG exports from the Figma file, in `assets/img/plugin/`; the
+link at the bottom opens that file. Coming back (`index.html#a:plugin`) reopens
+the bubbles section quietly, since the pop count resets with the page change.
+
 ## want to know more, and the journey
 
 The section before the footer, always. Four cards: **journey** (internal, the

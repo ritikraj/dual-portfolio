@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en" class="v-a" data-home="index.html#a:plugin">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>the design system plugin · ritik raj</title>
+<meta name="description" content="a figma plugin by ritik raj that builds a connected, themed, documented design system from a handful of choices about your brand.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script>
+/* the one page in portfolio a that is not green. it is a product, not a
+   chapter of the portfolio, so it wears the plugin's own red. mode is shared. */
+try {
+  var d = document.documentElement;
+  var m = localStorage.getItem('rr-mode');
+  if (!m) m = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  d.setAttribute('data-theme', 'red');
+  d.setAttribute('data-mode',  m);
+} catch (e) {}
+</script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="assets/css/theme.css">
+<link rel="stylesheet" href="assets/css/case-a.css">
+<link rel="stylesheet" href="assets/css/plugin.css">
+
+<style>
+/* ══ FIRST-PAINT VEIL ══════════════════════════════════════════════════
+   Inline on purpose. An external stylesheet, however early, can still lose
+   a frame to the parser — and one frame of unstyled html is exactly the
+   thing an expert eye catches. This is styled before anything is fetched,
+   so the first thing ever painted is the veil. Everything else loads,
+   swaps fonts and mounts behind it. app.js / case.js lift it when ready.
+   ═════════════════════════════════════════════════════════════════════ */
+#veil{
+  position:fixed; inset:0; z-index:999;
+  display:grid; place-items:center;
+  background:var(--ink,#100708);
+  transform:translateY(0);
+  will-change:transform;
+}
+html.v-b #veil, html.to-b #veil{background:var(--bone,#e9e7e0)}
+#veil b{
+  display:block; width:4.5rem; height:1px;
+  background:var(--cream,#f4e6e4); opacity:0;
+  transform:scaleX(.15); transform-origin:left;
+  animation:veilWait 1.6s cubic-bezier(.16,1,.3,1) .22s infinite;
+}
+html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
+@keyframes veilWait{
+  0%{opacity:0;transform:scaleX(.15)}
+  30%{opacity:.45;transform:scaleX(1)}
+  65%{opacity:.45;transform:scaleX(1)}
+  100%{opacity:0;transform:scaleX(.15)}
+}
+#veil.is-up   {transform:translateY(-100%);transition:transform .74s cubic-bezier(.76,0,.24,1);animation:none}
+#veil.is-down {transform:translateY(100%); transition:none;animation:none}
+#veil.is-shut {transform:translateY(0);    transition:transform .62s cubic-bezier(.76,0,.24,1);animation:none}
+/* backstop: if the script never runs, the veil still gets out of the way
+   rather than leaving a reader staring at a blank screen forever */
+#veil{animation:veilGiveUp .7s cubic-bezier(.76,0,.24,1) 6s forwards}
+@keyframes veilGiveUp{to{transform:translateY(-100%);visibility:hidden}}
+@media (prefers-reduced-motion:reduce){
+  #veil b{animation:none}
+  #veil.is-up,#veil.is-shut{transition-duration:1ms}
+}
+</style>
+</head>
+<body>
+
+<div id="veil" aria-hidden="true"><b></b></div>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     THE PLUGIN. reached from the section that only opens after six bubbles.
+     every number on this page comes from the product brief, measured from one
+     complete build. do not add speeds, code export, ai or accessibility claims:
+     the brief rules all four out. screens live in assets/img/plugin/.
+     ══════════════════════════════════════════════════════════════════ -->
+<article class="csa pl">
+
+  <div class="csa__rule"></div>
+  <div class="csa__bar">
+    <a class="csa__back" href="index.html#a:plugin">
+      <svg viewBox="0 0 28 8" aria-hidden="true"><path d="M28 4H2M6 1L2 4l4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg>
+      <span>portfolio</span>
+    </a>
+    <span class="pl-bar__right">
+      <span class="csa__where">the plugin</span>
+      <button class="theme__mode" id="plMode" type="button" aria-label="light or dark">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.4"/><path d="M8 2.6a5.4 5.4 0 0 0 0 10.8z" fill="currentColor" stroke="none"/></svg>
+      </button>
+    </span>
+  </div>
+
+  <!-- ── 01 · hero ───────────────────────────────────────────────────── -->
+  <header class="pl-hero">
+    <div class="pl-hero__copy">
+      <p class="csa__eyebrow" data-up>for designers · a figma plugin</p>
+      <h1 class="csa__title pl-hero__title" data-up>from one hex code to a <em>complete design system</em>.</h1>
+      <p class="csa__stand" data-up>
+        i have built more than ten design systems by hand, and most of those
+        weeks went into work that was necessary and not creative. so i built a
+        plugin that does that part the way i would: tokens, themes, styles,
+        documentation and 2,991 connected component variants, from a handful of
+        choices about your brand.
+      </p>
+      <div class="pl-hero__cta" data-up>
+        <a class="csa__flip csa__flip--take" href="#screens"><span>see the screens</span><svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg></a>
+        <a class="pl-quiet" href="#how">how it works</a>
+      </div>
+    </div>
+    <div class="pl-hero__stack" data-up aria-hidden="true">
+      <img class="pl-shot pl-shot--back"  src="assets/img/plugin/roles.png" alt="" decoding="async">
+      <img class="pl-shot pl-shot--front" src="assets/img/plugin/ramps.png" alt="" decoding="async">
+    </div>
+  </header>
+
+  <!-- ── 02 · the numbers ────────────────────────────────────────────── -->
+  <section class="csa__block">
+    <div class="csa__numbers pl-numbers" data-up>
+      <div><b>756</b><span>connected variables</span></div>
+      <div><b>2,991</b><span>component variants</span></div>
+      <div><b>77</b><span>component sets</span></div>
+      <div><b>289</b><span>icons</span></div>
+    </div>
+    <p class="pl-fine" data-up>measured from one complete build: seven colour palettes, one brand, light and dark themes, every optional colour group on, the default at every step. fewer choices build fewer of each.</p>
+  </section>
+
+  <!-- ── 03 · the problem ────────────────────────────────────────────── -->
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>the part of the job nobody puts in a portfolio</h2>
+    <p class="csa__p" data-up>every serious product needs a design system, and almost every team builds it by hand. colour ramps in a separate tool. hundreds of tokens named one at a time. light and dark wired together. a button in every size, state and colour, then the same again for inputs, badges, tabs, modals and charts. then documenting all of it.</p>
+    <p class="csa__p" data-up>and hand-built systems decay. a colour gets hard-coded in one component, the dark theme drifts, a spacing value is typed instead of referenced. <b>six months later, changing the brand colour means hunting through hundreds of components.</b></p>
+    <p class="csa__pull" data-up>teams either ship without a real system, or burn their best designers building one.</p>
+  </section>
+
+  <!-- ── 04 · how it works ───────────────────────────────────────────── -->
+  <section class="csa__block pl-how" id="how">
+    <h2 class="csa__h" data-up>four setup steps, then the <em>components</em></h2>
+
+    <div class="pl-step" data-up>
+      <div class="pl-step__copy">
+        <span class="pl-step__n">step 01 · brand</span>
+        <h3 class="pl-step__h">pick your colours. get the ramps.</h3>
+        <p class="csa__p">every colour becomes an 11-step ramp generated in oklch, so the steps look evenly spaced to the eye rather than only to the maths. <b>your exact colour is always step 07.</b> the plugin never shifts the colour you chose. each ramp gets a matching transparency ramp, and light colours like yellow are shaped so the dark end does not fall off a cliff.</p>
+      </div>
+      <img class="pl-shot" src="assets/img/plugin/ramps.png" alt="plugin screen: reviewing the generated colour ramps" loading="lazy" decoding="async">
+    </div>
+
+    <div class="pl-step" data-up>
+      <div class="pl-step__copy">
+        <span class="pl-step__n">step 02 · colour tokens</span>
+        <h3 class="pl-step__h">map palettes onto roles. choose your themes.</h3>
+        <p class="csa__p">six roles are always present: primary, neutral, danger, warning, success, info. four are optional: secondary, magic, media, data. then default only, light and dark, or fully custom themes. every value is an alias into the brand collection. <b>nothing is a raw colour.</b></p>
+      </div>
+      <img class="pl-shot" src="assets/img/plugin/roles.png" alt="plugin screen: mapping palettes to semantic roles" loading="lazy" decoding="async">
+    </div>
+
+    <div class="pl-step" data-up>
+      <div class="pl-step__copy">
+        <span class="pl-step__n">step 03 · typography and effects</span>
+        <h3 class="pl-step__h">fonts, a type scale, focus rings, elevation.</h3>
+        <p class="csa__p">a primary family and an optional display family, a full type scale, and text styles that ride font variables. focus rings for every semantic colour and six elevation levels, all coloured from variables so they theme correctly. documentation drawn before the fonts existed is restyled in the font you chose.</p>
+      </div>
+      <img class="pl-shot" src="assets/img/plugin/fonts.png" alt="plugin screen: choosing primary and secondary fonts" loading="lazy" decoding="async">
+    </div>
+
+    <div class="pl-step pl-step--bare" data-up>
+      <div class="pl-step__copy">
+        <span class="pl-step__n">step 04 · spacing, radius and widths</span>
+        <h3 class="pl-step__h">the numbers everything else stands on.</h3>
+        <p class="csa__p">border radius as a minimal or full scale, plus a full-round value. a 16-step spacing scale. a 12-step width ramp, device breakpoints and a content container, stored as component variables.</p>
+      </div>
+      <ul class="pl-tokens" aria-label="token collections">
+        <li><b>187</b><span>library primitives</span><i>the raw colour ramps</i></li>
+        <li><b>242</b><span>brand</span><i>semantic roles, one mode per brand</i></li>
+        <li><b>187</b><span>main variables</span><i>what components use, one mode per theme</i></li>
+        <li><b>35</b><span>fonts</span><i>families, sizes, weights, line heights</i></li>
+        <li><b>38</b><span>other variables</span><i>radius, spacing, widths</i></li>
+        <li><b>67</b><span>component variables</span><i>retuned in one place</i></li>
+      </ul>
+    </div>
+
+    <div class="pl-step" data-up>
+      <div class="pl-step__copy">
+        <span class="pl-step__n">then · components</span>
+        <h3 class="pl-step__h">built in order, and it tells you why.</h3>
+        <p class="csa__p">components are grouped and built one after another. where one is made from another, a toast reusing the real close button or a dropdown being a list box with a header and footer, the plugin says so in plain language and tells you what to build first.</p>
+      </div>
+      <img class="pl-shot" src="assets/img/plugin/buttons.png" alt="plugin screen: configuring button types, fills, outlines and icons" loading="lazy" decoding="async">
+    </div>
+  </section>
+
+  <!-- ── 05 · what makes it different ────────────────────────────────── -->
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>a system, not a style sheet</h2>
+    <div class="pl-cards" data-up>
+      <div class="pl-card"><h3>a real token architecture</h3><p>primitives, brand roles, themed semantic tokens. change a primitive and it cascades through every brand, every theme and every component.</p></div>
+      <div class="pl-card"><h3>figma, used the way experts use it</h3><p>variables and modes. styles bound to variables. component properties instead of multiplied variants. native slots. instances of shared parts, not copies.</p></div>
+      <div class="pl-card"><h3>documentation that builds itself</h3><p>a foundation page with colour sheets, a variables catalogue, a type specimen and an effects sheet. rebuild it any time; it replaces, never stacks.</p></div>
+      <div class="pl-card"><h3>change your mind without starting over</h3><p>every setup step breaks into parts, and any part can be rebuilt alone. a resume screen ticks off everything already built.</p></div>
+      <div class="pl-card"><h3>an organised file, automatically</h3><p>43 pages in 8 groups with dividers, foundation and icons first, kept in order every time something is added.</p></div>
+      <div class="pl-card"><h3>built and tested like software</h3><p>171 automated checks build whole systems in a simulated figma and verify them: no crossing chart bands, no duplicated component names.</p></div>
+    </div>
+  </section>
+
+  <!-- ── 06 · the library ────────────────────────────────────────────── -->
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>41 component families, available now</h2>
+    <dl class="pl-lib" data-up>
+      <div><dt>icons</dt><dd>289 icons, recoloured from your tokens</dd></div>
+      <div><dt>building blocks</dt><dd>avatars · dividers · status dot · tooltips · display icons · progress · spinner</dd></div>
+      <div><dt>form elements</dt><dd>badges · buttons · inputs · checkbox and radio · toggles · sliders · list item · tags</dd></div>
+      <div><dt>display</dt><dd>accordions · cards · list box · empty states · tables and cells</dd></div>
+      <div><dt>overlays</dt><dd>popovers · dropdowns · context menu · modals · side panels · bottomsheets</dd></div>
+      <div><dt>charts</dt><dd>graph base · bar · donut and pie · line and area · stacked area · radial</dd></div>
+      <div><dt>notification</dt><dd>toast · banners · callouts · notes</dd></div>
+      <div><dt>navigation</dt><dd>nav list items · tabs · breadcrumbs · pagination</dd></div>
+      <div class="is-next"><dt>coming next</dt><dd>alerts, activity, feed, timeline, calendar, filter, message bubbles, chatbox, file upload. not built yet.</dd></div>
+    </dl>
+  </section>
+
+  <!-- ── 07 · charts ─────────────────────────────────────────────────── -->
+  <section class="csa__block pl-charts">
+    <div class="pl-charts__big" data-up><b>1,175</b><span>chart variants</span></div>
+    <div>
+      <h2 class="csa__h" data-up>most systems stop at buttons. <em>this one draws charts.</em></h2>
+      <p class="csa__p" data-up>bar graphs vertical and horizontal, single and stacked. donut and pie in five sizes, three hole depths, two to eight segments. line and area, sharp or smooth, with six distinct curve shapes. stacked areas whose bands can never cross. radial bars that double as gauges. 7, 15 or 30 data points.</p>
+      <p class="csa__p" data-up>charts use your brand palettes. pies use a sequential scale of one colour while bars and lines use distinct ones, the way data visualisation practice recommends. and <b>every chart shares one dataset</b>, so a dashboard mock-up agrees with itself.</p>
+    </div>
+  </section>
+
+  <!-- ── 08 · who it is for / before and after ───────────────────────── -->
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>before, and after</h2>
+    <div class="pl-ba" data-up>
+      <div class="pl-ba__row"><p><small>before</small>the first weeks of a project go into ramps, pasted hex codes, hand-named tokens and forty sibling buttons.</p><p><small>after</small>choose the colours and fonts, answer a few questions per component, and every value traces back to a token.</p></div>
+      <div class="pl-ba__row"><p><small>before</small>rebranding means auditing every component.</p><p><small>after</small>change the palette and the system follows, because nothing was hard-coded.</p></div>
+      <div class="pl-ba__row"><p><small>before</small>dark mode is a second project.</p><p><small>after</small>dark mode is a choice made in step two.</p></div>
+    </div>
+    <ul class="csa__list pl-who" data-up>
+      <li><b>founding and solo designers</b>the system a larger company would have, without a design systems team.</li>
+      <li><b>agencies and freelancers</b>a client-branded system at the start of an engagement, not rebuilt foundations every time.</li>
+      <li><b>design systems leads</b>skip the scaffolding and spend the weeks on decisions specific to your product.</li>
+      <li><b>multi-brand and white-label teams</b>brands are modes: one system, many brands, switchable.</li>
+    </ul>
+  </section>
+
+  <!-- ── 09 · questions ──────────────────────────────────────────────── -->
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>questions designers ask first</h2>
+    <div class="pl-faq" data-up>
+      <details><summary>does it work with my existing file?</summary><p>it builds into the file you open it in. re-running a step updates what it created rather than duplicating it.</p></details>
+      <details><summary>does it write code?</summary><p>no. it builds the design system inside figma, and a library-ready file you publish the usual way.</p></details>
+      <details><summary>can i have more than one brand?</summary><p>yes. each brand is a mode of the brand collection. more than one mode needs a paid figma plan.</p></details>
+      <details><summary>do i have to build every component?</summary><p>no. build only the groups you need. where one component is made from another, the plugin tells you which to build first.</p></details>
+      <details><summary>can i change things after it is built?</summary><p>yes. any setup step, or any part of one, can be rebuilt on its own, and component steps can be re-run too.</p></details>
+    </div>
+  </section>
+
+  <!-- ── 10 · the screens, and the file ──────────────────────────────── -->
+  <section class="csa__block pl-screens" id="screens">
+    <h2 class="csa__h" data-up>the plugin, screen by screen</h2>
+    <div class="pl-strip" data-up tabindex="0" aria-label="plugin screens, scroll sideways">
+      <figure><img src="assets/img/plugin/welcome.png" alt="welcome: what would you like to do" loading="lazy" decoding="async"><figcaption>start</figcaption></figure>
+      <figure><img src="assets/img/plugin/ramps.png" alt="reviewing colour ramps" loading="lazy" decoding="async"><figcaption>ramps</figcaption></figure>
+      <figure><img src="assets/img/plugin/roles.png" alt="mapping palettes to semantic roles" loading="lazy" decoding="async"><figcaption>roles</figcaption></figure>
+      <figure><img src="assets/img/plugin/themes.png" alt="themes built" loading="lazy" decoding="async"><figcaption>themes</figcaption></figure>
+      <figure><img src="assets/img/plugin/fonts.png" alt="choosing fonts" loading="lazy" decoding="async"><figcaption>type</figcaption></figure>
+      <figure><img src="assets/img/plugin/badges.png" alt="configuring badges" loading="lazy" decoding="async"><figcaption>badges</figcaption></figure>
+      <figure><img src="assets/img/plugin/tooltips.png" alt="configuring tooltips" loading="lazy" decoding="async"><figcaption>tooltips</figcaption></figure>
+      <figure><img src="assets/img/plugin/status-dots.png" alt="status dots preview" loading="lazy" decoding="async"><figcaption>status dots</figcaption></figure>
+    </div>
+    <div class="csa__take pl-close">
+      <p class="csa__take-note" data-up>every screen above is in the figma file, with the flows between them.</p>
+      <a class="csa__flip csa__flip--take" href="https://www.figma.com/design/V4tfuYY2Gw6MY1YH74kttk/Ultimate-DS-Generator?node-id=4070-442" target="_blank" rel="noopener" data-up><span>open the plugin ui in figma ↗</span></a>
+    </div>
+  </section>
+
+  <footer class="jr-foot">
+    <a class="csa__flip jr-foot__home" href="index.html#a:plugin">back to the portfolio</a>
+    <nav class="jr-foot__links" aria-label="elsewhere">
+      <a href="https://dribbble.com/ritik-raj" target="_blank" rel="noopener">dribbble ↗</a>
+      <a href="https://medium.com/@ritikraj559" target="_blank" rel="noopener">medium ↗</a>
+      <a href="https://www.linkedin.com/in/ritik-raj/" target="_blank" rel="noopener">linkedin ↗</a>
+      <a href="mailto:ritikraj559@gmail.com">email</a>
+    </nav>
+  </footer>
+
+</article>
+
+<script>
+/* the same light/dark preference as the rest of portfolio a, stored as rr-mode */
+(function () {
+  var d = document.documentElement, b = document.getElementById('plMode');
+  b.addEventListener('click', function () {
+    var m = d.getAttribute('data-mode') === 'light' ? 'dark' : 'light';
+    d.setAttribute('data-mode', m);
+    try { localStorage.setItem('rr-mode', m); } catch (e) {}
+  });
+})();
+</script>
+<script src="assets/js/case.js"></script>
+</body>
+</html>
