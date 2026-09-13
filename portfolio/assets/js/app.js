@@ -459,6 +459,7 @@
           Thread.set(Thread.p === null ? 0 : Thread.p, true);
           self.layout();
           self.render(true);
+          Aside.sync();
         }, 120);
       });
     },
@@ -789,7 +790,9 @@
           // change, so reopen it quietly. the count reset with the reload.
           if (slug === 'plugin') {
             Stage.unlock(false);
-            $('.panel--aside .aside__tag').text('you burst them earlier. i was still counting.');
+            if (!Aside.plain) {
+              $('.panel--aside .aside__tag[data-when="bubbles"]').text('you burst them earlier. i was still counting.');
+            }
           }
           Stage.start(slug ? Stage.indexOfSlug(slug) : 0);
         }
@@ -859,12 +862,37 @@
   }
 
 
+  /* ── ASIDE: THE PLUGIN SECTION ────────────────────────────────────────────
+     Normally earned by popping six bubbles. Where the bubbles are not shown
+     at all (css hides #bubbles below 1320px), there is nothing to pop, so the
+     section is open from the start and wears its plain opening instead.
+     Checked at boot and on resize. Once earned the bubble way, it keeps that
+     copy; once plain, it stays plain for the session.
+     -------------------------------------------------------------------- */
+  var Aside = {
+    plain: false,
+
+    sync: function () {
+      if (this.plain) return;
+      var $b = $('#bubbles'), $s = $('.panel--aside');
+      if (!$s.length) return;
+      if ($b.length && $b.css('display') !== 'none') return;   // bubbles are here
+      if (!$s.prop('hidden')) return;                          // already earned
+
+      this.plain = true;
+      $s.addClass('is-plain');
+      Stage.unlock(false);
+    }
+  };
+
+
   /* ── BOOT ─────────────────────────────────────────────────────────────── */
   $(function () {
     Viewport.init();
     Theme.init();
     Thread.init();
     Stage.init();
+    Aside.sync();
     Hero.init();
 
     // deep link: index.html#a opens portfolio a straight away

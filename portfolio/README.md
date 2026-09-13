@@ -303,6 +303,12 @@ where there is no empty half left. Glass colours are `--glass-*` in `theme.css`
 — one pair, flipped by mode, deliberately outside the palettes so the bubbles
 borrow whatever is behind them.
 
+**Where there are no bubbles** (css hides `#bubbles` below 1320px wide), there
+is nothing to pop, so `Aside.sync()` in `app.js` opens the plugin section from
+the start and adds `.is-plain`. The section holds two openings, marked
+`data-when="bubbles"` and `data-when="plain"`; the plain one never mentions
+bubbles or counting. Edit both when you change the copy.
+
 ## the plugin page
 
 `plugin.html` is where "see the plugin" in the unlockable bubbles section goes.

@@ -822,6 +822,12 @@ em{font-style:italic}
 .aside__line--pitch{color:var(--cream)}
 .aside__line b{font-weight:400;color:var(--cream)}
 .panel--aside .case__link{margin-top:2.4rem}
+/* which opening shows. the plain one is for screens with no bubbles to pop */
+.panel--aside [data-when="plain"]{display:none}
+.panel--aside.is-plain [data-when="bubbles"]{display:none}
+.panel--aside.is-plain span[data-when="plain"]{display:inline-block}
+.panel--aside.is-plain h2[data-when="plain"],
+.panel--aside.is-plain p[data-when="plain"]{display:block}
 
 /* the acknowledgement, bottom right, gone in six seconds */
 .notice{

@@ -329,19 +329,31 @@ html.to-b[data-pb="dark"] #veil b{background:#eeede8}
          ──────────────────────────────────────────────── -->
     <section class="panel panel--aside" data-label="the plugin" hidden>
       <div class="panel__in aside">
-        <span class="aside__tag" data-reveal="1">you popped <b id="popCount">6</b>. i was counting.</span>
-        <h2 class="aside__head" data-reveal="2">
+        <!-- two openings. [data-when="bubbles"] is the one earned by popping
+             six. [data-when="plain"] is shown where there are no bubbles to
+             pop (app.js → Aside, when #bubbles is display:none), and there the
+             section is simply open, so it must not mention bubbles at all. -->
+        <span class="aside__tag" data-when="bubbles" data-reveal="1">you popped <b id="popCount">6</b>. i was counting.</span>
+        <span class="aside__tag" data-when="plain" data-reveal="1">for designers</span>
+        <h2 class="aside__head" data-when="bubbles" data-reveal="2">
           enjoyed bursting <em>bubbles</em>?
         </h2>
-        <p class="aside__line" data-reveal="3">
+        <h2 class="aside__head" data-when="plain" data-reveal="2">
+          do you dread maintaining a <em>design system</em>?
+        </h2>
+        <p class="aside__line" data-when="bubbles" data-reveal="3">
           i thought you might. watching what people actually do, rather than
           taking their word for what they would do, is most of the job. it is
           also how the case studies above got written.
         </p>
+        <p class="aside__line" data-when="plain" data-reveal="3">
+          most designers i know do. building one is interesting for about a
+          month. keeping it alive for the next two years is the actual job, and
+          almost nobody plans for that part.
+        </p>
         <p class="aside__line aside__line--pitch" data-reveal="4">
           so here is the one thing on this site that is for you rather than about
-          me. if you are a designer who dreads maintaining a design system, i
-          built something out of exactly that frustration: a figma plugin that
+          me. i built something out of exactly that frustration: a figma plugin that
           builds a connected design system in one sitting. tokens, themes,
           styles, documentation and 2,991 component variants. then any part of
           it can be rebuilt on its own, which is the part everyone skips.
