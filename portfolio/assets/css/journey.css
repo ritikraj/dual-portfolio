@@ -94,12 +94,11 @@
   color:var(--cream-dim);
 }
 .jr-tags li.is-flag{border-color:var(--gold);background:var(--gold);color:var(--ink)}
+/* the project's own name: the tag you read first */
+.jr-tags li.is-name{border-color:var(--cream-dim);color:var(--cream)}
+.jr-item--case .jr-tags li.is-name{border-color:var(--gold-half);color:var(--gold)}
 .jr-tags li.is-loss{border-color:var(--cream-dim);border-style:dashed;color:var(--cream)}
 
-.jr-slug{
-  font-size:.66rem; letter-spacing:.08em; color:var(--cream-dim);
-  margin-bottom:.35rem;
-}
 .jr-line{
   max-width:38rem;
   font-size:.96rem; line-height:1.65; color:var(--cream);
@@ -115,11 +114,9 @@
   padding:1.2rem 1.4rem 1.3rem;
   margin:-.2rem 0 0;
   border:1px solid var(--cream-faint);
-  border-left:2px solid var(--gold);
   background:linear-gradient(90deg, var(--gold-glow), transparent 70%);
 }
-.jr-item--case .jr-slug{color:var(--gold)}
-.jr-item--case .jr-line{
+.jr-item--case .jr-item--case .jr-line{
   font-family:var(--font-display);
   font-size:clamp(1.15rem,1.7vw,1.4rem); line-height:1.4;
 }

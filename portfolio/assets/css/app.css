@@ -394,6 +394,9 @@ em{font-style:italic}
 .stage__back{
   display:inline-flex; align-items:center; gap:.7rem; white-space:nowrap;
   color:var(--cream); opacity:.78;
+  /* a <button> does not inherit these from the bar the way a link does, so
+     say them outright. matches .csa__back on the case and journey pages. */
+  font-size:.62rem; letter-spacing:.32em; text-transform:uppercase;
   transition:opacity 400ms ease;
 }
 .stage__back:hover{opacity:1}

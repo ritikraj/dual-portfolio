@@ -308,10 +308,11 @@ because the running order is read from the DOM.
 `journey.html` sits beside `index.html`. Every entry is an
 `<article class="jr-item jr-item--KIND">`, where KIND is `case` (has a case
 study here: serif, accent card, filled bead, a way in), `soon`, `loss` (did not
-land, kept on purpose, dashed bead) or `plain`. To promote an entry to a case
-study, change its kind and add the `.jr-cta` link. The thread is the index page's curve, repeated
+land, kept on purpose, dashed bead) or `plain`. Every entry carries tags, and the first tag
+(`.is-name`) is the project's own name, so there are no hashtags. To promote an
+entry to a case study, change its kind and add the `.jr-cta` link. The thread is the index page's curve, repeated
 down the length of the list (the same bend every 440px), filled in the accent
-as you read. Each bead is seated on the curve at its own height, and lights as
+as you read. It starts at the top of the list and stops dead at the last bead. Each bead is seated on the curve at its own height, and lights as
 the fill reaches it (`journey.js`). Over the last screen of scroll the reading
 line eases down to wherever the thread ends, so it always completes even when
 the footer leaves no room to scroll further; everything else, the veil, transitions, reveals and esc, is

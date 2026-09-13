@@ -17,17 +17,28 @@
   if (!list || !svg || !base || !live) return;
 
   var rows = [].slice.call(list.querySelectorAll('.jr-item, .jr-group')),
-      len = 0, lut = [], seats = [], tick = false;
+      len = 0, end = 0, lut = [], seats = [], tick = false;
 
   /* ── the curve ────────────────────────────────────────────────────────── */
   function draw() {
-    var W = svg.clientWidth, H = list.offsetHeight;
-    if (!W || !H) return;
+    var W = svg.clientWidth;
+    if (!W || !list.offsetHeight) return;
 
-    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    // measure the beads before drawing anything: the thread should start at
+    // the top of the list and stop dead at the last bead, not trail on past
+    // it into nothing. offsets ignore the reveal transforms, so an item that
+    // has not animated in yet still measures where it will finally sit.
+    var listY = docY(list);
+    seats = rows.map(function (row) {
+      var dot = row.querySelector('.jr-dot');
+      return dot ? { row: row, dot: dot, y: docY(dot) + dot.offsetHeight / 2 - listY } : null;
+    }).filter(Boolean);
+    if (!seats.length) return;
 
-    // the same bend the index thread makes, laid end to end: out, back,
-    // through the centre, a gentle S every stretch
+    var H = seats[seats.length - 1].y;
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + list.offsetHeight);
+
+    // the same bend the index thread makes, laid end to end
     var x = W / 2, s = W < 40 ? 5 : 17, seg = 440, y = 0, flip = 1,
         d = 'M' + x + ',0';
     while (y < H) {
@@ -42,8 +53,8 @@
     len = live.getTotalLength();
     live.style.strokeDasharray = len;
 
-    // a table from height down the list to position along the curve. the
-    // path only ever travels downward, so height is a clean key.
+    // height down the list → position along the curve. the path only ever
+    // travels downward, so height is a clean key.
     lut = [];
     var N = Math.max(60, Math.round(len / 12)), i, pt;
     for (i = 0; i <= N; i++) {
@@ -51,18 +62,12 @@
       lut.push({ y: pt.y, x: pt.x, l: len * i / N });
     }
 
-    // seat each bead on the curve at its own height. offsets ignore the
-    // reveal transforms, so an item that has not animated in yet still
-    // measures where it will finally sit.
-    var listY = docY(list);
-    seats = rows.map(function (row) {
-      var dot = row.querySelector('.jr-dot');
-      if (!dot) return null;
-      var yDot = docY(dot) + dot.offsetHeight / 2 - listY;
-      dot.style.transform = 'translateX(' + (at(yDot, 'x') - W / 2).toFixed(1) + 'px)';
-      return { row: row, y: yDot };
-    }).filter(Boolean);
+    // seat each bead on the curve at its own height
+    seats.forEach(function (st) {
+      st.dot.style.transform = 'translateX(' + (at(st.y, 'x') - W / 2).toFixed(1) + 'px)';
+    });
 
+    end = H;
     paint();
   }
 
@@ -104,7 +109,7 @@
     // reading line past the last bead. over the final screen of scroll, ease
     // the line down to wherever the thread ends, so it always completes.
     var max      = Math.max(0, document.documentElement.scrollHeight - vh),
-        endAtMax = (top + window.scrollY) + list.offsetHeight - max;   /* where the thread ends on screen at full scroll */
+        endAtMax = (top + window.scrollY) + end - max;   /* where the thread ends on screen at full scroll */
     if (endAtMax > line) {
       var k = Math.max(0, Math.min(1, (window.scrollY - (max - vh)) / vh));
       line = line + (endAtMax + 2 - line) * k;
@@ -112,7 +117,7 @@
 
     var y = line - top;
     live.style.strokeDashoffset = (len - at(y, 'l')).toFixed(1);
-    seats.forEach(function (s) { s.row.classList.toggle('is-past', s.y <= y); });
+    seats.forEach(function (st) { st.row.classList.toggle('is-past', st.y <= y); });
   }
 
   function ask() { if (!tick) { tick = true; requestAnimationFrame(paint); } }
