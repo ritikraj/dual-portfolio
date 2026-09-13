@@ -498,13 +498,32 @@ em{font-style:italic}
 }
 .timeline__dot:hover::after{opacity:.55}
 .timeline__dot.is-on::after{background:var(--gold);opacity:1;transform:scale(1.65)}
+/* the same chip the thread's beads use: ink scrim, hairline edge, 3px
+   corners, the label set identically. these are all case studies, so each
+   also carries an eyebrow saying so. */
 .timeline__dot span{
-  position:absolute; left:150%; top:50%; transform:translateY(-50%) translateX(-4px);
-  white-space:nowrap;
-  font-size:.58rem; letter-spacing:.24em; text-transform:uppercase;
-  opacity:0; transition:opacity 400ms ease, transform 400ms var(--ease-lux);
+  position:absolute; left:calc(100% + .55rem); top:50%;
+  display:flex; flex-direction:column; align-items:flex-start; gap:.3rem;
+  padding:6px 9px;
+  background:color-mix(in srgb, var(--ink) 93%, transparent);
+  border:1px solid var(--cream-faint); border-radius:3px;
+  white-space:nowrap; text-align:left;
+  opacity:0; pointer-events:none;
+  transform:translate(-4px,-50%);
+  transition:opacity 340ms ease, transform 340ms var(--ease-lux);
 }
-.timeline__dot:hover span{opacity:.6;transform:translateY(-50%) translateX(0)}
+.timeline__dot:hover span{opacity:1;transform:translate(0,-50%)}
+.timeline__dot span b{
+  font-family:var(--font-body); font-weight:400;
+  font-size:9px; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--cream); opacity:.62;
+}
+.timeline__dot span i{
+  font-style:normal;
+  font-family:var(--font-body);
+  font-size:7.5px; letter-spacing:.26em; text-transform:uppercase;
+  color:var(--gold);
+}
 
 /* ── 06 · PANELS ────────────────────────────────────────────────────────── */
 .panel{

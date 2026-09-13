@@ -329,7 +329,9 @@
       var html = '';
       $.each(cases, function (i, c) {
         html += '<button class="timeline__dot" type="button" data-go="' + c.index + '" ' +
-                'aria-label="' + c.label + '"><span>' + c.label + '</span></button>';
+                'aria-label="case study: ' + c.label + '">' +
+                  '<span><i>case study</i><b>' + c.label + '</b></span>' +
+                '</button>';
       });
       $t.html(html);
       this.$dots = $t.find('.timeline__dot');
