@@ -398,10 +398,21 @@
       this.render(true);
 
       if (!announce) return;
+      var self = this, at = this.$panels.index($new);
       var $n = $('#notice').html(
-        'i noticed. <b>a new section</b> opened near the end.'
+        'i noticed. <b>a new section</b> opened near the end.<br>' +
+        '<a class="notice__go" href="#">take me there' +
+          '<svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg>' +
+        '</a>'
       ).addClass('is-on');
-      setTimeout(function () { $n.removeClass('is-on'); }, 6000);
+      $n.off('click').on('click', '.notice__go', function (e) {
+        e.preventDefault();
+        clearTimeout(self.noticeT);
+        $n.removeClass('is-on');
+        self.goTo(at);
+      });
+      clearTimeout(this.noticeT);
+      this.noticeT = setTimeout(function () { $n.removeClass('is-on'); }, 9000);
     },
 
     bind: function () {

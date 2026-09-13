@@ -44,7 +44,7 @@ html[data-pb="dark"] .pb{
   --pb-card:  #26252e;
   --pb-ink:   #eeede8;
   --pb-body:  #c3c1ba;
-  --pb-grey:  #84837d;
+  --pb-grey:  #9d9c95;
   --pb-line:  #34333c;
   --pb-red:  #ff5a4e;
   --pb-mark: #ffd23a;
@@ -273,7 +273,7 @@ html[data-pb="dark"] .pb__mode{transform:rotate(180deg)}
   font-family:var(--pb-mono); font-size:.7rem;
 }
 .pb-spec dt{color:var(--pb-grey);text-transform:uppercase;font-size:.6rem;letter-spacing:.06em;white-space:nowrap}
-.pb-spec dd{margin:0;flex:1;text-align:right}
+.pb-spec dd{margin:0;flex:1;text-align:right;font-weight:400}
 .pb-open__nav{
   margin:2.4rem 0 0;
   font-family:var(--pb-mono); font-size:.64rem; color:var(--pb-grey); text-transform:uppercase;

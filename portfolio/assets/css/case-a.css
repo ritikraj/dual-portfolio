@@ -42,6 +42,13 @@ a{color:inherit;text-decoration:none}
 
 /* ── hero ────────────────────────────────────────────────────────────── */
 .csa__hero{padding:9rem var(--pad) 0;max-width:72rem}
+.csa__tags{display:flex;flex-wrap:wrap;gap:.4rem;padding:0;list-style:none}
+.csa__tags li{
+  padding:.24rem .55rem;border:1px solid var(--cream-faint);
+  font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cream-dim);
+}
+.csa__tags li.is-name{border-color:var(--gold-half);color:var(--gold)}
+.csa__tags li.is-flag{border-color:var(--gold);background:var(--gold);color:var(--ink)}
 .csa__eyebrow{font-size:.62rem;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);opacity:.85}
 .csa__title{
   margin-top:1.6rem;

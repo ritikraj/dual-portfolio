@@ -726,11 +726,19 @@ em{font-style:italic}
 
 /* ── 08 · CASE STUDY ────────────────────────────────────────────────────── */
 .case{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:5vw;align-items:center}
-.case__tag{
-  display:block; margin-bottom:1.9rem;
-  font-size:.62rem; letter-spacing:.4em; text-transform:uppercase;
-  color:var(--gold); opacity:.8;
+.case__tags{
+  display:flex; flex-wrap:wrap; gap:.4rem;
+  margin:0 0 1.9rem; padding:0; list-style:none;
 }
+/* the same tags as the journey page: the project's name first, in the accent */
+.case__tags li{
+  padding:.24rem .55rem;
+  border:1px solid var(--cream-faint);
+  font-size:.56rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--cream-dim);
+}
+.case__tags li.is-name{border-color:var(--gold-half);color:var(--gold)}
+.case__tags li.is-flag{border-color:var(--gold);background:var(--gold);color:var(--ink)}
 .case__head{
   font-family:var(--font-display); font-weight:400;
   font-size:clamp(2.2rem,4.7vw,4rem);
@@ -766,7 +774,7 @@ em{font-style:italic}
 .case__link:hover svg{transform:translateX(6px)}
 
 .case__plate{
-  position:relative; aspect-ratio:4/5;
+  position:relative; aspect-ratio:3/2;
   /* a screenshot reads better cropped from its top-left corner than its middle */
   border:1px solid var(--cream-faint);
   background:linear-gradient(150deg,var(--plate-a),var(--plate-b));
@@ -843,7 +851,14 @@ em{font-style:italic}
   pointer-events:none;
   transition:opacity 700ms var(--ease-lux), transform 800ms var(--ease-lux);
 }
-.notice.is-on{opacity:1;transform:none}
+.notice.is-on{opacity:1;transform:none;pointer-events:auto}
+.notice__go{
+  display:inline-flex; align-items:center; gap:.6rem;
+  margin-top:.55rem;
+  color:var(--gold); letter-spacing:.24em;
+}
+.notice__go svg{width:22px;height:8px;transition:transform 500ms var(--ease-lux)}
+.notice__go:hover svg{transform:translateX(5px)}
 .notice b{font-weight:400;color:var(--gold)}
 
 /* ── 08c · WANT TO KNOW MORE ────────────────────────────────────────────
@@ -1085,7 +1100,8 @@ em{font-style:italic}
   .lede{margin-top:1.3rem;font-size:.84rem;line-height:1.62}
   .lede--sub{margin-top:.7rem;font-size:.8rem}
 
-  .case__tag{margin-bottom:1rem;font-size:.55rem;letter-spacing:.26em}
+  .case__tags{margin-bottom:1rem}
+  .case__tags li{font-size:.52rem}
   .case__head{font-size:clamp(1.5rem,7.2vw,2.1rem);line-height:1.14}
   .case__line{margin-top:1rem;font-size:.84rem;line-height:1.62}
   .case__link{margin-top:1.4rem;padding:.78rem 1.15rem;font-size:.57rem;letter-spacing:.22em;gap:.75rem}
