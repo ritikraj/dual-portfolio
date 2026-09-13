@@ -8,8 +8,52 @@
    to PALETTES in app.js. Nothing else knows the names.
    ========================================================================== */
 
-/* ── RED · default ──────────────────────────────────────────────────────── */
+/* ── GREEN · portfolio a, fixed ─────────────────────────────────────────────
+   the light side. portfolio a is always this palette: the picker is hidden
+   and app.js ignores any stored choice (Theme.FIXED). the other palettes stay
+   defined below so the picker can come back by flipping one constant.       */
 :root,
+[data-theme="green"]{
+  --ink:#07100b; --ink-2:#0c1711;
+  --paper:#eaf3ec; --paper-2:#d9e9dd;
+  --cream:#e6f1e8;
+  --cream-dim:rgba(230,241,232,.58);
+  --cream-faint:rgba(230,241,232,.15);
+  --gold:#43e08a;                        /* the accent. named gold for history */
+  --gold-soft:rgba(67,224,138,.3);
+  --gold-half:rgba(67,224,138,.5);
+  --gold-glow:rgba(67,224,138,.15);
+  --accent-deep:#15803d;
+  --veil-light:rgba(7,16,11,.07);
+  --plate-a:rgba(230,241,232,.05);
+  --plate-b:rgba(67,224,138,.06);
+
+  /* the door. a is the paper panel and takes the green; b is the ink panel
+     and takes b's red, because b has its own world and the door previews
+     both. absent from the light block below: the door never inverts.    */
+  --hero-dark:#110a0b; --hero-light:#eef6f0;
+  --hero-fg-dark:#f2e8e7; --hero-fg-light:#0e1a13;
+  --hero-accent:#ff4a3d; --hero-accent-light:#15803d;
+  --hero-glow:rgba(255,74,61,.17); --hero-line:rgba(150,150,150,.45);
+}
+:root[data-mode="light"],
+[data-theme="green"][data-mode="light"]{
+  --ink:#f2f8f3; --ink-2:#e5f0e8;
+  --paper:#0b1a11; --paper-2:#12281a;
+  --cream:#0c1a12;
+  --cream-dim:rgba(12,26,18,.66);
+  --cream-faint:rgba(12,26,18,.14);
+  --gold:#15803d;
+  --gold-soft:rgba(21,128,61,.26);
+  --gold-half:rgba(21,128,61,.5);
+  --gold-glow:rgba(21,128,61,.1);
+  --accent-deep:#7ee2a8;
+  --veil-light:rgba(242,248,243,.14);
+  --plate-a:rgba(12,26,18,.05);
+  --plate-b:rgba(21,128,61,.07);
+}
+
+/* ── RED ────────────────────────────────────────────────────────────────── */
 [data-theme="red"]{
   --ink:#100708; --ink-2:#180c0d;
   --paper:#f9eae8; --paper-2:#f1dbd8;
@@ -32,7 +76,6 @@
   --hero-accent:#ff5147; --hero-accent-light:#a8201a;
   --hero-glow:rgba(255,81,71,.17); --hero-line:rgba(255,81,71,.5);
 }
-:root[data-mode="light"],
 [data-theme="red"][data-mode="light"]{
   --ink:#fdf2f0; --ink-2:#f7e4e1;
   --paper:#1a0a09; --paper-2:#281311;
@@ -237,6 +280,10 @@ body.is-hero .theme{color:var(--hero-fg-dark)}
    only flip the two sides, which is the one thing the door is about. */
 body.is-hero .theme__mode,
 body.is-hero .theme__sep{display:none}
+
+/* the palette picker, hidden: portfolio a is fixed to green. delete these
+   two rules and set Theme.FIXED to null in app.js to bring it back. */
+.theme__swatch,.theme__sep{display:none !important}
 
 /* one swatch. it shows the palette you are in; clicking moves to the next. */
 .theme__swatch{

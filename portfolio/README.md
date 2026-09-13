@@ -71,10 +71,15 @@ down the left tracks progress; case-study dots appear only on case sections.
 If you change `--dur-slide`, change `CONFIG.slideDuration` in `app.js` to match.
 That is the only place the two files have to agree.
 
-**Colour** lives entirely in `assets/css/theme.css`. Five palettes — red
-(default), orchid, magenta, gold, signal — each with a dark and a light
-rendition. One swatch at the top right cycles them. Light/dark follows the
-operating system until you press the toggle, and then it sticks.
+**Colour** lives entirely in `assets/css/theme.css`. Portfolio A is **green,
+fixed**: `Theme.FIXED = 'green'` in `app.js`, and every page's head script sets
+`data-theme="green"` before paint, so a palette someone picked on an older visit
+is ignored. The other palettes (red, orchid, magenta, gold, signal) are still in
+the file and the swatch still exists in the markup, only hidden with
+`.theme__swatch{display:none}`. To bring the picker back: set `FIXED: null`,
+delete that rule, and restore the `rr-theme` read in the head scripts.
+Light/dark follows the operating system until you press the toggle, and then
+it sticks.
 
 **Which side is which.** A panel carries two classes: its identity
 (`--a` / `--b`) and its treatment (`.is-ink` / `.is-paper`). They are separate
@@ -94,8 +99,8 @@ add one line to `PALETTES` in `app.js`. Nothing else knows the names. The token
 is still called `--gold` everywhere because that is what the accent was first
 called, and renaming it would touch sixty rules for no gain.
 
-Portfolio B is deliberately outside all of this. It keeps its own bone-and-cobalt
-world whatever A is wearing, including the curtain that wipes into it — but it
+Portfolio B is deliberately outside all of this. It keeps its own bone-and-red
+world (`--pb-red`, `--pb-mark` in `read.css`; `--red`, `--mark` in `case-b.css`) whatever A is wearing, including the curtain that wipes into it — but it
 has **one preference of its own**: light or dark, no palettes, on the button in
 its own header. Follows the OS until pressed, stored separately as
 `rr-pb-mode`, and shared with the `?v=b` case pages.
@@ -137,9 +142,9 @@ Drop an `<img>` in `.case__plate` for the visual — hidden under 1024px.
 
 ## portfolio B — "the read"
 
-Bone, cobalt, a lime marker. Space Grotesk + IBM Plex Mono. Horizontal, fast,
+Bone, signal red, a yellow marker. Space Grotesk + IBM Plex Mono. Horizontal, fast,
 560ms. Reads as a dossier an outsider wrote about you: subject → the pattern →
-five observations → the tell → verdict.
+four observations → the tell → verdict. The rail labels never wrap; on narrow tablets and foldables they truncate with an ellipsis and carry a `title`.
 
 One flick of the wheel moves one card, momentum swallowed. Drag the strip and it
 tracks your cursor 1:1, then snaps or takes the throw. Arrow keys, Home/End, and

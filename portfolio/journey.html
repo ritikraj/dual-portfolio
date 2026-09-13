@@ -13,7 +13,7 @@ try {
   var d = document.documentElement;
   var m = localStorage.getItem('rr-mode');
   if (!m) m = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-  d.setAttribute('data-theme', localStorage.getItem('rr-theme') || 'red');
+  d.setAttribute('data-theme', 'green');
   d.setAttribute('data-mode',  m);
 } catch (e) {}
 </script>
@@ -33,14 +33,14 @@ try {
 #veil{
   position:fixed; inset:0; z-index:999;
   display:grid; place-items:center;
-  background:var(--ink,#100708);
+  background:var(--ink,#07100b);
   transform:translateY(0);
   will-change:transform;
 }
 html.v-b #veil, html.to-b #veil{background:var(--bone,#e9e7e0)}
 #veil b{
   display:block; width:4.5rem; height:1px;
-  background:var(--cream,#f4e6e4); opacity:0;
+  background:var(--cream,#e6f1e8); opacity:0;
   transform:scaleX(.15); transform-origin:left;
   animation:veilWait 1.6s cubic-bezier(.16,1,.3,1) .22s infinite;
 }

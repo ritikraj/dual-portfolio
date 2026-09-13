@@ -587,6 +587,7 @@
      add a palette there, add a line here, done.
      ------------------------------------------------------------------- */
   var PALETTES = [
+    { id: 'green',   dot: '#43e08a' },
     { id: 'red',     dot: '#ff5147' },
     { id: 'orchid',  dot: '#b283ee' },
     { id: 'magenta', dot: '#ff5b9e' },
@@ -595,11 +596,16 @@
   ];
 
   var Theme = {
+    /* portfolio a is the light side, and the light side is green. with this
+       set, the stored palette is ignored and the picker is hidden in css.
+       set it to null to hand the choice back to the visitor. */
+    FIXED: 'green',
+
     init: function () {
       var self = this, saved = store('rr-mode');
 
       this.$el   = $('#theme');
-      this.i     = index(store('rr-theme'));
+      this.i     = index(this.FIXED || store('rr-theme'));
       this.mode  = saved || system();
       this.pinned = !!saved;              /* has he chosen, or is this the os? */
 

@@ -63,7 +63,8 @@ window.TheRead = (function () {
      the rail grows. nothing to register anywhere. */
   function buildRail() {
     rail.innerHTML = cards.map(function (card, i) {
-      return '<button class="pb-tick" type="button" data-go="' + i + '">' +
+      return '<button class="pb-tick" type="button" data-go="' + i + '" ' +
+               'title="' + (card.getAttribute('data-rail') || '') + '">' +
                '<span class="pb-tick__n">' + pad(i) + '</span>' +
                (card.getAttribute('data-rail') || '') +
              '</button>';

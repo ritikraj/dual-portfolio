@@ -23,7 +23,7 @@ try{
   var d = document.documentElement;
   var m = localStorage.getItem('rr-mode');
   if (!m) m = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-  d.setAttribute('data-theme', localStorage.getItem('rr-theme') || 'red');
+  d.setAttribute('data-theme', 'green');
   d.setAttribute('data-mode',  m);
   /* side b keeps one preference of its own: light or dark, no palettes */
   var pb = localStorage.getItem('rr-pb-mode');
@@ -49,7 +49,7 @@ try{
 #veil{
   position:fixed; inset:0; z-index:999;
   display:grid; place-items:center;
-  background:var(--ink,#100708);
+  background:var(--ink,#07100b);
   transform:translateY(0);
   will-change:transform;
 }
@@ -57,7 +57,7 @@ html.to-b #veil{background:#e9e7e0}
 html.to-b[data-pb="dark"] #veil{background:#15141a}
 #veil b{
   display:block; width:4.5rem; height:1px;
-  background:var(--cream,#f4e6e4); opacity:0;
+  background:var(--cream,#e6f1e8); opacity:0;
   transform:scaleX(.15); transform-origin:left;
   animation:veilWait 1.6s cubic-bezier(.16,1,.3,1) .22s infinite;
 }
@@ -468,7 +468,7 @@ html.to-b[data-pb="dark"] #veil b{background:#eeede8}
     <article class="pb-card pb-card--open" data-rail="subject">
       <div class="pb-sheet"><div class="pb-sheet__body">
       <div class="pb-open">
-        <p class="pb-kicker" data-in>assessment · 2026 · unedited</p>
+        <p class="pb-kicker" data-in>the dark side · unedited</p>
         <h2 class="pb-open__head" data-in>
           i was handed four thousand words about ritik raj.<br>
           <span class="pb-mark">here is what i actually think.</span>
@@ -755,13 +755,19 @@ html.to-b[data-pb="dark"] #veil b{background:#eeede8}
           which is rarer.
         </h2>
         <p class="pb-end__caveat" data-in>
-          one disclosure, since it matters. i am the ai he built the other side without.
-          read that one first. this is only the second opinion.
+          the evidence for the second half is on his own timeline: three projects
+          marked as not landing, and left in on purpose.
+        </p>
+        <p class="pb-end__caveat" data-in>
+          one disclosure, since it matters. i also typed the other side, from his
+          structure and in his words. so this is a second opinion from someone who
+          had already read everything, not a neutral one. start with his.
         </p>
         <div class="pb-end__contact" data-in>
           <a class="pb-end__mail" href="mailto:ritikraj559@gmail.com">ritikraj559@gmail.com</a>
           <div class="pb-end__links">
             <a href="https://www.linkedin.com/in/ritik-raj/" target="_blank" rel="noopener">linkedin ↗</a>
+            <a href="journey.html">his timeline ↗</a>
             <a href="https://ritikraj.in" target="_blank" rel="noopener">ritikraj.in ↗</a>
             <a href="#" data-portfolio-switch="a">portfolio a ↗</a>
           </div>
