@@ -802,6 +802,53 @@ em{font-style:italic}
 .notice.is-on{opacity:1;transform:none}
 .notice b{font-weight:400;color:var(--gold)}
 
+/* ── 08c · WANT TO KNOW MORE ────────────────────────────────────────────
+   Four ways out. Journey is internal and gets the lead card; the other three
+   leave the site, open in a new tab, and say so with ↗ rather than →.
+   --------------------------------------------------------------------- */
+.more{max-width:62rem}
+.more__tag{
+  display:block; margin-bottom:1.4rem;
+  font-size:.62rem; letter-spacing:.4em; text-transform:uppercase;
+  color:var(--gold); opacity:.85;
+}
+.more__head{
+  font-family:var(--font-display); font-weight:400;
+  font-size:clamp(2.2rem,4.7vw,4rem); line-height:1.08; letter-spacing:-.02em;
+}
+.more__head em{font-style:normal;color:var(--gold)}
+
+.more__grid{
+  margin-top:2.6rem;
+  display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1px;
+  background:var(--cream-faint); border:1px solid var(--cream-faint);
+}
+.more__card{
+  position:relative;
+  display:flex; flex-direction:column; gap:.5rem;
+  min-height:8.5rem; padding:1.5rem 1.4rem 1.3rem;
+  background:var(--ink);
+  transition:background 420ms var(--ease-lux);
+}
+.more__card--lead{grid-column:1 / -1; min-height:9.5rem}
+.more__card:hover{background:var(--ink-2)}
+.more__name{
+  font-family:var(--font-display); font-size:clamp(1.5rem,2.4vw,2.1rem);
+  line-height:1; color:var(--cream);
+  transition:color 420ms var(--ease-lux);
+}
+.more__card--lead .more__name{font-size:clamp(1.9rem,3.2vw,2.8rem)}
+.more__card:hover .more__name{color:var(--gold)}
+.more__desc{font-size:.84rem; line-height:1.6; color:var(--cream-dim); max-width:30rem}
+.more__go{
+  position:absolute; top:1.4rem; right:1.4rem;
+  color:var(--gold); opacity:.55; font-size:1rem; line-height:1;
+  transition:opacity 420ms ease, transform 520ms var(--ease-lux);
+}
+.more__go svg{width:26px;height:8px;display:block}
+.more__card:hover .more__go{opacity:1;transform:translateX(5px)}
+.more__card:hover .more__go--out{transform:translate(3px,-3px)}
+
 /* ── 09 · ABOUT + FOOTER ────────────────────────────────────────────────── */
 .panel--end{justify-content:space-between;padding-top:8rem;padding-bottom:2.6rem}
 .end{display:flex;flex-direction:column;gap:3.2rem;height:100%;justify-content:center;max-width:78rem}
@@ -958,6 +1005,9 @@ em{font-style:italic}
   .stage.is-live .thread{opacity:.75}
   .lede{font-size:.92rem;line-height:1.75}
   .aside__line{margin-top:1.1rem;font-size:.86rem;line-height:1.7}
+  .more__grid{grid-template-columns:1fr;margin-top:1.6rem}
+  .more__card,.more__card--lead{min-height:0;padding:1.05rem 1.1rem}
+  .more__desc{font-size:.78rem}
   .notice{right:1.5rem;bottom:1.8rem;left:1.5rem;max-width:none}
   .end{gap:1.4rem}
   .end__copy{margin-top:1rem;font-size:.88rem;line-height:1.7}

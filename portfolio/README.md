@@ -117,7 +117,7 @@ room on both sides of the line without spilling out of it.
 **Layout** `--thread-x` moves the thread and the timeline dots together.
 `--gutter` is the page margin.
 
-There are five case studies and they must stay matched across both sides.
+There are four case studies and they must stay matched across both sides.
 `case/<slug>.html` files chain to each other through their "next" links, so
 inserting one means retargeting the two links on either side of it.
 
@@ -295,6 +295,28 @@ most 38rem) so it can never crowd the text, and hides entirely below 1320px
 where there is no empty half left. Glass colours are `--glass-*` in `theme.css`
 — one pair, flipped by mode, deliberately outside the palettes so the bubbles
 borrow whatever is behind them.
+
+## want to know more, and the journey
+
+The section before the footer, always. Four cards: **journey** (internal, the
+lead card, →) and **dribbble**, **medium**, **linkedin** (external, new tab, ↗).
+If the plugin section has been unlocked it slots in above this one on its own,
+because the running order is read from the DOM.
+
+`journey.html` sits beside `index.html`. Every entry is an
+`<article class="jr-item jr-item--KIND">`, where KIND is `case` (has a case
+study here: serif, accent card, filled bead, a way in), `soon`, `loss` (did not
+land, kept on purpose, dashed bead) or `plain`. To promote an entry to a case
+study, change its kind and add the `.jr-cta` link. The rail fills with the
+accent as you read and each bead lights as the fill reaches it
+(`journey.js`); everything else, the veil, transitions, reveals and esc, is
+`case.js`. The page tells `case.js` where home is with
+`data-home="index.html#a:journey"` on `<html>`, which brings you back to the
+more section rather than the top.
+
+No images on the timeline, deliberately: art exists for three of sixteen
+entries, and a page where a few items have pictures reads as though the rest
+matter less.
 
 ## the unlocked section
 

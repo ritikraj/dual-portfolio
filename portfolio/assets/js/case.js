@@ -10,7 +10,10 @@
   var side = document.documentElement.className.indexOf('v-b') > -1 ? 'b' : 'a';
   /* the portfolio reopens on the section you left from, not at the top */
   var slug = (location.pathname.split('/').pop() || '').replace('.html', '');
-  var home = '../index.html#' + side + (slug ? ':' + slug : '');
+  /* a page that does not live in /case can say where home is, e.g. the
+     journey, which sits beside index.html rather than below it */
+  var home = document.documentElement.getAttribute('data-home') ||
+             ('../index.html#' + side + (slug ? ':' + slug : ''));
 
   [].slice.call(document.querySelectorAll('.csa__back, .csb__back')).forEach(function (a) {
     a.setAttribute('href', home);

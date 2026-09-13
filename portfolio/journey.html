@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en" class="v-a" data-home="index.html#a:journey">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>journey · ritik raj</title>
+<meta name="description" content="every project ritik raj has shipped since 2018, including the ones that did not work.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script>
+/* portfolio a's palette and mode, before first paint, same as everywhere else */
+try {
+  var d = document.documentElement;
+  var m = localStorage.getItem('rr-mode');
+  if (!m) m = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  d.setAttribute('data-theme', localStorage.getItem('rr-theme') || 'red');
+  d.setAttribute('data-mode',  m);
+} catch (e) {}
+</script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="assets/css/theme.css">
+<link rel="stylesheet" href="assets/css/case-a.css">
+<link rel="stylesheet" href="assets/css/journey.css">
+
+<style>
+/* ══ FIRST-PAINT VEIL ══════════════════════════════════════════════════
+   Inline on purpose. An external stylesheet, however early, can still lose
+   a frame to the parser — and one frame of unstyled html is exactly the
+   thing an expert eye catches. This is styled before anything is fetched,
+   so the first thing ever painted is the veil. Everything else loads,
+   swaps fonts and mounts behind it. app.js / case.js lift it when ready.
+   ═════════════════════════════════════════════════════════════════════ */
+#veil{
+  position:fixed; inset:0; z-index:999;
+  display:grid; place-items:center;
+  background:var(--ink,#100708);
+  transform:translateY(0);
+  will-change:transform;
+}
+html.v-b #veil, html.to-b #veil{background:var(--bone,#e9e7e0)}
+#veil b{
+  display:block; width:4.5rem; height:1px;
+  background:var(--cream,#f4e6e4); opacity:0;
+  transform:scaleX(.15); transform-origin:left;
+  animation:veilWait 1.6s cubic-bezier(.16,1,.3,1) .22s infinite;
+}
+html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
+@keyframes veilWait{
+  0%{opacity:0;transform:scaleX(.15)}
+  30%{opacity:.45;transform:scaleX(1)}
+  65%{opacity:.45;transform:scaleX(1)}
+  100%{opacity:0;transform:scaleX(.15)}
+}
+#veil.is-up   {transform:translateY(-100%);transition:transform .74s cubic-bezier(.76,0,.24,1);animation:none}
+#veil.is-down {transform:translateY(100%); transition:none;animation:none}
+#veil.is-shut {transform:translateY(0);    transition:transform .62s cubic-bezier(.76,0,.24,1);animation:none}
+/* backstop: if the script never runs, the veil still gets out of the way
+   rather than leaving a reader staring at a blank screen forever */
+#veil{animation:veilGiveUp .7s cubic-bezier(.76,0,.24,1) 6s forwards}
+@keyframes veilGiveUp{to{transform:translateY(-100%);visibility:hidden}}
+@media (prefers-reduced-motion:reduce){
+  #veil b{animation:none}
+  #veil.is-up,#veil.is-shut{transition-duration:1ms}
+}
+</style>
+</head>
+<body>
+
+<div id="veil" aria-hidden="true"><b></b></div>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     JOURNEY. every entry is an <article class="jr-item jr-item--KIND">:
+       --case   has a case study on this site: serif, accent, and a way in
+       --soon   case study coming soon
+       --loss   did not land. kept on purpose.
+       --plain  a milestone, no case study expected
+     to promote one to a case study, change the kind and add the .jr-cta link.
+     ══════════════════════════════════════════════════════════════════ -->
+<article class="csa">
+
+  <div class="csa__rule"></div>
+  <div class="csa__bar">
+    <a class="csa__back" href="index.html#a:journey">
+      <svg viewBox="0 0 28 8" aria-hidden="true"><path d="M28 4H2M6 1L2 4l4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg>
+      <span>portfolio</span>
+    </a>
+    <span class="csa__where">journey</span>
+  </div>
+
+  <div class="jr">
+    <header>
+      <p class="csa__eyebrow" data-up>journey · 2018 to now</p>
+      <h1 class="csa__title" data-up>my professional <em>journey</em></h1>
+      <p class="csa__stand" data-up>every project since 2018. 4 of them have a case study here, and 3 did not work. those are marked, not hidden.</p>
+      <ul class="jr-legend" data-up>
+        <li><i class="jr-dot is-case" aria-hidden="true"></i>case study</li>
+        <li><i class="jr-dot is-soon" aria-hidden="true"></i>case study coming soon</li>
+        <li><i class="jr-dot is-loss" aria-hidden="true"></i>did not land</li>
+      </ul>
+    </header>
+
+    <section class="jr-list" id="jrList" aria-label="timeline, newest first">
+      <span class="jr-rail" id="jrRail" aria-hidden="true"></span>
+
+      <header class="jr-group" data-up>
+        <p class="jr-group__years">2026</p>
+        <i class="jr-dot" aria-hidden="true"></i>
+        <h2 class="jr-group__name">personal <em>project</em></h2>
+      </header>
+      <article class="jr-item jr-item--soon" data-up>
+        <p class="jr-date">aug 2026</p>
+        <i class="jr-dot is-soon" aria-hidden="true"></i>
+        <div class="jr-body" data-date="aug 2026">
+          <ul class="jr-tags"><li>figma plugin</li><li>layered</li><li>design system</li></ul>
+          <p class="jr-slug">#the-ultimate-design-system-plugin</p>
+          <p class="jr-line">700 tokens and 36 inter-connected component libraries, all under five minutes.</p>
+          <p class="jr-status">case study coming soon</p>
+        </div>
+      </article>
+      <header class="jr-group" data-up>
+        <p class="jr-group__years">2023 · 2026</p>
+        <i class="jr-dot" aria-hidden="true"></i>
+        <h2 class="jr-group__name">at <em>fello</em></h2>
+      </header>
+      <article class="jr-item jr-item--soon" data-up>
+        <p class="jr-date">mar 2026</p>
+        <i class="jr-dot is-soon" aria-hidden="true"></i>
+        <div class="jr-body" data-date="mar 2026">
+          <ul class="jr-tags"><li>ai</li><li>builder</li><li>web tool</li></ul>
+          <p class="jr-slug">#conversational-form-builder</p>
+          <p class="jr-line">a complex conversational form, created in under two minutes with "create with ai".</p>
+          <p class="jr-status">case study coming soon</p>
+        </div>
+      </article>
+      <article class="jr-item jr-item--case" data-up>
+        <p class="jr-date">nov 2025</p>
+        <i class="jr-dot is-case" aria-hidden="true"></i>
+        <div class="jr-body" data-date="nov 2025">
+          <ul class="jr-tags"><li class="is-flag">flagship</li><li>builder</li><li>web tool</li></ul>
+          <p class="jr-slug">#email-builder</p>
+          <p class="jr-line">saving churn by 5.4%, raising adoption by 75.2%, and adding $2M in ARR.</p>
+          <a class="jr-cta" href="case/email-builder.html?v=a"><span>read the case study</span><svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg></a>
+        </div>
+      </article>
+      <article class="jr-item jr-item--case" data-up>
+        <p class="jr-date">sept 2025</p>
+        <i class="jr-dot is-case" aria-hidden="true"></i>
+        <div class="jr-body" data-date="sept 2025">
+          <ul class="jr-tags"><li>ux</li><li>growth</li><li>revenue impact</li></ul>
+          <p class="jr-slug">#property-intelligence</p>
+          <p class="jr-line">30% agent database growth, while improving revenue visibility by 90% per account.</p>
+          <a class="jr-cta" href="case/property-intelligence.html?v=a"><span>read the case study</span><svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg></a>
+        </div>
+      </article>
+      <article class="jr-item jr-item--case" data-up>
+        <p class="jr-date">may 2025</p>
+        <i class="jr-dot is-case" aria-hidden="true"></i>
+        <div class="jr-body" data-date="may 2025">
+          <ul class="jr-tags"><li>builder</li><li>technical</li><li>framework</li></ul>
+          <p class="jr-slug">#builder-framework</p>
+          <p class="jr-line">solving core builder ux by creating one unified builder experience.</p>
+          <a class="jr-cta" href="case/builder-framework.html?v=a"><span>read the case study</span><svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg></a>
+        </div>
+      </article>
+      <article class="jr-item jr-item--case" data-up>
+        <p class="jr-date">dec 2024</p>
+        <i class="jr-dot is-case" aria-hidden="true"></i>
+        <div class="jr-body" data-date="dec 2024">
+          <ul class="jr-tags"><li class="is-flag">flagship</li><li>design system</li><li>component</li></ul>
+          <p class="jr-slug">#design-system</p>
+          <p class="jr-line">saving dev effort and cutting timelines by 30%. the design system that did work.</p>
+          <a class="jr-cta" href="case/design-system.html?v=a"><span>read the case study</span><svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg></a>
+        </div>
+      </article>
+      <article class="jr-item jr-item--loss" data-up>
+        <p class="jr-date">oct 2024</p>
+        <i class="jr-dot is-loss" aria-hidden="true"></i>
+        <div class="jr-body" data-date="oct 2024">
+          <ul class="jr-tags"><li class="is-loss">did not land</li></ul>
+          <p class="jr-slug">#notifications-framework</p>
+          <p class="jr-line">0% revenue impact. a feature that was never implemented.</p>
+        </div>
+      </article>
+      <article class="jr-item jr-item--soon" data-up>
+        <p class="jr-date">aug 2024</p>
+        <i class="jr-dot is-soon" aria-hidden="true"></i>
+        <div class="jr-body" data-date="aug 2024">
+          <ul class="jr-tags"><li>b2b2c</li><li>trust</li><li>big impact</li></ul>
+          <p class="jr-slug">#lead-conversion</p>
+          <p class="jr-line">50% increase in lead conversion, by building trust into the consumer dashboard.</p>
+          <p class="jr-status">case study coming soon</p>
+        </div>
+      </article>
+      <article class="jr-item jr-item--soon" data-up>
+        <p class="jr-date">may 2024</p>
+        <i class="jr-dot is-soon" aria-hidden="true"></i>
+        <div class="jr-body" data-date="may 2024">
+          <ul class="jr-tags"><li>big impact</li><li>add-on</li></ul>
+          <p class="jr-slug">#segments</p>
+          <p class="jr-line">23% increase in contact engagement, through three-tier segments.</p>
+          <p class="jr-status">case study coming soon</p>
+        </div>
+      </article>
+      <article class="jr-item jr-item--loss" data-up>
+        <p class="jr-date">feb 2024</p>
+        <i class="jr-dot is-loss" aria-hidden="true"></i>
+        <div class="jr-body" data-date="feb 2024">
+          <ul class="jr-tags"><li class="is-loss">did not land</li></ul>
+          <p class="jr-slug">#automation-budget</p>
+          <p class="jr-line">0% effect on automation usage. the feature was removed within two months.</p>
+        </div>
+      </article>
+      <header class="jr-group" data-up>
+        <p class="jr-group__years">2021 · 2023</p>
+        <i class="jr-dot" aria-hidden="true"></i>
+        <h2 class="jr-group__name">at <em>fashinza</em></h2>
+      </header>
+      <article class="jr-item jr-item--soon" data-up>
+        <p class="jr-date">may 2023</p>
+        <i class="jr-dot is-soon" aria-hidden="true"></i>
+        <div class="jr-body" data-date="may 2023">
+          <ul class="jr-tags"><li>dashboard</li><li>app</li><li>ux interviews</li></ul>
+          <p class="jr-slug">#q-app</p>
+          <p class="jr-line">more visibility for factory owners, and 30% efficiency on the floor, through q-app.</p>
+          <p class="jr-status">case study coming soon</p>
+        </div>
+      </article>
+      <article class="jr-item jr-item--soon" data-up>
+        <p class="jr-date">jan 2023</p>
+        <i class="jr-dot is-soon" aria-hidden="true"></i>
+        <div class="jr-body" data-date="jan 2023">
+          <ul class="jr-tags"><li>app</li><li>audit report</li><li>ux interviews</li></ul>
+          <p class="jr-slug">#quality-framework</p>
+          <p class="jr-line">order breakage down 8%, through the final inspection report.</p>
+          <p class="jr-status">case study coming soon</p>
+        </div>
+      </article>
+      <article class="jr-item jr-item--soon" data-up>
+        <p class="jr-date">aug 2022</p>
+        <i class="jr-dot is-soon" aria-hidden="true"></i>
+        <div class="jr-body" data-date="aug 2022">
+          <ul class="jr-tags"><li>time reduction</li><li>order creation</li></ul>
+          <p class="jr-slug">#bill-of-material</p>
+          <p class="jr-line">time spent cut by 50%, through the bill-of-material framework.</p>
+          <p class="jr-status">case study coming soon</p>
+        </div>
+      </article>
+      <article class="jr-item jr-item--loss" data-up>
+        <p class="jr-date">mar 2022</p>
+        <i class="jr-dot is-loss" aria-hidden="true"></i>
+        <div class="jr-body" data-date="mar 2022">
+          <ul class="jr-tags"><li class="is-loss">did not land</li></ul>
+          <p class="jr-slug">#ppm</p>
+          <p class="jr-line">merchandisers hated spending 15 minutes on a single ppm report. the feature failed.</p>
+        </div>
+      </article>
+      <header class="jr-group" data-up>
+        <p class="jr-group__years">2018 · 2020</p>
+        <i class="jr-dot" aria-hidden="true"></i>
+        <h2 class="jr-group__name">at <em>devslane</em></h2>
+      </header>
+      <article class="jr-item jr-item--plain" data-up>
+        <p class="jr-date">mar 2019</p>
+        <i class="jr-dot is-plain" aria-hidden="true"></i>
+        <div class="jr-body" data-date="mar 2019">
+          <p class="jr-slug">#plugins</p>
+          <p class="jr-line">jquery plugins for graph libraries, image tracking and web development.</p>
+        </div>
+      </article>
+      <article class="jr-item jr-item--plain" data-up>
+        <p class="jr-date">aug 2018</p>
+        <i class="jr-dot is-plain" aria-hidden="true"></i>
+        <div class="jr-body" data-date="aug 2018">
+          <p class="jr-slug">#app</p>
+          <p class="jr-line">joined as an interaction designer.</p>
+        </div>
+      </article>
+    </section>
+  </div>
+
+  <footer class="jr-foot">
+    <a class="csa__flip" href="index.html#a:journey">back to the portfolio</a>
+    <nav class="jr-foot__links" aria-label="elsewhere">
+      <a href="https://dribbble.com/ritik-raj" target="_blank" rel="noopener">dribbble ↗</a>
+      <a href="https://medium.com/@ritikraj559" target="_blank" rel="noopener">medium ↗</a>
+      <a href="https://www.linkedin.com/in/ritik-raj/" target="_blank" rel="noopener">linkedin ↗</a>
+      <a href="mailto:ritikraj559@gmail.com">email</a>
+    </nav>
+  </footer>
+
+</article>
+
+<script src="assets/js/case.js"></script>
+<script src="assets/js/journey.js"></script>
+</body>
+</html>

@@ -697,7 +697,7 @@
 
       // anything with data-portfolio-switch jumps worlds
       // every link into a case study wipes out instead of cutting
-      $(document).on('click', 'a[href^="case/"]', function (e) {
+      $(document).on('click', 'a[href^="case/"], a[href^="journey.html"]', function (e) {
         e.preventDefault();
         var href = $(this).attr('href');
         Hero.wipeTo(href, href.indexOf('v=b') > -1);

@@ -1,0 +1,164 @@
+/* ==========================================================================
+   JOURNEY · the whole record, 2018 to now
+   Portfolio A's reading page. Chrome, reveal and colour come from case-a.css
+   and theme.css; this file only draws the timeline. namespace: .jr-*
+
+   The rail is the index page's thread straightened out for a long scroll:
+   same hairline, same accent fill with its glow, same pips that light up as
+   the fill passes them. A straight line reads better than a curve here,
+   because the eye is travelling down a list rather than across a screen.
+   ========================================================================== */
+
+.jr{
+  --date-w:7.2rem;         /* the date column                    */
+  --rail-w:2.8rem;         /* the column the bead sits centred in */
+  padding:9rem var(--pad) 2rem;
+  max-width:66rem;
+}
+
+/* ── head ────────────────────────────────────────────────────────────── */
+.jr-legend{
+  margin-top:2.4rem; padding:0; list-style:none;
+  display:flex; flex-wrap:wrap; gap:.8rem 1.8rem;
+  font-size:.6rem; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--cream-dim);
+}
+.jr-legend li{display:inline-flex;align-items:center;gap:.6rem}
+
+/* ── the list and its rail ───────────────────────────────────────────── */
+.jr-list{position:relative;margin-top:4.2rem}
+.jr-rail{
+  position:absolute; top:.6rem; bottom:.6rem;
+  left:calc(var(--date-w) + var(--rail-w) / 2);
+  width:1px; margin-left:-.5px;
+  background:var(--cream-faint);
+}
+.jr-rail::after{
+  content:""; position:absolute; top:0; left:0; right:0;
+  height:calc(var(--p, 0) * 100%);
+  background:var(--gold);
+  box-shadow:0 0 8px var(--gold-half);
+}
+
+/* ── beads ───────────────────────────────────────────────────────────── */
+.jr-dot{
+  position:relative; z-index:1;
+  display:block; width:9px; height:9px; border-radius:50%;
+  border:1px solid var(--cream-dim); background:var(--ink);
+  transition:border-color 500ms var(--ease), background 500ms var(--ease), box-shadow 500ms var(--ease);
+}
+.jr-dot.is-case{background:var(--gold);border-color:var(--gold);box-shadow:0 0 0 4px var(--gold-glow)}
+.jr-dot.is-loss{border-style:dashed}
+.jr-dot.is-plain{width:7px;height:7px}
+
+/* the fill has reached it */
+.jr-item.is-past .jr-dot:not(.is-case){border-color:var(--gold)}
+.jr-item.is-past .jr-dot.is-case{box-shadow:0 0 0 5px var(--gold-glow), 0 0 12px var(--gold-half)}
+
+/* ── a group: where the work happened ────────────────────────────────── */
+.jr-group{
+  display:grid; grid-template-columns:var(--date-w) var(--rail-w) 1fr;
+  align-items:center;
+  padding:3.2rem 0 1rem;
+}
+.jr-group:first-of-type{padding-top:0}
+.jr-group .jr-dot{justify-self:center;width:13px;height:13px;border-color:var(--cream)}
+.jr-group__years{
+  text-align:right; padding-right:1.1rem;
+  font-size:.58rem; letter-spacing:.22em; text-transform:uppercase; color:var(--cream-dim);
+}
+.jr-group__name{
+  font-family:var(--font-display); font-weight:400;
+  font-size:clamp(1.5rem,2.6vw,2.1rem); line-height:1.1; letter-spacing:-.01em;
+}
+.jr-group__name em{font-style:normal;color:var(--gold)}
+
+/* ── an entry ────────────────────────────────────────────────────────── */
+.jr-item{
+  display:grid; grid-template-columns:var(--date-w) var(--rail-w) 1fr;
+  align-items:start;
+  padding:1.3rem 0;
+}
+.jr-date{
+  text-align:right; padding:.1rem 1.1rem 0 0;
+  font-size:.6rem; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--cream-dim); font-variant-numeric:tabular-nums;
+}
+.jr-item .jr-dot{justify-self:center;margin-top:.2rem}
+
+.jr-body{min-width:0}
+.jr-tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:.7rem;padding:0;list-style:none}
+.jr-tags li{
+  padding:.22rem .5rem;
+  border:1px solid var(--cream-faint);
+  font-size:.54rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--cream-dim);
+}
+.jr-tags li.is-flag{border-color:var(--gold);background:var(--gold);color:var(--ink)}
+.jr-tags li.is-loss{border-color:var(--cream-dim);border-style:dashed;color:var(--cream)}
+
+.jr-slug{
+  font-size:.66rem; letter-spacing:.08em; color:var(--cream-dim);
+  margin-bottom:.35rem;
+}
+.jr-line{
+  max-width:38rem;
+  font-size:.96rem; line-height:1.65; color:var(--cream);
+}
+.jr-status{
+  margin-top:.55rem;
+  font-size:.6rem; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--cream-dim); opacity:.6;
+}
+
+/* the ones with a case study: they get the serif, the colour, and a door */
+.jr-item--case .jr-body{
+  padding:1.2rem 1.4rem 1.3rem;
+  margin:-.2rem 0 0 -.2rem;
+  border:1px solid var(--cream-faint);
+  border-left:2px solid var(--gold);
+  background:linear-gradient(90deg, var(--gold-glow), transparent 70%);
+}
+.jr-item--case .jr-slug{color:var(--gold)}
+.jr-item--case .jr-line{
+  font-family:var(--font-display);
+  font-size:clamp(1.15rem,1.7vw,1.4rem); line-height:1.4;
+}
+.jr-cta{
+  display:inline-flex; align-items:center; gap:.8rem;
+  margin-top:1.1rem; padding:.7rem 1.1rem;
+  border:1px solid var(--gold-half); color:var(--gold);
+  font-size:.58rem; letter-spacing:.26em; text-transform:uppercase;
+  transition:background 420ms var(--ease), color 420ms var(--ease), border-color 420ms var(--ease);
+}
+.jr-cta svg{width:22px;height:8px;transition:transform 500ms var(--ease)}
+.jr-cta:hover{background:var(--gold);color:var(--ink);border-color:var(--gold)}
+.jr-cta:hover svg{transform:translateX(5px)}
+
+/* the ones that did not land: quieter, and marked, not hidden */
+.jr-item--loss .jr-line{color:var(--cream-dim)}
+
+/* ── foot ────────────────────────────────────────────────────────────── */
+.jr-foot{
+  margin-top:5rem; padding:2.4rem var(--pad) 4.5rem;
+  border-top:1px solid var(--cream-faint);
+  display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:1.4rem 2rem;
+}
+.jr-foot__links{display:flex;flex-wrap:wrap;gap:1.6rem;font-size:.6rem;letter-spacing:.24em;text-transform:uppercase}
+.jr-foot__links a{color:var(--cream-dim);transition:color 300ms ease}
+.jr-foot__links a:hover{color:var(--gold)}
+
+/* ── phone: the rail moves to the edge and the date rides above ──────── */
+@media (max-width:720px){
+  .jr{--date-w:0rem; --rail-w:1.8rem; padding-top:7rem}
+  .jr-group,.jr-item{grid-template-columns:var(--rail-w) 1fr}
+  .jr-group__years,.jr-date{display:none}
+  .jr-group{padding-top:2.4rem}
+  .jr-item{padding:1rem 0}
+  .jr-item .jr-body::before{
+    content:attr(data-date); display:block; margin-bottom:.5rem;
+    font-size:.56rem; letter-spacing:.2em; text-transform:uppercase; color:var(--cream-dim);
+  }
+  .jr-item--case .jr-body{padding:1rem 1rem 1.1rem;margin-left:0}
+  .jr-line{font-size:.9rem}
+}
