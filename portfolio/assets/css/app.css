@@ -136,11 +136,22 @@ em{font-style:italic}
   max-width:24rem;
 }
 .hero__cta{
-  display:inline-flex; align-items:center; gap:.85rem;
+  display:inline-flex; align-items:center; gap:.9rem;
   margin-top:2.6rem;
-  font-size:.72rem; letter-spacing:.3em; text-transform:uppercase;
+  padding:.95rem 1.5rem;
+  border:1px solid;                      /* colour set per side, below */
+  font-size:.66rem; letter-spacing:.3em; text-transform:uppercase;
   opacity:0; transform:translateY(.6rem);
   transition:opacity 700ms var(--ease-lux), transform 700ms var(--ease-lux);
+}
+/* the outline takes its side's accent: each panel has its own ground */
+.hero__panel.is-ink .hero__cta{
+  color:var(--hero-accent);
+  border-color:color-mix(in srgb, var(--hero-accent) 55%, transparent);
+}
+.hero__panel.is-paper .hero__cta{
+  color:var(--hero-accent-light);
+  border-color:color-mix(in srgb, var(--hero-accent-light) 55%, transparent);
 }
 .hero__panel.is-hot .hero__cta{opacity:1;transform:none}
 .hero__cta-arrow{width:28px;height:8px;overflow:visible;transition:transform 600ms var(--ease-lux)}
