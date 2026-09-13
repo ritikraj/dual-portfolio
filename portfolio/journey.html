@@ -100,7 +100,10 @@ html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
     </header>
 
     <section class="jr-list" id="jrList" aria-label="timeline, newest first">
-      <span class="jr-rail" id="jrRail" aria-hidden="true"></span>
+      <svg class="jr-thread" id="jrThread" aria-hidden="true" preserveAspectRatio="none">
+        <path class="jr-thread__base" id="jrBase"/>
+        <path class="jr-thread__live" id="jrLive"/>
+      </svg>
 
       <header class="jr-group" data-up>
         <p class="jr-group__years">2026</p>
@@ -279,7 +282,7 @@ html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
   </div>
 
   <footer class="jr-foot">
-    <a class="csa__flip" href="index.html#a:journey">back to the portfolio</a>
+    <a class="csa__flip jr-foot__home" href="index.html#a:journey">back to the portfolio</a>
     <nav class="jr-foot__links" aria-label="elsewhere">
       <a href="https://dribbble.com/ritik-raj" target="_blank" rel="noopener">dribbble ↗</a>
       <a href="https://medium.com/@ritikraj559" target="_blank" rel="noopener">medium ↗</a>

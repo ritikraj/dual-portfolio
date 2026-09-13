@@ -123,27 +123,36 @@ a{color:inherit;text-decoration:none}
 }
 .csa__numbers span{display:block;margin-top:.7rem;font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;opacity:.42}
 
-/* ── foot ────────────────────────────────────────────────────────────── */
-.csa__next{
-  margin-top:6rem;padding:3.2rem var(--pad) 5rem;
-  border-top:1px solid var(--cream-faint);
-  display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:1.4rem;
+/* ── claude's take: the last thing in the case, before the footer ──── */
+.csa__take{
+  margin-top:5rem; padding:0 var(--pad);
+  max-width:72rem;
 }
-.csa__next a{
-  font-family:var(--font-display);font-size:clamp(1.4rem,2.6vw,2.2rem);
-  background-image:linear-gradient(var(--gold),var(--gold));
-  background-size:0 1px;background-position:0 100%;background-repeat:no-repeat;
-  transition:background-size .6s var(--ease);
+.csa__take-note{
+  font-family:var(--font-display);
+  font-size:clamp(1.1rem,1.8vw,1.45rem); line-height:1.5; color:var(--cream-dim);
+  max-width:34rem;
 }
-.csa__next a:hover{background-size:100% 1px}
-.csa__next small{font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;opacity:.35}
 .csa__flip{
-  display:inline-flex;align-items:center;gap:.6rem;
+  display:inline-flex;align-items:center;gap:.8rem;
   padding:.85rem 1.3rem;border:1px solid var(--gold-half);color:var(--gold);
-  font-size:.6rem;letter-spacing:.26em;text-transform:uppercase;
+  font-family:var(--font-body);font-size:.6rem;letter-spacing:.26em;text-transform:uppercase;
   transition:background .45s var(--ease),color .45s var(--ease),border-color .45s var(--ease);
 }
+.csa__flip svg{width:24px;height:8px;transition:transform .5s var(--ease)}
 .csa__flip:hover{background:var(--gold);color:var(--ink);border-color:var(--gold)}
+.csa__flip:hover svg{transform:translateX(5px)}
+.csa__flip--take{margin-top:1.4rem;padding:1rem 1.5rem}
+
+/* ── foot: shared by every reading page ──────────────────────────────── */
+.jr-foot{
+  margin-top:5rem; padding:2.4rem var(--pad) 4.5rem;
+  border-top:1px solid var(--cream-faint);
+  display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:1.4rem 2rem;
+}
+.jr-foot__links{display:flex;flex-wrap:wrap;gap:1.6rem;font-size:.6rem;letter-spacing:.24em;text-transform:uppercase}
+.jr-foot__links a{color:var(--cream-dim);transition:color 300ms ease}
+.jr-foot__links a:hover{color:var(--gold)}
 
 /* ── reveal ──────────────────────────────────────────────────────────── */
 .csa [data-up]{opacity:0;transform:translate3d(0,1.4rem,0);transition:opacity .9s var(--ease),transform 1s var(--ease)}

@@ -105,7 +105,9 @@ its own header. Follows the OS until pressed, stored separately as
 them; change the token and the Google Fonts `<link>` in `index.html`.
 
 **The thread's beads** are one stop per section, sitting exactly where the
-progress bead comes to rest. The visible pip is 2.2px; the circle that catches
+progress bead comes to rest. Sections are spread over the middle stretch of
+the thread rather than its ends (`Thread.lenAt`): the top of the screen is
+under the bar and the bottom is the edge, so a bead at either is unreachable. The visible pip is 2.2px; the circle that catches
 the click is 11px, which is the whole point. The label on hover sits on a scrim that is **measured off the text** with
 `getBBox()` rather than sized by hand, so renaming a section can never leave it
 half-covered; it is re-measured once `document.fonts.ready` resolves, since the
@@ -307,9 +309,12 @@ because the running order is read from the DOM.
 `<article class="jr-item jr-item--KIND">`, where KIND is `case` (has a case
 study here: serif, accent card, filled bead, a way in), `soon`, `loss` (did not
 land, kept on purpose, dashed bead) or `plain`. To promote an entry to a case
-study, change its kind and add the `.jr-cta` link. The rail fills with the
-accent as you read and each bead lights as the fill reaches it
-(`journey.js`); everything else, the veil, transitions, reveals and esc, is
+study, change its kind and add the `.jr-cta` link. The thread is the index page's curve, repeated
+down the length of the list (the same bend every 440px), filled in the accent
+as you read. Each bead is seated on the curve at its own height, and lights as
+the fill reaches it (`journey.js`). Over the last screen of scroll the reading
+line eases down to wherever the thread ends, so it always completes even when
+the footer leaves no room to scroll further; everything else, the veil, transitions, reveals and esc, is
 `case.js`. The page tells `case.js` where home is with
 `data-home="index.html#a:journey"` on `<html>`, which brings you back to the
 more section rather than the top.
@@ -317,6 +322,13 @@ more section rather than the top.
 No images on the timeline, deliberately: art exists for three of sixteen
 entries, and a page where a few items have pictures reads as though the rest
 matter less.
+
+## the case study footer
+
+Every reading page — the four case studies and the journey — ends the same way:
+claude's take (on case pages), then the shared footer with a way back and the
+external links. The footer's home link is set by `case.js`, so it always returns
+to the section you came from.
 
 ## the unlocked section
 

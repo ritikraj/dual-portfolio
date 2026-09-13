@@ -11,7 +11,7 @@
 
 .jr{
   --date-w:7.2rem;         /* the date column                    */
-  --rail-w:2.8rem;         /* the column the bead sits centred in */
+  --rail-w:3.4rem;         /* the column the thread bends inside  */
   padding:9rem var(--pad) 2rem;
   max-width:66rem;
 }
@@ -25,19 +25,17 @@
 }
 .jr-legend li{display:inline-flex;align-items:center;gap:.6rem}
 
-/* ── the list and its rail ───────────────────────────────────────────── */
+/* ── the list and its thread ─────────────────────────────────────────── */
 .jr-list{position:relative;margin-top:4.2rem}
-.jr-rail{
-  position:absolute; top:.6rem; bottom:.6rem;
-  left:calc(var(--date-w) + var(--rail-w) / 2);
-  width:1px; margin-left:-.5px;
-  background:var(--cream-faint);
+.jr-thread{
+  position:absolute; top:0; height:100%;
+  left:var(--date-w); width:var(--rail-w);
+  overflow:visible; pointer-events:none;
 }
-.jr-rail::after{
-  content:""; position:absolute; top:0; left:0; right:0;
-  height:calc(var(--p, 0) * 100%);
-  background:var(--gold);
-  box-shadow:0 0 8px var(--gold-half);
+.jr-thread__base{fill:none;stroke:var(--cream-faint);stroke-width:1}
+.jr-thread__live{
+  fill:none; stroke:var(--gold); stroke-width:1.25; stroke-linecap:round;
+  filter:drop-shadow(0 0 6px var(--gold-half));
 }
 
 /* ── beads ───────────────────────────────────────────────────────────── */
@@ -46,6 +44,7 @@
   display:block; width:9px; height:9px; border-radius:50%;
   border:1px solid var(--cream-dim); background:var(--ink);
   transition:border-color 500ms var(--ease), background 500ms var(--ease), box-shadow 500ms var(--ease);
+  /* seated on the curve by journey.js with a translateX */
 }
 .jr-dot.is-case{background:var(--gold);border-color:var(--gold);box-shadow:0 0 0 4px var(--gold-glow)}
 .jr-dot.is-loss{border-style:dashed}
@@ -114,7 +113,7 @@
 /* the ones with a case study: they get the serif, the colour, and a door */
 .jr-item--case .jr-body{
   padding:1.2rem 1.4rem 1.3rem;
-  margin:-.2rem 0 0 -.2rem;
+  margin:-.2rem 0 0;
   border:1px solid var(--cream-faint);
   border-left:2px solid var(--gold);
   background:linear-gradient(90deg, var(--gold-glow), transparent 70%);
@@ -138,15 +137,7 @@
 /* the ones that did not land: quieter, and marked, not hidden */
 .jr-item--loss .jr-line{color:var(--cream-dim)}
 
-/* ── foot ────────────────────────────────────────────────────────────── */
-.jr-foot{
-  margin-top:5rem; padding:2.4rem var(--pad) 4.5rem;
-  border-top:1px solid var(--cream-faint);
-  display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:1.4rem 2rem;
-}
-.jr-foot__links{display:flex;flex-wrap:wrap;gap:1.6rem;font-size:.6rem;letter-spacing:.24em;text-transform:uppercase}
-.jr-foot__links a{color:var(--cream-dim);transition:color 300ms ease}
-.jr-foot__links a:hover{color:var(--gold)}
+/* the footer lives in case-a.css now: every reading page shares it */
 
 /* ── phone: the rail moves to the edge and the date rides above ──────── */
 @media (max-width:720px){

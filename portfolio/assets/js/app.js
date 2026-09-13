@@ -96,7 +96,20 @@
       this.live.setAttribute('d', d);
       this.len = this.live.getTotalLength();
       this.live.style.strokeDasharray = this.len;
+
+      // the sections live on the middle stretch of the thread, not its ends:
+      // the top of the screen is under the bar and the bottom is the edge, so
+      // a bead parked at either one is a bead nobody can see or reach
+      var top = Math.max(96, h * 0.11), bottom = Math.max(64, h * 0.08);
+      this.a = this.len * (top / h);
+      this.b = this.len * (1 - bottom / h);
+
       this.stops(this.labels);
+    },
+
+    /* progress 0 → 1, as a length along the padded stretch of the thread */
+    lenAt: function (p) {
+      return this.a + Math.max(0, Math.min(1, p)) * (this.b - this.a);
     },
 
     /* one bead per section, sitting exactly where the progress bead will come
@@ -109,7 +122,7 @@
       var n = labels.length, html = '', i, pt, p;
       for (i = 0; i < n; i++) {
         p  = n > 1 ? i / (n - 1) : 1;
-        pt = this.live.getPointAtLength(this.len * Math.max(0.02, Math.min(1, p)));
+        pt = this.live.getPointAtLength(this.lenAt(p));
         html += '<g class="thread__stop" data-go="' + i + '" ' +
                   'transform="translate(' + pt.x.toFixed(1) + ',' + pt.y.toFixed(1) + ')">' +
                   '<circle class="thread__hit" r="11"/>' +
@@ -152,7 +165,7 @@
     set: function (target, instant) {
       if (!this.len) return;
       var self = this,
-          to   = Math.max(0.02, Math.min(1, target)),
+          to   = Math.max(0, Math.min(1, target)),
           from = this.p === null ? to : this.p,
           dur  = instant ? 0 : CONFIG.slideDuration,
           t0   = performance.now();
@@ -169,8 +182,9 @@
     },
 
     paint: function (p) {
-      this.live.style.strokeDashoffset = this.len * (1 - p);
-      var pt = this.live.getPointAtLength(this.len * p);
+      var L = this.lenAt(p);
+      this.live.style.strokeDashoffset = this.len - L;
+      var pt = this.live.getPointAtLength(L);
       this.bead.style.transform = 'translate(' + pt.x + 'px,' + pt.y + 'px)';
     }
   };

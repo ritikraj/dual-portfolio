@@ -15,7 +15,7 @@
   var home = document.documentElement.getAttribute('data-home') ||
              ('../index.html#' + side + (slug ? ':' + slug : ''));
 
-  [].slice.call(document.querySelectorAll('.csa__back, .csb__back')).forEach(function (a) {
+  [].slice.call(document.querySelectorAll('.csa__back, .csb__back, .jr-foot__home')).forEach(function (a) {
     a.setAttribute('href', home);
   });
 
