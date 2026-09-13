@@ -312,8 +312,7 @@ It carries its own light/dark button in the top bar, sharing `rr-mode`.
 
 Every number on it comes from the plugin's product brief. The brief rules out
 build-time claims, code export, "ai" and accessibility claims; keep it that way.
-Screens are 2x PNG exports from the Figma file, in `assets/img/plugin/`; the
-link at the bottom opens that file. Coming back (`index.html#a:plugin`) reopens
+Screens are 2x PNG exports from the Figma file, in `assets/img/plugin/`. Coming back (`index.html#a:plugin`) reopens
 the bubbles section quietly, since the pop count resets with the page change.
 
 ## want to know more, and the journey

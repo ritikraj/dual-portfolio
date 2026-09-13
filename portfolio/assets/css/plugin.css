@@ -163,7 +163,6 @@
 }
 .pl-strip figure:hover img{transform:translateY(-6px)}
 .pl-strip figcaption{margin-top:.8rem;font-size:.58rem;letter-spacing:.26em;text-transform:uppercase;color:var(--cream-dim)}
-.pl-close{padding:0 var(--pad) 0 0;margin-top:3.4rem}
 
 /* ── tablet and phone ────────────────────────────────────────────────── */
 @media (max-width:960px){
