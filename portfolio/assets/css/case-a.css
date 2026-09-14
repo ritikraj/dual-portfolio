@@ -106,9 +106,14 @@ a{color:inherit;text-decoration:none}
 .csa__plate img{width:100%;height:100%;object-fit:cover;display:block}
 /* a plate holding a real screenshot sizes itself to the screenshot rather
    than cropping it into a 16:9 hole */
-.csa__plate--free{aspect-ratio:auto;display:block}
-.csa__plate--free img{height:auto}
-.csa__plate--free figcaption{position:static;background:none;padding:.9rem 0 0}
+/* the frame goes on the picture, not the figure, so the caption sits under
+   it on the page: left aligned, no band, set like every other caption */
+.csa__plate.csa__plate--free{aspect-ratio:auto;display:block;place-items:normal;border:0;background:none;overflow:visible}
+.csa__plate--free img,.csa__plate--free video{height:auto;border:1px solid var(--cream-faint)}
+.csa__plate.csa__plate--free figcaption{
+  position:static;background:none;padding:.9rem 0 0;text-align:left;
+  font-size:.58rem;letter-spacing:.26em;text-transform:uppercase;opacity:.45;
+}
 .csa__plate figcaption{
   position:absolute;left:0;right:0;bottom:0;padding:.7rem 1rem;
   font-size:.58rem;letter-spacing:.26em;text-transform:uppercase;opacity:.3;
@@ -117,6 +122,12 @@ a{color:inherit;text-decoration:none}
 .csa__plates .csa__plate{margin:0;aspect-ratio:4/3}
 .csa__plates .csa__plate--free{aspect-ratio:4/3}
 .csa__plates .csa__plate--free img{height:100%}
+/* a pair of screenshots at their own shape, side by side on anything wider
+   than a phone */
+.csa__plates--pair{max-width:none}
+.csa__plates--pair .csa__plate--free{aspect-ratio:auto}
+.csa__plates--pair .csa__plate--free img{height:auto}
+.csa__plates .csa__plate + .csa__plate{margin-top:0}
 
 /* a plate can hold a clip as well as a screenshot */
 .csa__plate video{width:100%;height:auto;display:block}
