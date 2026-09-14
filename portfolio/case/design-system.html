@@ -135,26 +135,43 @@ html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
       <div><dt>role</dt><dd>owner, architecture to governance</dd></div>
       <div><dt>scale</dt><dd>120+ coded · 1,000+ figma</dd></div>
       <div><dt>quality</dt><dd>wcag 2.1 aa audited</dd></div>
-      <div><dt>company</dt><dd>fello · us real estate crm</dd></div>
+      <div><dt>timeline</dt><dd>discovery to live in 8 months</dd></div>
       <div><dt>attempt</dt><dd>the tenth. the first that stuck</dd></div>
     </dl>
   </header>
 
+  <section class="csa__glance" data-up>
+    <div><small>the problem</small><p>a style guide of about 20 components, no documentation, and a product people relearned every few weeks.</p></div>
+    <div><small>what i did</small><p>built for the ai-first company fello was becoming: principles, then variables, then skeletons, then components.</p></div>
+    <div><small>how it landed</small><p>under <b>1%</b> detach, <b>3.6M</b> insertions in six months, and every new surface built on it.</p></div>
+  </section>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>the problem</h2>
+    <p class="csa__p" data-up>what existed was a style guide with about twenty components, no documentation and no design language behind it. the stated problem was speed: design was the queue everything waited in.</p>
+    <div class="csa__pairs" data-up>
+      <div><b>for the team</b><p>no reusable code, so engineering rebuilt the same things. no ux architecture to lean on, no ui consistency, and nothing ready for ai.</p></div>
+      <div><b>for users</b><p>new features needed help to find. the product relied on recall instead of recognition, and people relearned it every few weeks.</p></div>
+    </div>
+    <p class="csa__p" data-up>it was the eleventh hour. every new builder, workflow or ai feature would compound the inconsistency, and the cost of change was rising faster than feature velocity. a ux audit mapped every component the product would need.</p>
+  </section>
+
   <section class="csa__block">
     <h2 class="csa__h" data-up>the problem under the problem</h2>
-    <p class="csa__p" data-up>the stated problem was speed. design was the queue everything waited in, and a system is the standard answer to that.</p>
-    <p class="csa__p" data-up>the actual problem was that the company was mid-identity-change. it had sold itself as a marketing tool and was becoming an ai-first real estate operating system. a system built for the first one would need tearing out within a year of the second one arriving. <b>deciding which company i was building for was the real first decision</b>, and it was not a design decision.</p>
-  </section>
-  <section class="csa__block">
-    <h2 class="csa__h" data-up>the bet</h2>
-    <p class="csa__p" data-up>every component was engineered to hold ai before engineering wrote a line of ai. ai variants on cards, loaders and graphs. headers tested with the ai elements present and absent, so neither state was the special case.</p>
-    <p class="csa__p" data-up>that looks like over-engineering right up until the roadmap turns, and then it looks like the only sane thing anyone did that quarter. it is a sequencing bet, and sequencing is most of what a system is.</p>
+    <p class="csa__p" data-up>the company was mid-identity-change. it had sold itself as a marketing tool and was becoming an ai-first real estate operating system. a system built for the first would need tearing out within a year of the second arriving. <b>deciding which company i was building for was the real first decision</b>, and it was not a design decision.</p>
+    <p class="csa__p" data-up>so every component was engineered to hold ai before engineering wrote a line of ai: ai variants on cards, loaders and graphs, and headers tested with the ai elements present and absent, so neither state was the special case. it looks like over-engineering right up until the roadmap turns.</p>
     <p class="csa__pull" data-up>a strong design system is 80% thinking and 20% figma.</p>
   </section>
+
   <section class="csa__block">
-    <h2 class="csa__h" data-up>the architecture</h2>
-    <p class="csa__p" data-up>token architecture in figma variables, carrying multi-theme and multi-context from the start rather than retrofitting either. <b>120+ coded components</b> standing against <b>1,000+ figma components</b>. accessibility audited to wcag 2.1 aa rather than asserted.</p>
-    <p class="csa__p" data-up>i benchmarked against atlassian, polaris, lightning and spectrum. not to copy them. to know exactly which of their decisions i was declining, and why.</p>
+    <h2 class="csa__h" data-up>how i built it, in order</h2>
+    <ol class="csa__list" data-up>
+      <li><b>principles first</b>atomic design as the method, and five principles for the whole product: scalable, simple, purposeful, unambiguous, empowering. plus one rule that saved months: a variation of an existing component before a new component.</li>
+      <li><b>variables in three layers</b>primitives defined and locked. global variables defined and tested across real screens. component variables only where a global one failed. tokens for colour, spacing, type and elevation, and a fluid column layout from day one.</li>
+      <li><b>skeletons before components</b>200+ iterations of the main pages to settle the taste, then skeletons for every other page. the base and advanced components were read off those skeletons, not guessed at.</li>
+      <li><b>the base layer</b>buttons, inputs, loaders, tooltips: the parts that rarely change. accessibility was built in from the start and solved with global variables, so no base component needed variables of its own.</li>
+      <li><b>the architecture</b>product-wide patterns, on logic similar to slack, hubspot and google chat: top navbar and main sidebar, page and section headers, cards and a robust table cell, secondary navigation panels, modals, bottomsheets, side popups, empty states and reusable illustrations.</li>
+    </ol>
     <figure class="csa__embed" data-up>
       <div class="csa__embed-frame">
         <iframe src="https://embed.figma.com/design/5bDJ3wMAfd2IxRGAUm3TOA/-CS--DS-Skeletons?node-id=0-1&amp;embed-host=share" title="design system 3.0, skeletons, in figma" loading="lazy" allowfullscreen></iframe>
@@ -162,6 +179,13 @@ html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
       <figcaption>the system in figma · skeletons</figcaption>
     </figure>
   </section>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>the architecture, and the hand-off</h2>
+    <p class="csa__p" data-up>token architecture in figma variables, carrying multi-theme and multi-context from the start rather than retrofitting either. <b>120+ coded components</b> against <b>1,000+ figma components</b>, with accessibility audited to wcag 2.1 aa rather than asserted. i benchmarked against atlassian, polaris, lightning and spectrum, to know exactly which of their decisions i was declining, and why.</p>
+    <p class="csa__p" data-up>the design took the team about ten to twelve weeks. engineering did not wait for it: they started in parallel, early, building the components and frameworks each flow would need, and the work was split so every designer owned a module.</p>
+  </section>
+
   <section class="csa__block">
     <h2 class="csa__h" data-up>how it landed</h2>
     <div class="csa__numbers" data-up>
@@ -170,8 +194,27 @@ html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
       <div><b>3.6M</b><span>insertions in 6 months</span></div>
       <div><b>~30%</b><span>faster to delivery</span></div>
     </div>
-    <p class="csa__p" data-up>3.6 million insertions in six months says the system was used. the detach rate says whether it was trusted, and it is the number i actually watch. adoption can be mandated. a detach rate under one percent means designers stopped needing to fight the system to do their job, and that is the only honest measure of whether a system is real.</p>
+    <ul class="csa__ticks" data-up>
+      <li><b>100%</b> of new product surfaces built on it after launch</li>
+      <li><b>zero</b> new custom components outside the system for the next nine months</li>
+      <li><b>three designers</b> onboarded and shipping inside it on their own within a week</li>
+      <li>the ai variants needed <b>no retrofitting</b> when the ai features shipped</li>
+      <li>it made the builder architecture possible, and gave contacts, builders, workflows and reports one visual language</li>
+    </ul>
+    <p class="csa__p" data-up>3.6 million insertions says the system was used. the detach rate says whether it was trusted, and it is the number i actually watch. adoption can be mandated. a detach rate under one percent means designers stopped fighting the system to do their job.</p>
   </section>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>what was hard</h2>
+    <div class="csa__pairs csa__pairs--rows" data-up>
+      <div><b>the iterations</b><p>200+ page iterations took several designers weeks before the ideas were ready to show anyone outside design.</p></div>
+      <div><b>the skeletons</b><p>they worked for designers. everyone else struggled to picture the finished ui from a skeleton screen.</p></div>
+      <div><b>the names</b><p>variable nomenclature clashed between design and engineering, again and again.</p></div>
+      <div><b>the constraints</b><p>designers struggled to create inside the system, and every component needed real thought about how it would scale, adapt and behave.</p></div>
+      <div><b>the qa loops</b><p>hand-off friction meant tight qa cycles. qa retested the whole product, because the entire design language was new to them.</p></div>
+    </div>
+  </section>
+
   <section class="csa__block">
     <h2 class="csa__h" data-up>the tenth one</h2>
     <p class="csa__p" data-up>i have built ten or more design systems. most of them failed, and they failed the same way: built as a component library, handed over as a component library, quietly abandoned when the product changed shape.</p>

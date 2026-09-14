@@ -130,7 +130,7 @@ html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
   <header class="csa__hero">
     <ul class="csa__tags" data-up><li class="is-name">builder framework</li><li>architecture</li><li>a refused brief</li></ul>
     <h1 class="csa__title" data-up>the <em>every builder is its own product</em> problem</h1>
-    <p class="csa__stand" data-up>the brief was to fix the email builder. i wrote a framework instead, and then spent a year staying on it so it would not come apart.</p>
+    <p class="csa__stand" data-up>the brief was to fix the email builder. i wrote a framework instead, and then stayed on it so it would not come apart.</p>
     <dl class="csa__meta" data-up>
       <div><dt>role</dt><dd>architect, reviewer and owner</dd></div>
       <div><dt>scope</dt><dd>four products, one model</dd></div>
@@ -140,20 +140,44 @@ html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
     </dl>
   </header>
 
+  <section class="csa__glance" data-up>
+    <div><small>the problem</small><p>email, landing pages and forms all failed the same way: no real builder, only locked templates.</p></div>
+    <div><small>what i did</small><p>one framework instead of one fix: three tiers of block, one page anatomy, one shell for every builder.</p></div>
+    <div><small>how it landed</small><p><b>four products</b> on one interaction model, and the email builder shipped in <b>ten weeks</b>.</p></div>
+  </section>
+
   <section class="csa__block">
     <h2 class="csa__h" data-up>the brief i did not take</h2>
-    <p class="csa__p" data-up>fello had builders. a landing page builder, an email builder, and more coming. each one had been built by whoever needed it, at the moment they needed it, with its own canvas, its own idea of a block, its own state rules.</p>
-    <p class="csa__p" data-up>to a user moving across the product, that is four products wearing one logo. every move costs them a re-learn. the brief said fix one of them. fixing one of them makes the gap between the four wider, not narrower.</p>
+    <p class="csa__p" data-up>fello had builders, and none of them was really a builder. email, landing pages and forms each had its own canvas, its own idea of a block, its own rules, and all of them came down to locked templates. users felt it the same way everywhere:</p>
+    <ul class="csa__ticks" data-up>
+      <li>campaigns with images, gifs, videos or embedded html were hard to make</li>
+      <li>forms gave them too little control</li>
+      <li>landing pages would not take a custom section</li>
+    </ul>
+    <p class="csa__p" data-up>the brief said fix the email builder. fixing one of them makes the gap between the others wider, not narrower. every surface was failing for the same reason, so it needed one answer.</p>
   </section>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>the rules i set</h2>
+    <ol class="csa__list" data-up>
+      <li><b>wysiwyg by default</b>what you see while editing is what gets sent. inline editing was non-negotiable.</li>
+      <li><b>one principle over every decision</b>anyone should be able to build anything. the only limit should be imagination.</li>
+      <li><b>one hurdle to respect</b>every layer of shared abstraction either limits what people can make, or collapses under its own complexity. each one had to earn its place.</li>
+    </ol>
+  </section>
+
   <section class="csa__block">
     <h2 class="csa__h" data-up>three tiers</h2>
     <ol class="csa__list" data-up>
       <li><b>base blocks</b>the primitives every builder shares. text, media, layout, spacing. one definition, one behaviour, everywhere.</li>
-      <li><b>shared widgets</b>compositions that more than one product needs. built once, inherited, not copied.</li>
+      <li><b>shared widgets</b>compositions more than one product needs. built once, inherited, not copied.</li>
       <li><b>product-specific widgets</b>the genuinely different parts. contained, named as such, and not allowed to leak downward.</li>
     </ol>
-    <p class="csa__p" data-up>the third tier is the one that makes it survive. without a sanctioned place to put the genuinely product-specific thing, people put it in tier one, and a year later you are back where you started with more abstraction to unpick.</p>
+    <p class="csa__p" data-up>the base had to stretch both ways. editing was designed at landing-page level and then limited for email: emails do not need nesting, and landing pages cannot work without it. some blocks behave the same everywhere; others are contextual, and the tiers say which is which.</p>
+    <p class="csa__p" data-up>the third tier is the one that makes it survive. without a sanctioned place for the product-specific thing, people put it in tier one, and a year later you are back where you started with more abstraction to unpick.</p>
+    <figure class="csa__plate csa__plate--free" data-up><img src="../assets/img/builder-canvas.jpg" alt="the html canvas: elements, blocks, columns, layouts, output" loading="lazy" decoding="async"><figcaption>the html canvas: five levels, and who each one is for</figcaption></figure>
   </section>
+
   <section class="csa__block">
     <h2 class="csa__h" data-up>from framework to screens</h2>
     <p class="csa__p" data-up>the tiers say what a block is. two more decisions say where it lives. every page is <b>areas holding sections, holding columns, holding blocks and widgets</b>. and every builder is the same four regions: a header, a navigation rail, a panel and a working canvas.</p>
@@ -194,29 +218,56 @@ html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
       </div>
       <figcaption>the email builder, wireframed on the shell</figcaption>
     </figure>
+    <div class="csa__pairs" data-up>
+      <div><b>areas</b><p>groups of sections, set up separately so parts of a page can be locked. their settings are hidden from users.</p></div>
+      <div><b>sections</b><p>end-to-end layouts inside an area, or nested inside a column. users can edit them.</p></div>
+      <div><b>columns</b><p>divide a section. fixed widths for email, fluid for landing pages; settings shown or hidden per builder.</p></div>
+      <div><b>blocks and widgets</b><p>blocks are the content itself. widgets are the special blocks, with settings of their own.</p></div>
+    </div>
   </section>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>three interaction calls</h2>
+    <ol class="csa__list" data-up>
+      <li><b>drag and drop</b>several drop areas light up with their handles while you drag, so a block never lands somewhere you did not mean.</li>
+      <li><b>device switch</b>two devices, not five. the easy part, kept easy.</li>
+      <li><b>properties panel</b>docked and floating were both designed. floating won by default, for smaller screens.</li>
+    </ol>
+  </section>
+
   <section class="csa__block">
     <h2 class="csa__h" data-up>the timing was the strategy</h2>
-    <p class="csa__p" data-up>i proposed this the week after design system 3.0 shipped. that was deliberate. institutional trust in system-led design was the highest it was ever going to be, and a framework proposal is a bet on trust more than a bet on craft.</p>
-    <p class="csa__p" data-up>the same document, six months earlier, would have read as architecture for its own sake. the work was ready before the company was. i waited for the company.</p>
-    <p class="csa__pull" data-up>the hard part was not designing it. it was staying on it.</p>
+    <p class="csa__p" data-up>i proposed this the week after design system 3.0 shipped. that was deliberate. trust in system-led design was the highest it was ever going to be, and a framework proposal is a bet on trust more than a bet on craft.</p>
+    <p class="csa__p" data-up>the same document six months earlier would have read as architecture for its own sake. the work was ready before the company was. i waited for the company.</p>
   </section>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>what broke, and what i changed</h2>
+    <div class="csa__pairs csa__pairs--rows" data-up>
+      <div><b>the side panel</b><p>widgets evolved past the panel’s original structure. a redesign was unavoidable, and it was done.</p></div>
+      <div><b>the floating panel</b><p>folding many settings into one compact floating panel took far more manual work than i planned for.</p></div>
+      <div><b>mobile column stacking</b><p>the system was designed for it, it was deprioritised for beta, and beta users flagged it at once. the architecture absorbed the fix in days. the delay was a process failure, and it was mine.</p></div>
+    </div>
+  </section>
+
   <section class="csa__block">
     <h2 class="csa__h" data-up>three roles, one pair of hands</h2>
-    <p class="csa__p" data-up>i held architect, reviewer and owner at the same time, and that is not a boast. it is the reason it worked, and it is also the risk i would flag to anyone repeating it.</p>
-    <p class="csa__p" data-up>a framework fragments at review time, not at design time. someone has to say no to the twentieth reasonable-sounding exception, week after week, long after the launch that made it exciting. remove sustained ownership and the widgets drift within two quarters.</p>
-    <figure class="csa__plate csa__plate--free" data-up><img src="../assets/img/builder-canvas.jpg" alt="the html canvas: elements, blocks, columns, layouts, output" loading="lazy" decoding="async"><figcaption>the html canvas: five levels, and who each one is for</figcaption></figure>
+    <p class="csa__p" data-up>i held architect, reviewer and owner at the same time: framework designer, quality gatekeeper, and scope owner for beta. that is not a boast. it is the reason it worked, and the risk i would flag to anyone repeating it.</p>
+    <p class="csa__p" data-up>a framework fragments at review time, not design time. without an owner the widgets would have split, the builders would have drifted apart, and there would be no shared foundation. as reviewer i compromised early, in concept discussions, so that launch quality stayed high and the system stayed extensible.</p>
+    <p class="csa__pull" data-up>the hard part was not designing it. it was staying on it.</p>
     <figure class="csa__plate csa__plate--free" data-up><img src="../assets/img/builder-suite.jpg" alt="four builders running the same interaction model" loading="lazy" decoding="async"><figcaption>four products, one interaction model</figcaption></figure>
   </section>
+
   <section class="csa__block">
     <h2 class="csa__h" data-up>how it landed</h2>
     <div class="csa__numbers" data-up>
       <div><b>4</b><span>products</span></div>
       <div><b>1</b><span>interaction model</span></div>
       <div><b>3</b><span>tiers</span></div>
-      <div><b>0</b><span>re-learn cost</span></div>
+      <div><b>10 wks</b><span>for the email builder</span></div>
     </div>
-    <p class="csa__p" data-up>the outcome is a negative one, which is why it is hard to sell and easy to undervalue: nothing had to be learned twice. the email builder that came next was ten weeks instead of a year, because it was an instance and not an invention.</p>
+    <p class="csa__p" data-up>the outcome is a negative one, which is why it is hard to sell and easy to undervalue: nothing had to be learned twice. the email builder was the proof, shipping in ten weeks as an instance rather than an invention, and the landing page builder went into development straight after it.</p>
+    <p class="csa__p" data-up>this project was never about shipping a builder. it was about recognising one failure repeated across a product, solving it once, and letting the next product grow without repeating it.</p>
   </section>
 
   <section class="csa__take">

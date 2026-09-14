@@ -291,6 +291,71 @@ a{color:inherit;text-decoration:none}
   .bf-shell{aspect-ratio:4/3}
 }
 
+/* ── the case in three lines ──────────────────────────────────────────
+   sits under the hero: problem, move, result, for the reader who stops here */
+.csa__glance{
+  margin:3.2rem var(--pad) 0; max-width:calc(72rem - var(--pad) * 2);
+  display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1px;
+  background:var(--cream-faint); border:1px solid var(--cream-faint);
+}
+.csa__glance > div{background:var(--ink);padding:1.3rem 1.3rem 1.4rem}
+.csa__glance small{display:block;font-size:.56rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
+.csa__glance p{margin-top:.7rem;font-size:.92rem;line-height:1.65;color:var(--cream)}
+.csa__glance b{font-weight:400;color:var(--gold)}
+
+/* ── an inline link inside prose ─────────────────────────────────────── */
+.csa__inline{color:var(--cream);border-bottom:1px solid var(--gold-half);transition:color .3s ease,border-color .3s ease}
+.csa__inline:hover{color:var(--gold);border-color:var(--gold)}
+
+/* ── short checked lines ─────────────────────────────────────────────── */
+.csa__ticks{margin:1.4rem 0 1.6rem;padding:0;list-style:none;max-width:var(--measure)}
+.csa__ticks li{
+  position:relative; padding:.5rem 0 .5rem 1.6rem;
+  font-size:clamp(.92rem,1.05vw,1rem); line-height:1.7; color:var(--cream-dim);
+}
+.csa__ticks li::before{content:"";position:absolute;left:0;top:1.2rem;width:.7rem;height:1px;background:var(--gold)}
+.csa__ticks b{font-weight:400;color:var(--cream)}
+
+/* ── three people, side by side ──────────────────────────────────────── */
+.csa__trio{
+  margin:1.6rem 0 1.8rem; max-width:62rem;
+  display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1px;
+  background:var(--cream-faint); border:1px solid var(--cream-faint);
+}
+.csa__trio > div{background:var(--ink);padding:1.2rem 1.2rem 1.3rem}
+.csa__trio b{display:block;font-family:var(--font-display);font-weight:400;font-size:1.2rem;color:var(--cream)}
+.csa__trio p{margin-top:.5rem;font-size:.86rem;line-height:1.65;color:var(--cream-dim)}
+
+/* ── label and line pairs: two across, or one per row ────────────────── */
+.csa__pairs{
+  margin:1.8rem 0 1.4rem; max-width:62rem;
+  display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 2.4rem;
+  border-top:1px solid var(--cream-faint);
+}
+.csa__pairs > div{padding:1.05rem 0 1.15rem;border-bottom:1px solid var(--cream-faint)}
+.csa__pairs b{display:block;font-size:.6rem;letter-spacing:.26em;text-transform:uppercase;font-weight:400;color:var(--gold)}
+.csa__pairs p{margin-top:.45rem;font-size:.92rem;line-height:1.7;color:var(--cream-dim)}
+.csa__pairs--rows{grid-template-columns:1fr}
+.csa__h + .csa__pairs{margin-top:0;border-top:0}
+.csa__h + .csa__pairs > div:first-child{padding-top:0}
+.csa__pairs--rows > div{display:grid;grid-template-columns:13rem 1fr;gap:1.5rem;align-items:baseline}
+.csa__pairs--rows p{margin-top:0}
+
+/* ── a funnel, drawn as rows of steps ────────────────────────────────── */
+.csa__flow{margin:1.8rem 0 2rem;max-width:62rem}
+.csa__flow-row{padding:1.1rem 0 1.2rem;border-top:1px solid var(--cream-faint)}
+.csa__flow-row:last-of-type{border-bottom:1px solid var(--cream-faint)}
+.csa__flow-name{display:block;margin-bottom:.9rem;font-size:.6rem;letter-spacing:.26em;text-transform:uppercase;font-weight:400;color:var(--gold)}
+.csa__flow ol{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.6rem}
+.csa__flow li{display:flex;flex-direction:column;gap:.45rem}
+.csa__flow li i{display:block;height:.45rem;background:var(--plate-a);position:relative;overflow:hidden}
+.csa__flow li i::after{content:"";position:absolute;inset:0 auto 0 0;width:var(--w);background:var(--gold-half)}
+.csa__flow li.is-cliff i::after{background:var(--gold)}
+.csa__flow li span{font-size:.72rem;color:var(--cream-dim);line-height:1.3}
+.csa__flow li em{font-style:normal;font-family:var(--font-display);font-size:1.15rem;line-height:1;color:var(--cream);font-variant-numeric:tabular-nums}
+.csa__flow li.is-cliff em{color:var(--gold)}
+.csa__flow-note{margin-top:.8rem;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cream-dim);opacity:.7}
+
 /* ── numbers ─────────────────────────────────────────────────────────── */
 .csa__numbers{
   margin-top:2.4rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(10rem,1fr));
@@ -302,6 +367,9 @@ a{color:inherit;text-decoration:none}
   font-size:clamp(2rem,3.4vw,2.9rem);line-height:1;color:var(--gold);
 }
 .csa__numbers + .csa__p,.csa__numbers + .csa__chart{margin-top:1.8rem}
+.csa__numbers--quiet{grid-template-columns:repeat(3,minmax(0,1fr))}
+.csa__numbers--quiet b{font-size:clamp(1.5rem,2.4vw,2rem)}
+.csa__numbers--quiet span{letter-spacing:.16em;line-height:1.5}
 .csa__numbers span{display:block;margin-top:.7rem;font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;opacity:.42}
 
 /* ── claude's take: the last thing in the case, before the footer ──── */
@@ -355,6 +423,12 @@ a{color:inherit;text-decoration:none}
 
 @media (max-width:720px){
   :root{--pad:1.5rem}
+  .csa__glance,.csa__trio{grid-template-columns:1fr}
+  .csa__pairs{grid-template-columns:1fr}
+  .csa__pairs--rows > div{grid-template-columns:1fr;gap:.35rem}
+  .csa__flow ol{grid-template-columns:1fr;gap:.55rem}
+  .csa__flow li{display:grid;grid-template-columns:7rem 1fr auto;align-items:center;gap:.8rem}
+  .csa__numbers--quiet{grid-template-columns:1fr}
   .csa__hero{padding-top:7rem}
   .csa__plates{grid-template-columns:1fr}
 }

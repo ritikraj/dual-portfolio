@@ -130,47 +130,70 @@ html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
   <header class="csa__hero">
     <ul class="csa__tags" data-up><li class="is-name">email builder</li><li class="is-flag">flagship</li><li>0 → 1</li></ul>
     <h1 class="csa__title" data-up>the <em>email customization</em> problem</h1>
-    <p class="csa__stand" data-up>fello’s customers could send email. they could not make it look like theirs. i spent twelve months listening before i drew a single screen.</p>
+    <p class="csa__stand" data-up>fello’s customers could send email. they could not make it look like theirs. i spent twelve months listening before i drew a single screen, and then ten weeks building.</p>
     <dl class="csa__meta" data-up>
       <div><dt>role</dt><dd>staff product designer, 0→1 owner</dd></div>
       <div><dt>research</dt><dd>530+ signals over 12 months</dd></div>
       <div><dt>build</dt><dd>proposal to launch in 10 weeks</dd></div>
+      <div><dt>reach</dt><dd>live to ~3,000 accounts</dd></div>
       <div><dt>company</dt><dd>fello · us real estate crm</dd></div>
-      <div><dt>surface</dt><dd>web app</dd></div>
     </dl>
   </header>
 
+  <!-- the case in three lines, for the reader who stops here -->
+  <section class="csa__glance" data-up>
+    <div><small>the problem</small><p>one template email for every account. only the copy could be edited.</p></div>
+    <div><small>what i did</small><p>a year of signals, then a builder made from the shared framework instead of a bolt-on or a paid editor.</p></div>
+    <div><small>how it landed</small><p><b>75.2%</b> adoption, a <b>5.4%</b> churn-save and <b>$2M+</b> attributable arr.</p></div>
+  </section>
+
   <section class="csa__block">
     <h2 class="csa__h" data-up>the problem</h2>
-    <p class="csa__p" data-up>fello sold marketing to real estate brokerages. the email going out of it carried fello’s shape, not the brokerage’s. every account said the same thing in a different accent: <b>this does not look like us</b>.</p>
-    <p class="csa__p" data-up>that reads like a template problem. buy more templates, ship more templates, move on. it was not a template problem, and the fastest way to prove that was to stop guessing and go count.</p>
+    <p class="csa__p" data-up>fello sold marketing to real estate brokerages, and every account sent the same single template. there was no editing, only copy. people could not build a campaign with their own images, a gif, a video or a block of html, and every account said the same thing in a different accent: <b>this does not look like us</b>.</p>
+    <p class="csa__p" data-up>that reads like a template problem. ship more templates, move on. it was not a template problem, and the fastest way to prove it was to stop guessing and go count.</p>
   </section>
+
   <section class="csa__block">
-    <h2 class="csa__h" data-up>how i found it</h2>
-    <p class="csa__p" data-up>i did not run a survey. the company was already drowning in evidence it had never read in one place: support tickets, sales call notes, churn interviews, product usage. over twelve months i pulled <b>530+ signals</b> out of those and sorted them until they stopped being complaints and started being structure.</p>
-    <p class="csa__p" data-up>four themes came out of it. only one of them was about templates. that is the whole case study in one sentence, and it took a year of listening to earn it.</p>
-    <!-- the four themes, in your own words. uncomment and fill.
-    <ol class="csa__list" data-up>
-      <li><b>theme one</b>one line on what it actually was.</li>
-      <li><b>theme two</b>one line on what it actually was.</li>
-      <li><b>theme three</b>one line on what it actually was.</li>
-      <li><b>theme four</b>one line on what it actually was.</li>
-    </ol> -->
+    <h2 class="csa__h" data-up>what 530 signals said</h2>
+    <p class="csa__p" data-up>i did not run a survey. the company was already sitting on evidence it had never read in one place: support tickets, sales notes, customer success sessions, churn interviews and product usage. over twelve months i pulled <b>530+ signals</b> out of it, across email, landing pages, forms, widgets, the contact dashboard and automation templates, and sorted them until they stopped being complaints and started being structure.</p>
+    <p class="csa__p" data-up>four structural themes came out. only one of them was about templates. and the same asks were arriving from landing pages, forms and the consumer dashboard, which meant <b>this was never only an email problem</b>.</p>
     <p class="csa__pull" data-up>the brief was a better email builder. the evidence said something else.</p>
   </section>
+
   <section class="csa__block">
-    <h2 class="csa__h" data-up>what i built</h2>
-    <p class="csa__p" data-up>the builder came out of the <b>builder framework</b> rather than getting bolted on beside it. same canvas grammar, same slot model, same state rules as every other builder in the suite. what a user learned in one place still worked here.</p>
-    <p class="csa__p" data-up>that decision is why ten weeks was possible. i was not designing a product, i was instantiating one. the blocks, the layouts and the settings panel are the framework's. what is the email builder's own is the send: who it goes to, from whom, and when.</p>
+    <h2 class="csa__h" data-up>who it was for</h2>
+    <div class="csa__trio" data-up>
+      <div><b>owners</b><p>the power users. most had already run mailchimp, constant contact, hubspot or klaviyo, and knew what a builder should feel like.</p></div>
+      <div><b>agents</b><p>no time for email. they are showing houses and closing deals. they use templates and edit the words.</p></div>
+      <div><b>marketing coordinators</b><p>the creators, often building for someone else. what they wanted was fewer tools, fewer subscriptions, fewer integrations.</p></div>
+    </div>
+    <p class="csa__p" data-up>one builder had to be simple enough for an agent between showings and deep enough that an owner would not miss mailchimp.</p>
+  </section>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>build, buy, or build once</h2>
+    <p class="csa__p" data-up>customers asked for drag-and-drop, like the tools they used elsewhere. third-party editors like unlayer and beefree existed, and cost too much for a single email builder. but the signals said landing pages, forms and the dashboard needed the same thing.</p>
+    <p class="csa__p" data-up>so the answer was neither buy nor build: <b>build once</b>. the email builder came out of the <a class="csa__inline" href="builder-framework.html?v=a">builder framework</a>, same canvas grammar, same blocks, same state rules as every builder after it. that is why ten weeks was possible. i was not designing a product, i was instantiating one.</p>
     <figure class="csa__plate csa__plate--free" data-up>
       <video src="../assets/img/concepts/email-builder-drag.mp4" poster="../assets/img/concepts/email-builder-drag-poster.webp" autoplay muted loop playsinline preload="metadata" aria-label="dragging a button block into an email"></video>
       <figcaption>drag a block in, and the canvas makes room for it</figcaption>
     </figure>
+  </section>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>closing the trust gap</h2>
+    <p class="csa__p" data-up>the framework supplied the blocks, layouts and settings. what was the email builder’s own was the moment of sending, where people stop trusting a tool they have not used before. three decisions went there.</p>
+    <ol class="csa__list" data-up>
+      <li><b>see it where it lands</b>a live preview with a mobile toggle, and editing on mobile too, so nobody sends blind.</li>
+      <li><b>test before you trust</b>the send-a-test flow stayed exactly as it was in the old builder. engineering rebuilt it; the ux did not move a pixel.</li>
+      <li><b>errors stop you, advice does not</b>a checklist before sending: errors disable the send button, optimisation tips never do.</li>
+    </ol>
     <figure class="csa__plate csa__plate--free" data-up><img src="../assets/img/concepts/email-builder-ai.webp" alt="the email builder with a paragraph selected, the edit with ai panel on the left and its settings on the right" loading="lazy" decoding="async"><figcaption>one block selected: edit it by hand on the right, or ask on the left</figcaption></figure>
   </section>
+
   <section class="csa__block">
     <h2 class="csa__h" data-up>the first prototype</h2>
-    <p class="csa__p" data-up>this is the first clickable version i put in front of people, before a line of it was built. it is rougher than what shipped, which is the point of showing it.</p>
+    <p class="csa__p" data-up>the first clickable version i put in front of people, before a line of it was built. it is rougher than what shipped, which is the point of showing it.</p>
     <figure class="csa__embed" data-up>
       <div class="csa__embed-frame">
         <iframe src="https://embed.figma.com/proto/4DWd8LuPZ7K1NtOpdOWij1/Builder-%3C-%3E-Email-Builder?node-id=1003-86313&amp;viewport=11988%2C2520%2C0.17&amp;scaling=min-zoom&amp;content-scaling=fixed&amp;starting-point-node-id=1003%3A86313&amp;show-proto-sidebar=1&amp;page-id=1003%3A45833&amp;embed-host=share" title="email builder, first prototype, in figma" loading="lazy" allowfullscreen></iframe>
@@ -178,16 +201,17 @@ html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
       <figcaption>the figma prototype · password protected, ask me for access</figcaption>
     </figure>
   </section>
+
   <section class="csa__block">
     <h2 class="csa__h" data-up>how it landed</h2>
     <div class="csa__numbers" data-up>
       <div><b>75.2%</b><span>adoption</span></div>
       <div><b>~3,000</b><span>accounts</span></div>
-      <div><b>6,200+</b><span>emails in beta</span></div>
+      <div><b>6,215</b><span>emails sent in beta</span></div>
       <div><b>5.4%</b><span>churn-save</span></div>
       <div><b>$2M+</b><span>attributable arr</span></div>
     </div>
-    <p class="csa__p" data-up>the shape of it, step by step. every step of a send grew after launch, and the steps that mean an email actually went out grew the most: published roughly five times over, sent six.</p>
+    <p class="csa__p" data-up>the churn-save came from <b>five scaling accounts</b> that were evaluating leaving and paused, over a product that did not exist six months earlier. every step of a send grew after launch, and the steps that mean an email actually went out grew the most.</p>
     <figure class="csa__chart" data-up>
       <div class="csa__chart-box">
         <canvas id="funnelChart" role="img" aria-label="bar chart of the send funnel. before launch: opened 10, created 9, published 3, sent 1. after launch: opened 46, created 28, published 13, sent 6."></canvas>
@@ -202,19 +226,55 @@ html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
       </script>
       <figcaption>the send funnel, before and after launch</figcaption>
     </figure>
-    <p class="csa__p" data-up>i tracked it at step level in mixpanel rather than at the top line. step retention held between <b>79% and 85%</b> through the flow, with one visible cliff. completion came in at <b>29%</b> for automated sends and <b>19%</b> for one-time sends.</p>
-    <p class="csa__p" data-up>beta numbers are labelled beta numbers here, because that is what they are.</p>
   </section>
+
   <section class="csa__block">
-    <h2 class="csa__h" data-up>what did not work</h2>
-    <p class="csa__p" data-up>the gap between 85% step retention and 29% completion is the interesting part, and the aggregate number hides the fact that it is two different failures wearing the same face.</p>
-    <p class="csa__p" data-up><b>one is a ux failure inside the builder.</b> a person opened it, started, and could not finish. that is mine, and design fixes it.</p>
-    <p class="csa__p" data-up><b>one is an activation failure outside it.</b> a person never had a reason to be in there in the first place. that is not a builder problem and no amount of interface work moves it. it is lifecycle, onboarding and sales motion.</p>
-    <p class="csa__p" data-up>they look identical in a funnel chart. they need opposite fixes. separating them is the most useful thing i did after launch.</p>
+    <h2 class="csa__h" data-up>where it broke</h2>
+    <p class="csa__p" data-up>i tracked it at step level in mixpanel, per flow, rather than at the top line. there are two flows: one-time sends, and automated emails published inside workflows.</p>
+    <div class="csa__flow" data-up>
+      <div class="csa__flow-row">
+        <b class="csa__flow-name">one-time send</b>
+        <ol>
+          <li style="--w:100%"><i></i><span>opened</span><em>59</em></li>
+          <li style="--w:66%"><i></i><span>clicked create</span><em>39 · 66%</em></li>
+          <li style="--w:56%"><i></i><span>started a draft</span><em>33 · 85%</em></li>
+          <li style="--w:44%"><i></i><span>saved</span><em>26 · 79%</em></li>
+          <li class="is-cliff" style="--w:8%"><i></i><span>sent</span><em>5 · 19%</em></li>
+        </ol>
+      </div>
+      <div class="csa__flow-row">
+        <b class="csa__flow-name">automated email</b>
+        <ol>
+          <li style="--w:100%"><i></i><span>opened</span><em>59</em></li>
+          <li style="--w:71%"><i></i><span>clicked create</span><em>42 · 71%</em></li>
+          <li style="--w:58%"><i></i><span>started a draft</span><em>34 · 81%</em></li>
+          <li style="--w:47%"><i></i><span>saved</span><em>28 · 82%</em></li>
+          <li class="is-cliff" style="--w:14%"><i></i><span>published</span><em>8 · 29%</em></li>
+        </ol>
+      </div>
+      <p class="csa__flow-note">percentages are step to step, from beta accounts</p>
+    </div>
+    <p class="csa__p" data-up><b>what held:</b> from clicking create to saving, retention stayed between 79% and 85% at every step. people could pick a template or start from scratch, compose, and save without real friction. in beta calls, 15 to 20 people who had used mailchimp called it easier.</p>
+    <p class="csa__p" data-up><b>what broke:</b> the last step. only 19% of people who saved a one-time email sent it, and 29% published an automated one. beta calls showed why: <b>send</b> was obvious, <b>publish</b> was not. people could not tell where an automated email would go, who would get it, or whether it was really ready.</p>
   </section>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>two failures, one shape</h2>
+    <div class="csa__numbers csa__numbers--quiet" data-up>
+      <div><b>23 of 93</b><span>accounts never opened the builder</span></div>
+      <div><b>40</b><span>never started a draft</span></div>
+      <div><b>77</b><span>never published an automated email</span></div>
+    </div>
+    <p class="csa__p" data-up>not every account arrived, and the aggregate hides that it is two different failures wearing the same face.</p>
+    <p class="csa__p" data-up><b>one is a ux failure inside the builder.</b> someone opened it, started, and could not finish. the publish step is mine, and design fixes it.</p>
+    <p class="csa__p" data-up><b>one is an activation failure outside it.</b> accounts that had access and never came in. no interface work moves that. it is lifecycle, onboarding and awareness.</p>
+    <p class="csa__p" data-up>they look identical in a funnel chart and need opposite fixes. separating them is the most useful thing i did after launch.</p>
+  </section>
+
   <section class="csa__block">
     <h2 class="csa__h" data-up>what is left</h2>
-    <p class="csa__p" data-up>the activation half is still open. the builder half has a known cliff with a queue of work behind it. neither of those is a reason to round the story up.</p>
+    <p class="csa__p" data-up>the activation half is still open. the publish step has a known cliff and a queue of work behind it. neither is a reason to round the story up.</p>
+    <p class="csa__p" data-up>the 530 signals were never data points. they were people whose tools were not keeping up with their businesses. the builder worked not because the architecture was elegant, but because it met them where they were.</p>
     <p class="csa__pull" data-up>the best design work is not finished. it is honest about what is left.</p>
   </section>
 
