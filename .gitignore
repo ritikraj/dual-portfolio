@@ -71,3 +71,7 @@ node_modules/
 # macOS
 .DS_Store
 **/.DS_Store
+
+# private working notes about ritik and his work. never publish.
+briefs/
+notes/
