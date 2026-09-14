@@ -796,6 +796,14 @@ em{font-style:italic}
 }
 .case__plate:hover::after{opacity:0}
 .case__plate:hover img,.case__plate:hover video{transform:scale(1.04)}
+/* the clip keeps its own shape: never cropped, and never taller than the
+   screen allows, so it shrinks by width when the viewport is short */
+.case__plate--clip{
+  aspect-ratio:1280/813;
+  width:min(100%, calc(var(--vh) * .56 * 1280 / 813));
+  justify-self:center;
+}
+.case__plate--clip video{object-fit:contain;object-position:50% 50%}
 .case__plate-note{
   font-size:.6rem; letter-spacing:.36em; text-transform:uppercase; opacity:.28;
 }
@@ -909,18 +917,16 @@ em{font-style:italic}
 .more__card:hover .more__go--out{transform:translate(3px,-3px)}
 
 /* ── 08d · EXPLORATIONS ──────────────────────────────────────────────────
-   Concept interfaces, shown rather than explained. A bento on desktop: the
-   lead tile spans 2×2, the clip 2×1, six singles. Every tile is a button that
-   opens the viewer. Below 1024px it becomes a sideways strip.
+   One screen at a time, whole. A numbered list on the left picks; the stage
+   on the right shows the screenshot uncropped (object-fit: contain), with
+   nothing laid over it. The active item's hairline fills while it is up, so
+   the auto-advance is visible rather than surprising.
    --------------------------------------------------------------------- */
 .panel--work .panel__in{
   display:flex; flex-direction:column;
-  height:100%; max-height:52rem; max-width:78rem;
+  height:100%; max-height:50rem; max-width:80rem;
 }
-.work__head{
-  display:flex; align-items:flex-end; justify-content:space-between; gap:1rem 3rem;
-  margin-bottom:1.8rem;
-}
+.work__head{margin-bottom:2rem}
 .work__tag{
   display:block; margin-bottom:1rem;
   font-size:.62rem; letter-spacing:.4em; text-transform:uppercase;
@@ -931,65 +937,97 @@ em{font-style:italic}
   font-size:clamp(2rem,3.9vw,3.3rem); line-height:1.05; letter-spacing:-.02em;
 }
 .work__title em{font-style:normal;color:var(--gold)}
-.work__line{
-  max-width:19rem; padding-bottom:.35rem;
-  font-size:.86rem; line-height:1.7; color:var(--cream-dim);
-}
 
-.work__grid{
+.work__body{
   flex:1; min-height:0;
+  display:grid; grid-template-columns:15.5rem minmax(0,40rem); gap:4rem;
+  align-items:center; justify-content:space-between;
+}
+
+/* the list */
+.work__list{
   margin:0; padding:0; list-style:none;
-  display:grid; gap:.7rem;
-  grid-template-columns:repeat(4,minmax(0,1fr));
-  grid-template-rows:repeat(3,minmax(0,1fr));
+  display:flex; flex-direction:column; justify-content:center;
 }
-.work__tile{min-width:0;min-height:0}
-.work__tile--lead{grid-column:span 2;grid-row:span 2}
-.work__tile--wide{grid-column:span 2}
-
-.work__open{
-  position:relative; display:block;
-  width:100%; height:100%; padding:0;
-  border:1px solid var(--cream-faint);
-  background:linear-gradient(150deg,var(--plate-a),var(--plate-b));
-  overflow:hidden; cursor:zoom-in;
+.work__list li{border-bottom:1px solid var(--cream-faint)}
+.work__list li:first-child{border-top:1px solid var(--cream-faint)}
+.work__item{
+  position:relative; width:100%;
+  display:grid; grid-template-columns:2rem 1fr; align-items:baseline;
+  padding:.72rem 0 .78rem; border:0; background:none; cursor:pointer;
   color:inherit; font:inherit; text-align:left;
-  transition:border-color 500ms var(--ease-lux);
 }
-.work__media{
-  position:absolute; inset:0;
-  width:100%; height:100%; display:block;
-  object-fit:cover; object-position:50% 0;
-  transform:scale(1.001);
-  transition:transform 1.4s var(--ease-lux);
+.work__n{font-size:.58rem;letter-spacing:.14em;color:var(--cream-dim);font-variant-numeric:tabular-nums;transition:color 400ms ease}
+.work__t{display:flex;flex-direction:column;gap:.2rem;min-width:0}
+.work__t b{
+  font-weight:400; font-size:.54rem; letter-spacing:.28em; text-transform:uppercase;
+  color:var(--cream-dim); transition:color 400ms ease;
 }
-/* the same dimmer as the case plates: a bright screenshot in a dark room */
-.work__open::after{
-  content:""; position:absolute; inset:0; pointer-events:none;
-  background:var(--ink); opacity:.22;
-  transition:opacity 700ms var(--ease-lux);
+.work__t i{
+  font-style:normal; font-family:var(--font-display);
+  font-size:1.12rem; line-height:1.15; color:var(--cream-dim);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  transition:color 400ms ease, transform 500ms var(--ease-lux);
 }
-.work__open:hover{border-color:var(--gold-half)}
-.work__open:hover::after,
-.work__open:focus-visible::after{opacity:0}
-.work__open:hover .work__media{transform:scale(1.035)}
-.work__open:focus-visible{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-glow)}
+.work__item:hover .work__t i{color:var(--cream)}
+.work__item.is-on .work__n,
+.work__item.is-on .work__t b{color:var(--gold)}
+.work__item.is-on .work__t i{color:var(--cream);transform:translateX(.35rem)}
+.work__item:focus-visible{outline:none}
+.work__item:focus-visible .work__t i{color:var(--cream);text-decoration:underline;text-underline-offset:.25em;text-decoration-thickness:1px}
 
-/* the caption: the bead chip, left in the corner */
-.work__cap{
-  position:absolute; z-index:1; left:.6rem; bottom:.6rem;
-  max-width:calc(100% - 1.2rem); overflow:hidden;
-  display:flex; flex-direction:column; gap:.28rem;
-  padding:6px 9px;
-  background:color-mix(in srgb, var(--ink) 90%, transparent);
-  border:1px solid var(--cream-faint); border-radius:3px;
-  white-space:nowrap;
-  transform:translateY(3px); opacity:.92;
-  transition:transform 500ms var(--ease-lux), opacity 400ms ease;
+/* the hairline that fills while an item is up */
+.work__bar{position:absolute;left:0;right:0;bottom:-1px;height:1px;overflow:hidden}
+.work__bar i{display:block;height:100%;background:var(--gold);transform:scaleX(0);transform-origin:left}
+.work__item.is-on .work__bar i{animation:workFill var(--work-dwell,6500ms) linear forwards}
+.panel--work.is-held .work__item.is-on .work__bar i{animation-play-state:paused}
+.panel--work.is-still .work__item.is-on .work__bar i{animation:none;transform:scaleX(1)}
+@keyframes workFill{to{transform:scaleX(1)}}
+
+/* the stage */
+.work__stage{margin:0;min-height:0;display:grid;gap:1rem}
+
+/* the screen sits on a mat made from itself: the same image, blurred far past
+   recognition and dimmed. a light screenshot gets a pale, warm mount and a
+   dark one a deep mount, so every screen has its own ground in either mode */
+.work__screen{
+  position:relative; display:block; width:100%;
+  aspect-ratio:16/10.5; max-height:calc(var(--vh) * .46);
+  padding:0; border:1px solid var(--cream-faint); background:var(--ink-2);
+  overflow:hidden; isolation:isolate; cursor:zoom-in;
 }
-.work__cap b{font-weight:400;font-size:7.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold)}
-.work__cap i{font-style:normal;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--cream);opacity:.75;overflow:hidden;text-overflow:ellipsis}
-.work__open:hover .work__cap{transform:none;opacity:1}
+.work__mat{
+  position:absolute; inset:-12%; z-index:-1;
+  background-position:center; background-size:cover; background-repeat:no-repeat;
+  filter:blur(38px) saturate(1.15);
+  opacity:.78;
+  transition:opacity 520ms ease;
+}
+/* a thin wash of the page colour over the mat keeps it a background */
+.work__screen::after{
+  content:""; position:absolute; inset:0; z-index:-1; pointer-events:none;
+  background:radial-gradient(120% 90% at 50% 45%, transparent 35%, color-mix(in srgb, var(--ink) 55%, transparent));
+}
+.work__mat.is-out{opacity:0}
+.work__img,.work__vid{
+  position:absolute; inset:7.5% 8%; width:84%; height:85%;
+  object-fit:contain; object-position:50% 50%;
+  filter:drop-shadow(0 .9rem 1.6rem rgba(0,0,0,.32));
+  transition:opacity 420ms ease, transform 900ms var(--ease-lux);
+}
+.work__img.is-out,.work__vid.is-out{opacity:0;transform:translateY(.5rem) scale(.985)}
+.work__vid[hidden]{display:none}
+.work__screen:focus-visible{outline:1px solid var(--gold-half);outline-offset:6px}
+.work__screen:hover{border-color:var(--gold-half)}
+
+.work__meta{
+  display:flex; justify-content:space-between; align-items:center;
+  font-size:.58rem; letter-spacing:.3em; text-transform:uppercase; color:var(--cream-dim);
+}
+.work__count{font-variant-numeric:tabular-nums}
+.work__count b{font-weight:400;color:var(--gold)}
+.work__hint{opacity:.7;transition:opacity 300ms ease}
+.work__stage:hover .work__hint{opacity:1;color:var(--cream)}
 
 /* ── the viewer ──────────────────────────────────────────────────────── */
 .viewer{
@@ -1132,20 +1170,22 @@ em{font-style:italic}
 
 /* ── 12 · RESPONSIVE ────────────────────────────────────────────────────── */
 @media (max-width:1024px){
-  /* explorations: a sideways strip rather than a bento */
-  .panel--work .panel__in{height:auto;max-height:none}
-  .work__head{display:block;margin-bottom:1.4rem}
-  .work__line{margin-top:.8rem;max-width:30rem}
-  .work__grid{
-    display:flex; gap:.7rem;
-    overflow-x:auto; scroll-snap-type:x mandatory;
+  /* explorations: stage on top, the list becomes a sideways row of names */
+  .panel--work .panel__in{max-height:none;justify-content:center}
+  .work__head{margin-bottom:1.4rem}
+  .work__body{flex:none;grid-template-columns:1fr;grid-template-rows:auto auto;gap:1.4rem}
+  .work__stage{order:-1}
+  .work__body{justify-content:stretch}
+  .work__screen{aspect-ratio:3/2;max-height:calc(var(--vh) * .42)}
+  .work__list{
+    flex-direction:row; justify-content:flex-start; gap:1.4rem;
+    overflow-x:auto; scrollbar-width:none;
     margin-right:calc(var(--gutter) * -1); padding-right:var(--gutter);
-    scrollbar-width:none;
   }
-  .work__grid::-webkit-scrollbar{display:none}
-  .work__tile,.work__tile--lead,.work__tile--wide{
-    flex:0 0 min(78vw,34rem); aspect-ratio:3/2; scroll-snap-align:start;
-  }
+  .work__list::-webkit-scrollbar{display:none}
+  .work__list li,.work__list li:first-child{flex:none;border:0}
+  .work__item{grid-template-columns:1.6rem auto}
+  .work__item.is-on .work__t i{transform:none}
   :root{--thread-x:5vw;--gutter:2rem}
   .panel{padding-left:calc(var(--thread-x) + 3.2rem)}
   .case,.end__top{grid-template-columns:1fr;gap:2.6rem}

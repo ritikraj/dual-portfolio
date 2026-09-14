@@ -317,7 +317,7 @@ It carries its own light/dark button in the top bar, sharing `rr-mode`.
 
 Every number on it comes from the plugin's product brief. The brief rules out
 build-time claims, code export, "ai" and accessibility claims; keep it that way.
-Screens are 2x PNG exports from the Figma file, in `assets/img/plugin/`. Coming back (`index.html#a:plugin`) reopens
+Screens are 2x PNG exports from the Figma file, in `assets/img/plugin/`, used beside the steps. Coming back (`index.html#a:plugin`) reopens
 the bubbles section quietly, since the pop count resets with the page change.
 
 ## case study extras
@@ -336,13 +336,16 @@ like a picture at any width. Edit the words in the markup directly.
 ## explorations
 
 A section of concept interfaces between the plugin section and "want to know
-more" (`.panel--work`, `§ 08d` in `app.css`, `Viewer` in `app.js`). Each tile is
-a `button.work__open`: `data-full` is the large image, the `<img>` inside is the
-small one, `data-name` / `data-what` are the two caption lines. A clip uses
-`data-video` and `data-poster` instead, and plays only while the section is on
-screen. The first tile spans 2x2 and the second 2x1; below 1024px the grid is a
-sideways strip. Clicking opens the viewer: arrows, swipe, esc (esc closes the
-viewer before it would leave the portfolio).
+more" (`.panel--work`, `§ 08d` in `app.css`, `Work` and `Viewer` in `app.js`).
+One screen at a time, never cropped: a numbered list on the left picks, the
+stage on the right shows it whole. While the section is on screen it moves on
+every 6.5s (`Work.dwell`), holds while pointed at, and stops once someone picks
+an item by hand. Each item is a `button.work__item`: `data-full` / `data-small`
+are the two image sizes, `data-video` / `data-poster` a clip instead,
+`data-name` / `data-what` the label. Clicking the stage opens the viewer
+(arrows, swipe, esc; esc closes the viewer before it would leave the
+portfolio). Below 1024px the stage sits on top and the list becomes a sideways
+row of names.
 
 Images are in `assets/img/concepts/`, WebP at 2000px and 960px (`-s`), made
 from the originals in `assets/img/portfolio-webimages/`. That folder is

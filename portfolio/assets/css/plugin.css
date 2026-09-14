@@ -27,13 +27,6 @@
 }
 .pl-hero__title{max-width:14ch}
 .pl-hero__cta{margin-top:.6rem;display:flex;flex-wrap:wrap;align-items:center;gap:1.6rem}
-.pl-quiet{
-  margin-top:1.4rem;
-  font-size:.6rem;letter-spacing:.26em;text-transform:uppercase;
-  color:var(--cream-dim);border-bottom:1px solid var(--cream-faint);padding-bottom:.35rem;
-  transition:color .3s ease,border-color .3s ease;
-}
-.pl-quiet:hover{color:var(--gold);border-color:var(--gold-half)}
 
 .pl-hero__stack{position:relative;aspect-ratio:1/1.05;max-width:30rem;justify-self:end;width:100%}
 .pl-hero__stack .pl-shot{position:absolute;width:62%}
@@ -145,25 +138,6 @@
 .pl-faq details[open] summary::after{transform:rotate(45deg)}
 .pl-faq details p{padding:0 0 1.4rem;max-width:var(--measure);font-size:.95rem;line-height:1.8;color:var(--cream-dim)}
 
-/* ── the screens strip ───────────────────────────────────────────────── */
-.pl-screens{max-width:none;padding-right:0}
-.pl-screens .csa__h{max-width:calc(72rem - var(--pad) * 2);margin-right:var(--pad)}
-.pl-strip{
-  display:flex;gap:1.6rem;overflow-x:auto;
-  padding:1rem var(--pad) 1.6rem 0;
-  scroll-snap-type:x mandatory;scrollbar-width:thin;
-  scrollbar-color:var(--gold-half) transparent;
-}
-.pl-strip:focus-visible{outline:1px solid var(--gold-half);outline-offset:4px}
-.pl-strip figure{flex:0 0 auto;width:clamp(14rem,22vw,19rem);scroll-snap-align:start}
-.pl-strip img{
-  display:block;width:100%;aspect-ratio:480/700;object-fit:cover;object-position:top;
-  border-radius:10px;border:1px solid var(--cream-faint);background:#fff;
-  transition:transform .6s var(--ease);
-}
-.pl-strip figure:hover img{transform:translateY(-6px)}
-.pl-strip figcaption{margin-top:.8rem;font-size:.58rem;letter-spacing:.26em;text-transform:uppercase;color:var(--cream-dim)}
-
 /* ── tablet and phone ────────────────────────────────────────────────── */
 @media (max-width:960px){
   .pl-hero{grid-template-columns:1fr;gap:3rem}
@@ -184,7 +158,6 @@
   .pl-ba__row{grid-template-columns:1fr}
   .pl-ba__row p{padding-right:0}
   .pl-ba__row p + p{padding:0 0 1.3rem;border-left:0}
-  .pl-strip figure{width:13rem}
 }
 @media (prefers-reduced-motion:reduce){
   .pl-hero__stack .pl-shot{animation:none !important}

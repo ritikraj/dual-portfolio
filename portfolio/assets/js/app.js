@@ -529,7 +529,7 @@
       var $cur = this.$panels.eq(i);
       Timeline.update(i, $cur.is('[data-case]'));
       if ($cur.is('[data-bubbles]')) Bubbles.spawn(); else Bubbles.clear();
-      Viewer.clips($cur.is('.panel--work'));
+      Work.active($cur.is('.panel--work'));
       Thread.set(this.count > 1 ? i / (this.count - 1) : 1, instant);
       Thread.mark(i);
       $('#countNow').text(pad(i + 1));
@@ -880,11 +880,123 @@
   }
 
 
-  /* ── VIEWER: THE EXPLORATIONS SECTION ─────────────────────────────────────
-     Opens any .work__open tile large, with previous / next, arrow keys, a
-     sideways swipe and esc. The list is read from the DOM when it opens, so
-     adding a tile in index.html is all it takes. It also plays the section's
-     clips only while that section is on screen.
+  /* ── WORK: THE EXPLORATIONS SECTION ───────────────────────────────────────
+     A list of concept screens and one stage. Picking an item shows it whole.
+     While the section is on screen it advances every CONFIG-ish `dwell` ms,
+     holds while the pointer is over it, and stops for good once someone has
+     picked one by hand (they are reading; do not move it under them).
+     -------------------------------------------------------------------- */
+  var Work = {
+    dwell: 6500,
+    i: 0,
+    live: false,
+    held: false,
+    still: false,
+
+    init: function () {
+      var self = this;
+      this.$sec   = $('.panel--work');
+      if (!this.$sec.length) return;
+      this.$items = this.$sec.find('.work__item');
+      this.$img   = this.$sec.find('.work__img');
+      this.$vid   = this.$sec.find('.work__vid');
+      this.$sec[0].style.setProperty('--work-dwell', this.dwell + 'ms');
+
+      this.$items.on('click', function () {
+        self.still = true;
+        self.$sec.addClass('is-still');
+        self.show(self.$items.index(this));
+      });
+      this.$sec.find('.work__screen').on('click', function () { Viewer.open(self.i); });
+
+      // hold while pointed at; the fill pauses with it
+      this.$sec.find('.work__body')
+        .on('mouseenter', function () { self.held = true;  self.$sec.addClass('is-held');  self.pause(); })
+        .on('mouseleave', function () { self.held = false; self.$sec.removeClass('is-held'); self.resume(); });
+
+      // warm the small images so switching never waits on the network
+      this.$items.each(function () {
+        var src = this.getAttribute('data-small');
+        if (src) { var im = new Image(); im.src = src; }
+      });
+    },
+
+    show: function (i) {
+      var self = this, $t = this.$items.eq(i), n = this.$items.length;
+      this.i = i;
+      this.$items.removeClass('is-on');
+      $t[0].offsetWidth;                                   // restart the fill
+      $t.addClass('is-on');
+      this.$sec.find('.work__count').html('<b>' + pad(i + 1) + '</b> / ' + pad(n));
+      this.$sec.find('.work__screen').attr('aria-label', $t.data('name') + ', ' + $t.data('what') + '. open larger');
+
+      // keep the active name in view when the list is a sideways row
+      var li = $t.parent()[0], list = li.parentNode;
+      if (list.scrollWidth > list.clientWidth) {
+        var dx = li.getBoundingClientRect().left - list.getBoundingClientRect().left;
+        list.scrollBy({ left: dx, behavior: 'smooth' });
+      }
+
+      var clip = $t.attr('data-video');
+      var $on = clip ? this.$vid : this.$img, $off = clip ? this.$img : this.$vid;
+      var $mat = this.$sec.find('.work__mat');
+
+      $off.addClass('is-out');
+      $on.addClass('is-out');
+      $mat.addClass('is-out');
+      setTimeout(function () {
+        if (self.i !== i) return;
+        $mat.css('background-image', 'url(' + (clip ? $t.attr('data-poster') : $t.attr('data-small')) + ')');
+        $mat.removeClass('is-out');
+      }, 260);
+      setTimeout(function () {
+        if (self.i !== i) return;
+        $off.prop('hidden', true);
+        self.$vid[0].pause();
+        $on.prop('hidden', false);
+        if (clip) {
+          if (self.$vid.attr('src') !== clip) self.$vid.attr({ src: clip, poster: $t.attr('data-poster') });
+          self.$vid[0].currentTime = 0;
+          if (self.live) self.play();
+          requestAnimationFrame(function () { $on.removeClass('is-out'); });
+        } else {
+          var small = $t.attr('data-small'), full = $t.attr('data-full');
+          var reveal = function () { requestAnimationFrame(function () { if (self.i === i) $on.removeClass('is-out'); }); };
+          self.$img.off('load').one('load', reveal)
+            .attr({ srcset: small + ' 960w, ' + full + ' 2000w', src: small, alt: $t.data('name') + ', ' + $t.data('what') });
+          if (self.$img[0].complete) reveal();
+        }
+      }, 260);
+
+      this.schedule();
+    },
+
+    play: function () { var p = this.$vid[0].play(); if (p && p.catch) p.catch(function () {}); },
+
+    schedule: function () {
+      clearTimeout(this.t);
+      if (!this.live || this.held || this.still || Viewer.isOpen) return;
+      var self = this;
+      this.t = setTimeout(function () { self.show((self.i + 1) % self.$items.length); }, this.dwell);
+    },
+    pause:  function () { clearTimeout(this.t); },
+    resume: function () { this.schedule(); },
+
+    /* called by Stage on every section change */
+    active: function (on) {
+      if (!this.$sec || !this.$sec.length) return;
+      if (on && this.live) return;                          // a resize re-render, not an arrival
+      this.live = on;
+      if (!on) { clearTimeout(this.t); this.$vid[0].pause(); return; }
+      this.show(this.i);                                    // restart this item's fill
+    }
+  };
+
+
+  /* ── VIEWER ───────────────────────────────────────────────────────────────
+     The explorations list, full screen. Previous / next, arrow keys, a
+     sideways swipe, esc. Opens from the stage at whatever is showing, and
+     leaves the section on whatever was last viewed.
      -------------------------------------------------------------------- */
   var Viewer = {
     isOpen: false,
@@ -897,18 +1009,15 @@
       this.$video = this.$el.find('.viewer__video');
       if (!this.$el.length) return;
 
-      $(document).on('click', '.work__open', function () {
-        self.open($('.work__open').index(this));
-      });
       this.$el.on('click', '[data-step]', function (e) {
         e.stopPropagation();
         self.step(parseInt($(this).attr('data-step'), 10));
       });
-      // the backdrop and the close button shut it; the media itself does not
+      // the backdrop and the close button shut it; the media and the bar do not
       this.$el.on('click', function (e) {
         if ($(e.target).is('.viewer__img, .viewer__video')) return;
-        if ($(e.target).closest('[data-close], .viewer').length &&
-            !$(e.target).closest('.viewer__bar').length) self.close();
+        if ($(e.target).closest('.viewer__bar').length) return;
+        self.close();
       });
       $(document).on('keydown', function (e) {
         if (!self.isOpen) return;
@@ -926,9 +1035,11 @@
     },
 
     open: function (i) {
-      this.$tiles = $('.work__open');
+      this.$tiles = $('.work__item');
       this.last = document.activeElement;
       this.isOpen = true;
+      Work.pause();
+      if (Work.$vid) Work.$vid[0].pause();
       $body.addClass('is-viewing');
       this.$el.addClass('is-open').attr('aria-hidden', 'false');
       this.show(i);
@@ -941,6 +1052,8 @@
       $body.removeClass('is-viewing');
       this.$el.removeClass('is-open').attr('aria-hidden', 'true');
       this.$video[0].pause();
+      if (this.i !== Work.i) { Work.still = true; Work.$sec.addClass('is-still'); Work.show(this.i); }
+      else if (Work.live && Work.$items.eq(Work.i).attr('data-video')) Work.play();
       if (this.last) this.last.focus({ preventScroll: true });
     },
 
@@ -981,23 +1094,10 @@
         if (this.$img[0].complete) reveal();
       }
 
-      // warm the neighbours so stepping is instant
       [i - 1, i + 1].forEach(function (k) {
         var f = self.$tiles.eq((k + n) % n).attr('data-full');
         if (f) { var im = new Image(); im.src = f; }
       });
-    },
-
-    /* the section's clips play only while it is the section on screen */
-    clips: function (on) {
-      clearTimeout(this.clipT);
-      var $v = $('.panel--work video.work__media');
-      if (!on) { $v.each(function () { this.pause(); }); return; }
-      // a beat later: a play() fired in the same frame as the slide starting
-      // can be dropped by the browser, and then the tile sits on its poster
-      this.clipT = setTimeout(function () {
-        $v.each(function () { var p = this.play(); if (p && p.catch) p.catch(function () {}); });
-      }, 120);
     }
   };
 
@@ -1032,6 +1132,7 @@
     Theme.init();
     Thread.init();
     Viewer.init();
+    Work.init();
     Stage.init();
     Aside.sync();
     Hero.init();
