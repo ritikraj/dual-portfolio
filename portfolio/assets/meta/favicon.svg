@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- temporary mark. replace this file (and favicon-180.png) with the real one -->
+  <rect width="64" height="64" rx="12" fill="#07100b"/>
+  <text x="29" y="45" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="40" fill="#e6f1e8">r</text>
+  <circle cx="44" cy="42" r="4.2" fill="#43e08a"/>
+</svg>
