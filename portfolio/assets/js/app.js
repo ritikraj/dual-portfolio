@@ -834,7 +834,9 @@
       setTimeout(function () {
         Stage.stop();
         if (window.TheRead) window.TheRead.stop();
-        self.$el.removeClass('is-leaving is-gone pick-a pick-b is-hovering').css('pointer-events', '');
+        // back to a neutral door: the side last hovered (hot-a / hot-b) is what
+        // positions and colours the saber, so it has to go with everything else
+        self.$el.removeClass('is-leaving is-gone pick-a pick-b is-hovering hot-a hot-b').css('pointer-events', '');
         self.$panels.removeClass('is-hot is-cold').css('flex-grow', '');
         $body.removeClass('is-a is-b').addClass('is-hero');
 
@@ -842,7 +844,10 @@
         setTimeout(function () {
           self.$curtain.removeClass('is-up is-away');
           self.busy = false;
-          if (thenOpen) self.enter(thenOpen);
+          if (thenOpen) { self.enter(thenOpen); return; }
+          // the pointer may already be resting on a side; mouseenter fired while
+          // the curtain was down and was ignored, so pick that side up now
+          self.$panels.filter(':hover').first().trigger('mouseenter');
         }, 950);
       }, 760);
     }
