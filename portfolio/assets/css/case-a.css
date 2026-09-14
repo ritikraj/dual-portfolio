@@ -388,6 +388,17 @@ a{color:inherit;text-decoration:none}
 .csa__plates--phones .csa__todo,.csa__plates--pair .csa__todo{margin:0}
 .csa__plates--phones .csa__todo-box span{font-size:.56rem;letter-spacing:.16em}
 
+/* device mockups: the frame is in the image, so no border of our own */
+.csa__plate--free.csa__plate--device img{border:0}
+.csa__plate--narrow{max-width:30rem}
+/* prose after a picture needs air above it, or it reads as the caption */
+.csa__plates + .csa__p,.csa__plate + .csa__p,.csa__plates + .csa__list,.csa__plate + .csa__pairs{margin-top:2.2rem}
+.csa__plates--phones .csa__plate,
+.csa__plates--tv .csa__plate{margin:0;aspect-ratio:auto}
+.csa__plates--phones .csa__plate--free img,
+.csa__plates--tv .csa__plate--free img{height:auto}
+.csa__plates--tv{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.6rem 1.2rem;margin-top:2.4rem;max-width:62rem}
+
 /* ── a process drawn as a strip of steps ─────────────────────────────── */
 .csa__process{
   margin:2rem 0 2rem; padding:0; list-style:none; max-width:62rem;
@@ -477,6 +488,7 @@ a{color:inherit;text-decoration:none}
   .csa__flow li{display:grid;grid-template-columns:7rem 1fr auto;align-items:center;gap:.8rem}
   .csa__numbers--quiet{grid-template-columns:1fr}
   .csa__plates--phones{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .csa__plates--tv{grid-template-columns:1fr}
   .csa__hero{padding-top:7rem}
   .csa__plates{grid-template-columns:1fr}
 }

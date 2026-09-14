@@ -5,7 +5,8 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**",
-      "**/portfolio-webimages/**"
+      "**/portfolio-webimages/**",
+      "**/assets/img/fashinza/*.png"
     ],
     "rewrites": [
       {
