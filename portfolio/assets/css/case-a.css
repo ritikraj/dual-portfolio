@@ -391,6 +391,14 @@ a{color:inherit;text-decoration:none}
 /* device mockups: the frame is in the image, so no border of our own */
 .csa__plate--free.csa__plate--device img{border:0}
 .csa__plate--narrow{max-width:30rem}
+/* screenshots are shown no wider than they can stay sharp. sizes follow the
+   source: tablets are ~480px, laptops ~1,400px, the wide composites ~1,600px */
+.csa__plate.csa__plate--tablet{max-width:15rem}
+.csa__plate.csa__plate--report{max-width:24rem}
+.csa__plate.csa__plate--laptop{max-width:40rem}
+.csa__plate.csa__plate--wide{max-width:46rem}
+.csa__plates--pair:has(.csa__plate--tablet){grid-template-columns:repeat(2,minmax(0,15rem));gap:2rem}
+.csa__plates--phones{max-width:44rem}
 /* prose after a picture needs air above it, or it reads as the caption */
 .csa__plates + .csa__p,.csa__plate + .csa__p,.csa__plates + .csa__list,.csa__plate + .csa__pairs{margin-top:2.2rem}
 .csa__plates--phones .csa__plate,
@@ -399,20 +407,30 @@ a{color:inherit;text-decoration:none}
 .csa__plates--tv .csa__plate--free img{height:auto}
 .csa__plates--tv{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.6rem 1.2rem;margin-top:2.4rem;max-width:62rem}
 
-/* ── a process drawn as a strip of steps ─────────────────────────────── */
+/* ── a process drawn as one line with stops ─────────────────────────────
+   a single hairline runs through every step; each step is a dot on it with
+   its name underneath. the steps that matter get the accent. no boxes. */
 .csa__process{
-  margin:2rem 0 2rem; padding:0; list-style:none; max-width:62rem;
-  display:flex; flex-wrap:wrap; gap:.4rem;
+  margin:2.4rem 0 2.2rem; padding:0; list-style:none; max-width:62rem;
+  display:grid; grid-template-columns:repeat(10,minmax(0,1fr));
 }
 .csa__process li{
-  position:relative; display:flex; flex-direction:column; gap:.25rem;
-  padding:.55rem .8rem; border:1px solid var(--cream-faint);
-  font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; color:var(--cream-dim);
+  position:relative;
+  display:flex; flex-direction:column; gap:.35rem;
+  padding:1.2rem .7rem 0 0;
+  border-top:1px solid var(--cream-faint);
+  font-size:.6rem; letter-spacing:.12em; line-height:1.5; text-transform:uppercase;
+  color:var(--cream-dim);
 }
-.csa__process li + li::before{content:"→";position:absolute;left:-.42rem;top:50%;transform:translate(-50%,-50%);font-size:.6rem;color:var(--cream-faint)}
-.csa__process li small{font-size:.5rem;letter-spacing:.2em;color:var(--gold)}
-.csa__process li.is-line{border-color:var(--gold-half);color:var(--cream)}
-.csa__process li.is-gate{border-color:var(--gold);color:var(--cream);background:var(--gold-glow)}
+.csa__process li::before{
+  content:""; position:absolute; left:0; top:-3.5px;
+  width:6px; height:6px; border-radius:50%;
+  background:var(--ink); border:1px solid var(--cream-dim);
+}
+.csa__process li small{font-size:.5rem;letter-spacing:.16em;color:var(--gold)}
+.csa__process li.is-line,.csa__process li.is-gate{color:var(--cream);border-top-color:var(--gold-half)}
+.csa__process li.is-line::before,.csa__process li.is-gate::before{background:var(--gold);border-color:var(--gold);box-shadow:0 0 0 4px var(--gold-glow)}
+.csa__process li.is-gate::before{width:9px;height:9px;top:-5px}
 
 /* ── numbers ─────────────────────────────────────────────────────────── */
 .csa__numbers{
@@ -489,6 +507,12 @@ a{color:inherit;text-decoration:none}
   .csa__numbers--quiet{grid-template-columns:1fr}
   .csa__plates--phones{grid-template-columns:repeat(2,minmax(0,1fr))}
   .csa__plates--tv{grid-template-columns:1fr}
+  .csa__process{grid-template-columns:1fr;margin-left:.3rem}
+  .csa__process li{border-top:0;border-left:1px solid var(--cream-faint);padding:.15rem 0 1rem 1.2rem}
+  .csa__process li:last-child{padding-bottom:0}
+  .csa__process li::before{left:-3.5px;top:.3rem}
+  .csa__process li.is-gate::before{left:-5px;top:.2rem}
+  .csa__process li.is-line,.csa__process li.is-gate{border-left-color:var(--gold-half)}
   .csa__hero{padding-top:7rem}
   .csa__plates{grid-template-columns:1fr}
 }
