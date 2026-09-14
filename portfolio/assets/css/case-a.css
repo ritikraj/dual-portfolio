@@ -290,6 +290,7 @@ a{color:inherit;text-decoration:none}
   display:block;font-family:var(--font-display);font-weight:400;
   font-size:clamp(2rem,3.4vw,2.9rem);line-height:1;color:var(--gold);
 }
+.csa__numbers + .csa__p,.csa__numbers + .csa__chart{margin-top:1.8rem}
 .csa__numbers span{display:block;margin-top:.7rem;font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;opacity:.42}
 
 /* ── claude's take: the last thing in the case, before the footer ──── */
