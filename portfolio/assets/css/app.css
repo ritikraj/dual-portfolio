@@ -124,8 +124,9 @@ em{font-style:italic}
 .hero__title{
   font-family:var(--font-display);
   font-weight:400;
-  font-size:clamp(2.3rem,4.2vw,3.9rem);
-  line-height:1.02;
+  /* two words each side now, so they can afford to be big */
+  font-size:clamp(2.9rem,5.6vw,5.2rem);
+  line-height:1;
   letter-spacing:-.015em;
 }
 .hero__title em{font-style:normal;color:var(--hero-accent)}

@@ -139,7 +139,7 @@ columns (or two rows) in `.proj__grid`. The case-study timeline on the left
 only appears for sections marked `data-case`, so it is dormant now.
 
 The long-form material from the previous portfolio (process, funnels,
-failures) is saved in `../notes/old-case-studies.md`, outside the deployed
+failures) is saved in `../briefs/sources/old-portfolio-case-studies.md` (all project facts and numbers: `../briefs/`), outside the deployed
 folder.
 
 **Reveals** `data-reveal="1..6"` on any element; the number is the stagger order.
