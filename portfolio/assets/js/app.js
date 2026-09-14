@@ -908,11 +908,14 @@
         buttons.forEach(function (b, k) { b.classList.toggle('is-on', k === i); });
       }
 
-      var raf = 0;
+      // a short timer rather than rAF: rAF pauses in background tabs, and the
+      // dots should be right the moment the page is looked at again
+      var t = 0;
       grid.addEventListener('scroll', function () {
-        cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(function () { paint(); });
+        clearTimeout(t);
+        t = setTimeout(paint, 50);
       }, { passive: true });
+      document.addEventListener('visibilitychange', function () { if (!document.hidden) paint(); });
       buttons.forEach(function (b, i) {
         b.addEventListener('click', function () {
           paint(i);

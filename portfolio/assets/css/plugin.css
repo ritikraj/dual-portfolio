@@ -162,3 +162,15 @@
 @media (prefers-reduced-motion:reduce){
   .pl-hero__stack .pl-shot{animation:none !important}
 }
+
+/* ── hairline grids, drawn with borders ──────────────────────────────────
+   these grids used to paint their lines as a grey background showing
+   through 1px gaps. any empty cell (five tiles wrapping into two columns,
+   say) showed up as a solid grey block. borders on the cells instead: an
+   empty slot is just empty. */
+.pl-tokens{gap:0;background:none;border:0;border-top:1px solid var(--cream-faint);border-left:1px solid var(--cream-faint)}
+.pl-tokens > *{border-right:1px solid var(--cream-faint);border-bottom:1px solid var(--cream-faint)}
+.pl-cards{gap:0;background:none;border:0;border-top:1px solid var(--cream-faint);border-left:1px solid var(--cream-faint)}
+.pl-cards > *{border-right:1px solid var(--cream-faint);border-bottom:1px solid var(--cream-faint)}
+.pl-numbers{gap:0;background:none;border:0;border-top:1px solid var(--cream-faint);border-left:1px solid var(--cream-faint)}
+.pl-numbers > *{border-right:1px solid var(--cream-faint);border-bottom:1px solid var(--cream-faint)}

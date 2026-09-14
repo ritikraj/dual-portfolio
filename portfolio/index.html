@@ -224,10 +224,10 @@ html.to-b[data-pb="dark"] #veil b{background:#eeede8}
     </section>
 
     <!-- ─────────────── 02 · FEATURED CASE STUDIES ───────────────
-         Heading, then four cards, then the journey. Each card is one link:
+         Heading, then six case study cards, then the journey as a card of its own below the grid. Each card is one link:
          a tag, the problem in the serif, one short line on how it landed.
          Keep that line to one sentence and no more than one number or three.
-         Below 1100px the cards are a sideways slider with four dots under it
+         Below 1100px the cards are a sideways slider with a dot per card under it
          (built by app.js → Proj, one dot per card, nothing to register).
          ──────────────────────────────────────────────────── -->
     <section class="panel panel--proj" data-label="case studies">
@@ -261,12 +261,26 @@ html.to-b[data-pb="dark"] #veil b{background:#eeede8}
             <p class="proj-card__line">agent rosters grew ~30%, at no seat cost to the owner.</p>
             <span class="proj-card__go">read the case study <svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg></span>
           </a>
+          <a class="proj-card" href="case/final-inspection.html?v=a">
+            <ul class="proj-card__tags"><li class="is-name">final inspection</li><li>fashinza</li></ul>
+            <h3 class="proj-card__head">the <em>passed without being inspected</em> problem</h3>
+            <p class="proj-card__line">shipment failures fell from over 20% to about 7% in three months.</p>
+            <span class="proj-card__go">read the case study <svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg></span>
+          </a>
+          <a class="proj-card" href="case/qapp.html?v=a">
+            <ul class="proj-card__tags"><li class="is-name">q-app</li><li>fashinza</li></ul>
+            <h3 class="proj-card__head">the <em>defects found too late</em> problem</h3>
+            <p class="proj-card__line">one tap to pass a piece, on a tablet at the line, in 100+ factories.</p>
+            <span class="proj-card__go">read the case study <svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg></span>
+          </a>
         </div>
         <div class="proj__dots" id="projDots" aria-hidden="true"></div>
-        <a class="proj__journey" href="journey.html" data-reveal="4">
-          <span class="proj__journey-name">the full journey</span>
-          <span class="proj__journey-note">every project since 2018, including three that did not land</span>
-          <span class="proj__journey-go"><svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg></span>
+        <!-- the journey: not a case study, so it sits outside the grid and the slider -->
+        <a class="proj-journey" href="journey.html" data-reveal="4">
+          <span class="proj-journey__tag">journey · 2018 to now</span>
+          <span class="proj-journey__head">every project, <em>including the ones that did not land</em></span>
+          <span class="proj-journey__line">sixteen projects, three of them marked as failures on purpose.</span>
+          <span class="proj-journey__go">see the journey <svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg></span>
         </a>
       </div>
     </section>
@@ -733,6 +747,66 @@ html.to-b[data-pb="dark"] #veil b{background:#eeede8}
       </div></div>
     </article>
 
+    <!-- ─── OBSERVATION 05 ─── -->
+    <article class="pb-card pb-card--obs" data-obs="5" data-rail="final inspection">
+      <div class="pb-sheet"><div class="pb-sheet__body">
+      <span class="pb-obs__num" aria-hidden="true">05</span>
+      <div class="pb-obs">
+        <div class="pb-obs__head">
+          <p class="pb-kicker" data-in>observation 05</p>
+          <h2 class="pb-h pb-h--obs" data-in>final inspection</h2>
+          <p class="pb-verdict" data-in>the gate · evidence over trust</p>
+        </div>
+        <div class="pb-obs__cols">
+          <div class="pb-block" data-in>
+            <p class="pb-block__label">the brief</p>
+            <p class="pb-block__text">digitise final inspection, where one pass or fail decides a whole shipment.</p>
+          </div>
+          <div class="pb-block" data-in>
+            <p class="pb-block__label">what he did</p>
+            <p class="pb-block__text">made the audit the report: aql built in, photos on every audit, a generated pdf that closes the plan step on its own. offline first, eight languages.</p>
+          </div>
+          <div class="pb-block pb-block--read" data-in>
+            <p class="pb-block__label">the read</p>
+            <p class="pb-block__text">he could not choose who inspects, so he designed the record instead. and the reason the report writes itself is a failure of his own he kept on the timeline: a fifteen-minute report nobody would fill in.</p>
+          </div>
+        </div>
+        <ul class="pb-metrics" data-in><li><b>20%+ → 7%</b><span>shipment failures</span></li><li><b>10–20</b><span>orders in the sample</span></li><li><b>100+</b><span>factories</span></li><li><b>8</b><span>languages</span></li></ul>
+        <a class="pb-obs__link" href="case/final-inspection.html?v=b" data-in><span>the full read on this one</span><em>↗</em></a>
+      </div>
+      </div></div>
+    </article>
+
+    <!-- ─── OBSERVATION 06 ─── -->
+    <article class="pb-card pb-card--obs" data-obs="6" data-rail="q-app">
+      <div class="pb-sheet"><div class="pb-sheet__body">
+      <span class="pb-obs__num" aria-hidden="true">06</span>
+      <div class="pb-obs">
+        <div class="pb-obs__head">
+          <p class="pb-kicker" data-in>observation 06</p>
+          <h2 class="pb-h pb-h--obs" data-in>q-app</h2>
+          <p class="pb-verdict" data-in>prevention · designed from the floor</p>
+        </div>
+        <div class="pb-obs__cols">
+          <div class="pb-block" data-in>
+            <p class="pb-block__label">the brief</p>
+            <p class="pb-block__text">catch defects before the shipment, on the stitching line.</p>
+          </div>
+          <div class="pb-block" data-in>
+            <p class="pb-block__label">what he did</p>
+            <p class="pb-block__text">a tablet on a stand, because both hands are on the cloth. one tap to pass, a piece number to reject or alter, three states instead of two, and the day on the factory tv.</p>
+          </div>
+          <div class="pb-block pb-block--read" data-in>
+            <p class="pb-block__label">the read</p>
+            <p class="pb-block__text">this is the answer to “has he met a user”. every decision fits a body at a workstation. the outcome is a remembered range, 30 to 40% fewer workmanship defects, and he labels it as one.</p>
+          </div>
+        </div>
+        <ul class="pb-metrics" data-in><li><b>30–40%</b><span>fewer defects, recalled</span></li><li><b>1</b><span>tap to pass</span></li><li><b>up to 40</b><span>lines a factory</span></li><li><b>8</b><span>languages</span></li></ul>
+        <a class="pb-obs__link" href="case/qapp.html?v=b" data-in><span>the full read on this one</span><em>↗</em></a>
+      </div>
+      </div></div>
+    </article>
+
     <!-- ─── 06 · THE TELL ─── -->
     <article class="pb-card pb-card--tell" data-rail="the tell">
       <div class="pb-sheet"><div class="pb-sheet__body">
@@ -788,10 +862,10 @@ html.to-b[data-pb="dark"] #veil b{background:#eeede8}
         <ol class="pb-exhibits" data-in>
           <li>
             <span class="pb-exhibits__i">a</span>
-            <p><b>one company carries the case.</b> all four featured studies are fello:
-            thirty months of an eight-year career. three years at fashinza, walking
-            factory floors with low-literacy users, is the better answer to “has he met
-            a user”, and it is a line on a timeline.</p>
+            <p><b>the strongest numbers and the strongest users live in different
+            companies.</b> fello has the measured funnels. fashinza has the factory floors,
+            and runs on a sample of 10 to 20 orders and a range he remembers. neither
+            half proves both.</p>
           </li>
           <li>
             <span class="pb-exhibits__i">b</span>

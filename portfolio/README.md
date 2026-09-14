@@ -133,6 +133,8 @@ single link: a tag, the problem in the serif, one short line on how it landed.
 Below 1100px the cards become a slider with one dot per card underneath
 (`Proj` in `app.js` builds the dots from the cards and tracks the scroll).
 
+**Image placeholders** — `<figure class="csa__todo">` boxes on the Fashinza case pages name the file to add (`assets/img/fashinza/…`). Drop the image in, then replace the figure with `<figure class="csa__plate csa__plate--free" data-up><img src="…" alt="…"><figcaption>…</figcaption></figure>`.
+
 **Adding a case study** — copy an `<a class="proj-card">`, change its link,
 tags, problem and line. A fifth card needs the grid set to five
 columns (or two rows) in `.proj__grid`. The case-study timeline on the left

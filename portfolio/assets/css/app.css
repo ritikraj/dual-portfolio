@@ -815,7 +815,7 @@ em{font-style:italic}
    the problem, because that is the thing a reader scans for.
    --------------------------------------------------------------------- */
 .panel--proj .panel__in{max-width:80rem}
-.proj__head{margin-bottom:2rem}
+.proj__head{margin-bottom:1.6rem}
 .proj__tag{
   display:block; margin-bottom:1rem;
   font-size:.62rem; letter-spacing:.4em; text-transform:uppercase;
@@ -828,13 +828,13 @@ em{font-style:italic}
 .proj__title em{font-style:normal;color:var(--gold)}
 
 .proj__grid{
-  display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:1px;
+  display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1px;
   background:var(--cream-faint); border:1px solid var(--cream-faint);
 }
 .proj-card{
   position:relative;
   display:flex; flex-direction:column;
-  min-height:15.5rem; padding:1.5rem 1.4rem 1.3rem;
+  min-height:11.5rem; padding:1.2rem 1.3rem 1.1rem;
   background:var(--ink); color:var(--cream);
   transition:background 420ms var(--ease-lux);
 }
@@ -847,9 +847,9 @@ em{font-style:italic}
 .proj-card__tags li.is-name{border-color:var(--gold-half);color:var(--gold)}
 .proj-card__tags li.is-flag{border-color:var(--cream-faint);color:var(--cream-dim)}
 .proj-card__head{
-  margin-top:1.5rem;
+  margin-top:1rem;
   font-family:var(--font-display); font-weight:400;
-  font-size:clamp(1.4rem,1.8vw,1.75rem); line-height:1.12; letter-spacing:-.01em;
+  font-size:clamp(1.3rem,1.65vw,1.6rem); line-height:1.12; letter-spacing:-.01em;
 }
 .proj-card__head em{font-style:normal;color:var(--gold)}
 .proj-card__line{
@@ -866,22 +866,40 @@ em{font-style:italic}
 .proj-card:hover .proj-card__go{color:var(--gold)}
 .proj-card:hover .proj-card__go svg{transform:translateX(6px)}
 
-/* the journey: one quiet row under the cards */
-.proj__journey{
-  display:flex; align-items:baseline; gap:.6rem 1.4rem; flex-wrap:wrap;
-  margin-top:1.5rem; padding-top:1.3rem;
-  border-top:1px solid var(--cream-faint);
+/* the journey: its own card under the grid, one line across on desktop */
+.proj-journey{
+  display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; gap:.5rem 2rem;
+  margin-top:1rem; padding:1.1rem 1.3rem;
+  border:1px solid var(--cream-faint);
+  background:linear-gradient(110deg,var(--gold-glow),transparent 55%);
   color:var(--cream);
+  transition:border-color 420ms var(--ease-lux), background 420ms var(--ease-lux);
 }
-.proj__journey-name{font-family:var(--font-display);font-size:1.3rem;line-height:1;transition:color 420ms var(--ease-lux)}
-.proj__journey-note{font-size:.8rem;color:var(--cream-dim)}
-.proj__journey-go{margin-left:auto;color:var(--gold)}
-.proj__journey-go svg{display:block;width:26px;height:8px;transition:transform 520ms var(--ease-lux)}
-.proj__journey:hover .proj__journey-name{color:var(--gold)}
-.proj__journey:hover .proj__journey-go svg{transform:translateX(6px)}
+.proj-journey:hover{border-color:var(--gold-half)}
+.proj-journey__tag{grid-row:1 / span 2;font-size:.54rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);white-space:nowrap}
+.proj-journey__head{font-family:var(--font-display);font-size:clamp(1.15rem,1.5vw,1.4rem);line-height:1.15}
+.proj-journey__head em{font-style:normal;color:var(--gold)}
+.proj-journey__line{grid-column:2;font-size:.8rem;color:var(--cream-dim)}
+.proj-journey__go{
+  grid-column:3; grid-row:1 / span 2;
+  display:inline-flex; align-items:center; gap:.7rem;
+  font-size:.54rem; letter-spacing:.26em; text-transform:uppercase; color:var(--cream-dim);
+  transition:color 420ms var(--ease-lux);
+}
+.proj-journey__go svg{width:22px;height:8px;transition:transform 520ms var(--ease-lux)}
+.proj-journey:hover .proj-journey__go{color:var(--gold)}
+.proj-journey:hover .proj-journey__go svg{transform:translateX(6px)}
 
 .proj__dots{display:none}
 
+@media (min-width:1101px) and (max-height:820px){
+  .proj__head{margin-bottom:1.1rem}
+  .proj-card{min-height:0}
+  .proj-card__line{display:none}
+  .proj-card__go{padding-top:1rem}
+  .proj-journey__line{display:none}
+  .proj-journey__tag,.proj-journey__go{grid-row:auto}
+}
 /* below 1100px: a slider, with a dot per card */
 @media (max-width:1100px){
   .proj__head{margin-bottom:1.4rem}
@@ -891,7 +909,7 @@ em{font-style:italic}
     margin-right:calc(var(--gutter) * -1); padding-right:var(--gutter);
   }
   .proj__grid::-webkit-scrollbar{display:none}
-  .proj-card{flex:0 0 min(80vw,22rem);min-height:13rem;scroll-snap-align:start;border:1px solid var(--cream-faint)}
+    .proj-card{flex:0 0 min(80vw,22rem);min-height:13rem;scroll-snap-align:start;border:1px solid var(--cream-faint)}
   .proj__dots{display:flex;justify-content:center;gap:.2rem;margin-top:.9rem}
   .proj__dots button{
     display:grid; place-items:center;
@@ -903,13 +921,14 @@ em{font-style:italic}
     transition:opacity 400ms ease, transform 500ms var(--ease-lux), background 400ms ease;
   }
   .proj__dots button.is-on::after{background:var(--gold);opacity:1;transform:scale(1.45)}
-  .proj__journey{margin-top:1rem}
 }
 @media (max-width:720px){
   .proj__title{font-size:clamp(1.7rem,7.4vw,2.3rem)}
+  .proj-journey{grid-template-columns:1fr;gap:.45rem;padding:1rem 1.1rem}
+  .proj-journey__tag,.proj-journey__line,.proj-journey__go{grid-column:auto;grid-row:auto}
+  .proj-journey__go{margin-top:.4rem}
   .proj-card{padding:1.2rem 1.15rem 1.1rem;min-height:12rem}
   .proj-card__head{margin-top:1.1rem}
-  .proj__journey-note{display:none}
 }
 
 /* ── 08b · THE UNLOCKED PANEL ───────────────────────────────────────────
@@ -1463,4 +1482,16 @@ em{font-style:italic}
   *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;
                        transition-duration:.01ms !important}
   [data-reveal]{opacity:1;transform:none}
+}
+
+/* ── hairline grids, drawn with borders ──────────────────────────────────
+   these grids used to paint their lines as a grey background showing
+   through 1px gaps. any empty cell (five tiles wrapping into two columns,
+   say) showed up as a solid grey block. borders on the cells instead: an
+   empty slot is just empty. */
+.more__grid{gap:0;background:none;border:0;border-top:1px solid var(--cream-faint);border-left:1px solid var(--cream-faint)}
+.more__grid > *{border-right:1px solid var(--cream-faint);border-bottom:1px solid var(--cream-faint)}
+@media (min-width:1101px){
+  .proj__grid{gap:0;background:none;border:0;border-top:1px solid var(--cream-faint);border-left:1px solid var(--cream-faint)}
+  .proj__grid > *{border-right:1px solid var(--cream-faint);border-bottom:1px solid var(--cream-faint)}
 }

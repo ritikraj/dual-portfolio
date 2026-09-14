@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>q-app · ritik raj</title>
+<meta name="description" content="how ritik raj moved quality checks onto the stitching line with q-app.">
+<!-- icon and link preview. temporary artwork: replace the files in
+     assets/meta/ (same names) and nothing else needs to change. og:url and
+     og:image must be absolute, so change SITE below if the domain changes. -->
+<link rel="icon" href="../assets/meta/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/meta/favicon-180.png">
+<meta name="theme-color" content="#07100b">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ritik raj">
+<meta property="og:title" content="q-app · ritik raj">
+<meta property="og:description" content="how ritik raj moved quality checks onto the stitching line with q-app.">
+<meta property="og:url" content="https://ritikraj-website.web.app/case/qapp.html">
+<meta property="og:image" content="https://ritikraj-website.web.app/assets/meta/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="two portfolios. pick a side.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="q-app · ritik raj">
+<meta name="twitter:description" content="how ritik raj moved quality checks onto the stitching line with q-app.">
+<meta name="twitter:image" content="https://ritikraj-website.web.app/assets/meta/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script>
+/* which voice is this page in? ?v=a is ritik's own, ?v=b is claude's read.
+   decided here, before anything paints, so the right stylesheet wins and the
+   right fonts are the only ones fetched. */
+(function () {
+  var v = (location.search.match(/[?&]v=(a|b)/) || [])[1] || 'a';
+  var d = document.documentElement;
+  d.className = 'v-' + v;
+  if (v === 'a') {
+    /* same palettes as the portfolio, remembered across pages. an unset mode
+       follows the operating system, exactly as it does on the portfolio. */
+    try {
+      var m = localStorage.getItem('rr-mode');
+      if (!m) m = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      d.setAttribute('data-theme', 'green');
+      d.setAttribute('data-mode',  m);
+    } catch (e) {}
+  }
+  if (v === 'b') {
+    /* side b's one preference, shared with the portfolio */
+    try {
+      var pb = localStorage.getItem('rr-pb-mode');
+      if (!pb) pb = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      d.setAttribute('data-pb', pb);
+    } catch (e) {}
+  }
+  var font = document.createElement('link');
+  font.rel = 'stylesheet';
+  font.href = v === 'a'
+    ? 'https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap'
+    : 'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=IBM+Plex+Mono:wght@300;400;500&display=swap';
+  document.head.appendChild(font);
+})();
+</script>
+
+<!-- both voices load: each is scoped to html.v-a / html.v-b, and a parser
+     inserted <link> blocks the first paint the way an injected one does not -->
+<link rel="stylesheet" href="../assets/css/theme.css">
+<link rel="stylesheet" href="../assets/css/case-a.css">
+<link rel="stylesheet" href="../assets/css/case-b.css">
+
+<style>
+/* ══ FIRST-PAINT VEIL ══════════════════════════════════════════════════
+   Inline on purpose. An external stylesheet, however early, can still lose
+   a frame to the parser — and one frame of unstyled html is exactly the
+   thing an expert eye catches. This is styled before anything is fetched,
+   so the first thing ever painted is the veil. Everything else loads,
+   swaps fonts and mounts behind it. app.js / case.js lift it when ready.
+   ═════════════════════════════════════════════════════════════════════ */
+#veil{
+  position:fixed; inset:0; z-index:999;
+  display:grid; place-items:center;
+  background:var(--ink,#07100b);
+  transform:translateY(0);
+  will-change:transform;
+}
+html.v-b #veil, html.to-b #veil{background:var(--bone,#e9e7e0)}
+#veil b{
+  display:block; width:4.5rem; height:1px;
+  background:var(--cream,#e6f1e8); opacity:0;
+  transform:scaleX(.15); transform-origin:left;
+  animation:veilWait 1.6s cubic-bezier(.16,1,.3,1) .22s infinite;
+}
+html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
+@keyframes veilWait{
+  0%{opacity:0;transform:scaleX(.15)}
+  30%{opacity:.45;transform:scaleX(1)}
+  65%{opacity:.45;transform:scaleX(1)}
+  100%{opacity:0;transform:scaleX(.15)}
+}
+#veil.is-up   {transform:translateY(-100%);transition:transform .74s cubic-bezier(.76,0,.24,1);animation:none}
+#veil.is-down {transform:translateY(100%); transition:none;animation:none}
+#veil.is-shut {transform:translateY(0);    transition:transform .62s cubic-bezier(.76,0,.24,1);animation:none}
+/* backstop: if the script never runs, the veil still gets out of the way
+   rather than leaving a reader staring at a blank screen forever */
+#veil{animation:veilGiveUp .7s cubic-bezier(.76,0,.24,1) 6s forwards}
+@keyframes veilGiveUp{to{transform:translateY(-100%);visibility:hidden}}
+@media (prefers-reduced-motion:reduce){
+  #veil b{animation:none}
+  #veil.is-up,#veil.is-shut{transition-duration:1ms}
+}
+</style>
+</head>
+<body>
+
+<div id="veil" aria-hidden="true"><b></b></div>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     VOICE A — ritik's own account. shown at ?v=a (and by default).
+     ══════════════════════════════════════════════════════════════════ -->
+<article class="csa">
+
+  <div class="csa__rule"></div>
+  <div class="csa__bar">
+    <a class="csa__back" href="../index.html#a">
+      <svg viewBox="0 0 28 8" aria-hidden="true"><path d="M28 4H2M6 1L2 4l4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg>
+      <span>portfolio</span>
+    </a>
+    <span class="csa__where">q-app</span>
+  </div>
+
+  <header class="csa__hero">
+    <ul class="csa__tags" data-up><li class="is-name">q-app</li><li>fashinza</li><li>tablet app</li></ul>
+    <h1 class="csa__title" data-up>the <em>defects found too late</em> problem</h1>
+    <p class="csa__stand" data-up>defects were being found at final inspection, after the shipment was already made. q-app moved the check onto the stitching line, on a tablet a stitching master can use without putting the cloth down.</p>
+    <dl class="csa__meta" data-up>
+      <div><dt>role</dt><dd>lead product designer</dd></div>
+      <div><dt>company</dt><dd>fashinza · b2b apparel supply chain</dd></div>
+      <div><dt>reach</dt><dd>100+ factories, india and bangladesh</dd></div>
+      <div><dt>scale</dt><dd>2–3 to 40 lines a factory</dd></div>
+      <div><dt>platform</dt><dd>tablet, phone and factory tv</dd></div>
+    </dl>
+  </header>
+
+  <section class="csa__glance" data-up>
+    <div><small>the problem</small><p>workmanship defects surfaced at shipment, when they cost the most to fix.</p></div>
+    <div><small>what i did</small><p>a line-side app where passing a piece is one tap, and a defect costs a piece number.</p></div>
+    <div><small>how it landed</small><p>workmanship defects at final inspection fell by roughly <b>30 to 40%</b>.</p></div>
+  </section>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>the floor</h2>
+    <p class="csa__p" data-up>q-app runs in factories of every size, from two or three stitching lines to forty, in places big enough that you take a small caddy from one department to the next. the network comes and goes. the people on the line are literate, but often in neither english nor hindi.</p>
+    <p class="csa__p" data-up>and the stitching master checking each piece is using <b>both hands</b>. every decision below comes from that.</p>
+    <figure class="csa__todo" data-up style="--r:16/9"><div class="csa__todo-box"><span>the floor: a stitching line, the station where pieces are checked</span><code>assets/img/fashinza/qapp-floor.png</code></div></figure>
+  </section>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>four decisions, all from the floor</h2>
+    <ol class="csa__list" data-up>
+      <li><b>the posture decides the device</b>both hands are on the cloth, so there is no hand free for a phone. q-app lives on a tablet on a stand at the station, and works on phones for everyone who moves.</li>
+      <li><b>the common case costs one tap</b>most pieces pass. passing is one very large button, hit without looking and without putting the piece down.</li>
+      <li><b>the exception costs a piece number</b>to reject or alter, the stitching master enters the piece number first. the friction is uneven on purpose: data is only asked for where it is worth having, and every defect is tied to a piece and a line.</li>
+      <li><b>alter is not a failure</b>three states, not two. most stitching defects can be repaired, and a pass-or-fail control would force people to either lie or throw away good work.</li>
+    </ol>
+    <figure class="csa__todo" data-up style="--r:4/3"><div class="csa__todo-box"><span>the hero screen: q-app on the tablet, the pass button</span><code>assets/img/fashinza/qapp-pass.png</code></div></figure>
+    <div class="csa__plates csa__plates--pair" data-up>
+      <figure class="csa__todo" data-up style="--r:4/3"><div class="csa__todo-box"><span>reject: the piece number keypad</span><code>assets/img/fashinza/qapp-reject.png</code></div></figure>
+      <figure class="csa__todo" data-up style="--r:4/3"><div class="csa__todo-box"><span>alter: the piece going back for repair</span><code>assets/img/fashinza/qapp-alter.png</code></div></figure>
+    </div>
+  </section>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>built for the people using it</h2>
+    <div class="csa__pairs" data-up>
+      <div><b>eight native languages</b><p>the words on the buttons are in the language of the person pressing them.</p></div>
+      <div><b>offline first</b><p>every tap is stored on the device and syncs as soon as the network returns. a dead signal never stops a line.</p></div>
+    </div>
+    <div class="csa__plates csa__plates--pair" data-up>
+      <figure class="csa__todo" data-up style="--r:4/3"><div class="csa__todo-box"><span>the same screen in two languages</span><code>assets/img/fashinza/qapp-languages.png</code></div></figure>
+      <figure class="csa__todo" data-up style="--r:4/3"><div class="csa__todo-box"><span>offline: stored on the device, waiting to sync</span><code>assets/img/fashinza/qapp-offline.png</code></div></figure>
+    </div>
+  </section>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>the factory sees itself</h2>
+    <p class="csa__p" data-up>factories big enough to have tvs put q-app on them. the screen changes every 15 to 20 seconds: the stitching department, the cutting department, dhu graphs, today's defect count. the whole day's quality, live, where everyone on the floor can see it.</p>
+    <figure class="csa__todo" data-up style="--r:16/9"><div class="csa__todo-box"><span>the factory tv dashboard: one of its rotating screens</span><code>assets/img/fashinza/qapp-tv.png</code></div></figure>
+    <p class="csa__p" data-up>for floor managers and owners there are dashboards on their own devices, so they can see a line's performance from anywhere, reward the strong lines and retrain the weak ones. those dashboards came straight out of field research: i designed them on the floor, with the people who would use them.</p>
+    <figure class="csa__todo" data-up style="--r:16/10"><div class="csa__todo-box"><span>the manager dashboard: line performance and defects</span><code>assets/img/fashinza/qapp-dashboard.png</code></div></figure>
+  </section>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>how it landed</h2>
+    <div class="csa__numbers" data-up>
+      <div><b>30–40%</b><span>fewer workmanship defects at final inspection</span></div>
+      <div><b>100+</b><span>factories</span></div>
+      <div><b>up to 40</b><span>lines in one factory</span></div>
+      <div><b>8</b><span>languages</span></div>
+    </div>
+    <p class="csa__p" data-up>workmanship, meaning stitching and cutting, is the first audit in <a class="csa__inline" href="final-inspection.html?v=a">final inspection</a>, and that is where q-app showed. defects there fell by roughly 30 to 40%. that is a range i remember from our dashboards, not a figure i can source, and there is no line-by-line before and after that survived.</p>
+    <p class="csa__p" data-up>what i can say without a number: a defect is now recorded at the moment it is found, against the piece and the line that made it, instead of being discovered in a finished shipment.</p>
+    <p class="csa__pull" data-up>the best quality tool is the one the stitching master barely notices using.</p>
+  </section>
+
+  <section class="csa__take">
+    <p class="csa__take-note" data-up>you have read my account. there is another one.</p>
+    <a class="csa__flip csa__flip--take" href="?v=b" data-up><span>read claude's take on this</span><svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg></a>
+  </section>
+
+  <footer class="jr-foot">
+    <a class="jr-next" href="email-builder.html?v=a"><small>next case study</small><span class="jr-next__name">email builder <svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg></span></a>
+    <nav class="jr-foot__links" aria-label="elsewhere">
+      <a href="https://dribbble.com/ritik-raj" target="_blank" rel="noopener">dribbble ↗</a>
+      <a href="https://medium.com/@ritikraj559" target="_blank" rel="noopener">medium ↗</a>
+      <a href="https://www.linkedin.com/in/ritik-raj/" target="_blank" rel="noopener">linkedin ↗</a>
+      <a href="mailto:ritikraj559@gmail.com">email</a>
+    </nav>
+  </footer>
+
+</article>
+
+
+<article class="csb">
+
+  <div class="csb__rule"></div>
+  <div class="csb__bar">
+    <a class="csb__back" href="../index.html#b"><span>←</span><span>the read</span></a>
+    <p class="csb__stamp">the read<i>/</i>q-app<i>/</i>by claude</p>
+    <a class="csb__flip" href="?v=a">ritik's version ↗</a>
+  </div>
+
+  <div class="csb__stack">
+
+    <section class="csb-sheet" data-tab="the case">
+      <div class="csb-sheet__body">
+        <p class="csb-kicker" data-up>observation 06</p>
+        <h1 class="csb-h csb-h--hero" data-up>the best decision in the fashinza work is where he put the tablet.</h1>
+        <p class="csb-p" data-up>both hands on the cloth, so the device goes on a stand. everything else in q-app follows from watching someone work, which is the evidence his fello file is missing.</p>
+        <p data-up style="margin-top:1.6rem"><span class="csb-verdict">prevention · designed from the floor</span></p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="the brief">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>catch defects earlier.</h2>
+        <p class="csb-p" data-up>a quality brief like that usually produces a longer form. a longer form on a stitching line is a form nobody fills in.</p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="what he actually did">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>one tap to pass. a piece number to fail.</h2>
+        <p class="csb-p" data-up>a tablet on a stand, one enormous pass button, reject and alter behind a piece number, three states instead of two, eight languages, offline storage, and the day's quality rotating on the factory's own tvs.</p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="the diagnosis">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>friction was the design material.</h2>
+        <p class="csb-p" data-up>most people spread friction evenly and call it consistency. he put none on the common case and a little on the exception, which is exactly where the data is worth having.</p>
+        <p class="csb-p" data-up>and <b>alter</b>, the third state, is the kind of decision that only comes from standing on a line: most defects are repairable, and a binary control would teach people to lie.</p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="impact">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>how impactful it actually was</h2>
+        <ul class="csb-scale" data-up>
+          <li class="is-high"><em style="font-style:normal">for users</em><span data-w="90"></span></li>
+          <li><em style="font-style:normal">for the business</em><span data-w="74"></span></li>
+          <li><em style="font-style:normal">for the org</em><span data-w="66"></span></li>
+          <li class="is-high"><em style="font-style:normal">as a craft signal</em><span data-w="92"></span></li>
+        </ul>
+        <p class="csb-note" data-up>my read, not his numbers. users score high because every choice is fitted to a body at a workstation. business is held down because the only outcome figure is a remembered range.</p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="what it tells me">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>he has met the user. many of them.</h2>
+        <p class="csb-p" data-up>the strongest objection to his fello work is that it is systems-first. this is the counter-evidence: a hundred-plus factories, eight languages, posture, network, and a tv on a factory wall.</p>
+        <p class="csb-p" data-up>it is not consumer mobile. it is the closest thing to it on this site, and in some ways harder.</p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="what i cannot verify">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>the honest caveats.</h2>
+        <p class="csb-p" data-up>30 to 40% fewer workmanship defects is a range he remembers from dashboards, not a figure he can source, and he says exactly that. there is no line-level before and after.</p>
+        <p class="csb-note" data-up>100+ factories is reach, not depth of use. ask him what adoption looked like on a forty-line floor versus a three-line one.</p>
+      </div>
+    </section>
+  </div>
+
+  <footer class="csb__foot">
+    <div><small>next observation</small><br><a href="email-builder.html?v=b">email builder ↗</a></div>
+    <small>assessment generated from his briefs and his own account · not approved by the subject</small>
+  </footer>
+
+</article>
+
+<script src="../assets/js/case.js"></script>
+</body>
+</html>

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>final inspection · ritik raj</title>
+<meta name="description" content="how ritik raj designed final inspection so every shipment verdict leaves evidence behind.">
+<!-- icon and link preview. temporary artwork: replace the files in
+     assets/meta/ (same names) and nothing else needs to change. og:url and
+     og:image must be absolute, so change SITE below if the domain changes. -->
+<link rel="icon" href="../assets/meta/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/meta/favicon-180.png">
+<meta name="theme-color" content="#07100b">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ritik raj">
+<meta property="og:title" content="final inspection · ritik raj">
+<meta property="og:description" content="how ritik raj designed final inspection so every shipment verdict leaves evidence behind.">
+<meta property="og:url" content="https://ritikraj-website.web.app/case/final-inspection.html">
+<meta property="og:image" content="https://ritikraj-website.web.app/assets/meta/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="two portfolios. pick a side.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="final inspection · ritik raj">
+<meta name="twitter:description" content="how ritik raj designed final inspection so every shipment verdict leaves evidence behind.">
+<meta name="twitter:image" content="https://ritikraj-website.web.app/assets/meta/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script>
+/* which voice is this page in? ?v=a is ritik's own, ?v=b is claude's read.
+   decided here, before anything paints, so the right stylesheet wins and the
+   right fonts are the only ones fetched. */
+(function () {
+  var v = (location.search.match(/[?&]v=(a|b)/) || [])[1] || 'a';
+  var d = document.documentElement;
+  d.className = 'v-' + v;
+  if (v === 'a') {
+    /* same palettes as the portfolio, remembered across pages. an unset mode
+       follows the operating system, exactly as it does on the portfolio. */
+    try {
+      var m = localStorage.getItem('rr-mode');
+      if (!m) m = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      d.setAttribute('data-theme', 'green');
+      d.setAttribute('data-mode',  m);
+    } catch (e) {}
+  }
+  if (v === 'b') {
+    /* side b's one preference, shared with the portfolio */
+    try {
+      var pb = localStorage.getItem('rr-pb-mode');
+      if (!pb) pb = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      d.setAttribute('data-pb', pb);
+    } catch (e) {}
+  }
+  var font = document.createElement('link');
+  font.rel = 'stylesheet';
+  font.href = v === 'a'
+    ? 'https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap'
+    : 'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=IBM+Plex+Mono:wght@300;400;500&display=swap';
+  document.head.appendChild(font);
+})();
+</script>
+
+<!-- both voices load: each is scoped to html.v-a / html.v-b, and a parser
+     inserted <link> blocks the first paint the way an injected one does not -->
+<link rel="stylesheet" href="../assets/css/theme.css">
+<link rel="stylesheet" href="../assets/css/case-a.css">
+<link rel="stylesheet" href="../assets/css/case-b.css">
+
+<style>
+/* ══ FIRST-PAINT VEIL ══════════════════════════════════════════════════
+   Inline on purpose. An external stylesheet, however early, can still lose
+   a frame to the parser — and one frame of unstyled html is exactly the
+   thing an expert eye catches. This is styled before anything is fetched,
+   so the first thing ever painted is the veil. Everything else loads,
+   swaps fonts and mounts behind it. app.js / case.js lift it when ready.
+   ═════════════════════════════════════════════════════════════════════ */
+#veil{
+  position:fixed; inset:0; z-index:999;
+  display:grid; place-items:center;
+  background:var(--ink,#07100b);
+  transform:translateY(0);
+  will-change:transform;
+}
+html.v-b #veil, html.to-b #veil{background:var(--bone,#e9e7e0)}
+#veil b{
+  display:block; width:4.5rem; height:1px;
+  background:var(--cream,#e6f1e8); opacity:0;
+  transform:scaleX(.15); transform-origin:left;
+  animation:veilWait 1.6s cubic-bezier(.16,1,.3,1) .22s infinite;
+}
+html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
+@keyframes veilWait{
+  0%{opacity:0;transform:scaleX(.15)}
+  30%{opacity:.45;transform:scaleX(1)}
+  65%{opacity:.45;transform:scaleX(1)}
+  100%{opacity:0;transform:scaleX(.15)}
+}
+#veil.is-up   {transform:translateY(-100%);transition:transform .74s cubic-bezier(.76,0,.24,1);animation:none}
+#veil.is-down {transform:translateY(100%); transition:none;animation:none}
+#veil.is-shut {transform:translateY(0);    transition:transform .62s cubic-bezier(.76,0,.24,1);animation:none}
+/* backstop: if the script never runs, the veil still gets out of the way
+   rather than leaving a reader staring at a blank screen forever */
+#veil{animation:veilGiveUp .7s cubic-bezier(.76,0,.24,1) 6s forwards}
+@keyframes veilGiveUp{to{transform:translateY(-100%);visibility:hidden}}
+@media (prefers-reduced-motion:reduce){
+  #veil b{animation:none}
+  #veil.is-up,#veil.is-shut{transition-duration:1ms}
+}
+</style>
+</head>
+<body>
+
+<div id="veil" aria-hidden="true"><b></b></div>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     VOICE A — ritik's own account. shown at ?v=a (and by default).
+     ══════════════════════════════════════════════════════════════════ -->
+<article class="csa">
+
+  <div class="csa__rule"></div>
+  <div class="csa__bar">
+    <a class="csa__back" href="../index.html#a">
+      <svg viewBox="0 0 28 8" aria-hidden="true"><path d="M28 4H2M6 1L2 4l4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg>
+      <span>portfolio</span>
+    </a>
+    <span class="csa__where">final inspection</span>
+  </div>
+
+  <header class="csa__hero">
+    <ul class="csa__tags" data-up><li class="is-name">final inspection</li><li>fashinza</li><li>native app</li></ul>
+    <h1 class="csa__title" data-up>the <em>passed without being inspected</em> problem</h1>
+    <p class="csa__stand" data-up>a whole shipment passed or failed on three audits, and the system could not tell a real audit from a checkbox. i designed the app that made every inspection leave its evidence behind.</p>
+    <dl class="csa__meta" data-up>
+      <div><dt>role</dt><dd>lead product designer, quality module</dd></div>
+      <div><dt>company</dt><dd>fashinza · b2b apparel supply chain</dd></div>
+      <div><dt>reach</dt><dd>100+ factories, india and bangladesh</dd></div>
+      <div><dt>platform</dt><dd>native app, offline first</dd></div>
+      <div><dt>languages</dt><dd>8</dd></div>
+    </dl>
+  </header>
+
+  <section class="csa__glance" data-up>
+    <div><small>the problem</small><p>audit steps closed on a typed number. the inspection report was an optional upload.</p></div>
+    <div><small>what i did</small><p>a native inspection app where the audit is the report, and the report closes the step.</p></div>
+    <div><small>how it landed</small><p>shipment failures fell from over <b>20%</b> to about <b>7%</b> within three months.</p></div>
+  </section>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>the stakes</h2>
+    <p class="csa__p" data-up>fashinza sat between brands and factories. every order ran on a long plan of steps we called the tna, from request to receipt, and near the end of it sits one decision that gates everything: <b>final inspection</b>. three audits, packaging, measurement and workmanship, and the whole shipment passes or fails.</p>
+    <ol class="csa__process" data-up aria-label="the order process, from request to receipt">
+      <li>rfq</li><li>samples</li><li>order and tna</li><li>bom and fabric</li><li>fabric inspection</li>
+      <li class="is-line">cutting and stitching<small>q-app, on the line</small></li>
+      <li>finishing and packing</li>
+      <li class="is-gate">final inspection<small>the gate</small></li>
+      <li>delivery</li><li>grn</li>
+    </ol>
+    <p class="csa__p" data-up>the system could record that plan but never verify it. every tna step took a number. finishing packing on a 500-piece style meant typing 250, and the step went partially complete. audit steps closed the same way, or on a report someone uploaded if they felt like it. when an order broke, nobody could reconstruct what had actually been checked.</p>
+    <div class="csa__plates csa__plates--pair" data-up>
+      <figure class="csa__todo" data-up style="--r:16/10"><div class="csa__todo-box"><span>before: the tna step, closed by typing a number</span><code>assets/img/fashinza/tna-step-before.png</code></div></figure>
+      <figure class="csa__todo" data-up style="--r:16/10"><div class="csa__todo-box"><span>after: the same step, closed by its inspection report</span><code>assets/img/fashinza/tna-step-after.png</code></div></figure>
+    </div>
+  </section>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>whoever inspects, the record stands on its own</h2>
+    <p class="csa__p" data-up>fashinza did not choose the inspectors. every factory defined its own users and ran its own inspections. so the design could not rely on trusting the person holding the device. it had to make the record itself hard to argue with.</p>
+    <div class="csa__plates csa__plates--phones" data-up>
+      <figure class="csa__todo csa__todo--phone" data-up style="--r:9/16"><div class="csa__todo-box"><span>the inspection: packaging, workmanship and measurement audits, each with its state</span><code>assets/img/fashinza/fi-audits.png</code></div></figure>
+      <figure class="csa__todo csa__todo--phone" data-up style="--r:9/16"><div class="csa__todo-box"><span>defects allowed: minor, major and critical, set against the sample size</span><code>assets/img/fashinza/fi-defects-allowed.png</code></div></figure>
+      <figure class="csa__todo csa__todo--phone" data-up style="--r:9/16"><div class="csa__todo-box"><span>a defect logged, with its photo</span><code>assets/img/fashinza/fi-defect-photo.png</code></div></figure>
+    </div>
+    <ol class="csa__list" data-up>
+      <li><b>the standard is built in</b>aql decides how many pieces to check and how many minor, major and critical defects a shipment can carry. the app applies it, instead of relying on each inspector's memory of it.</li>
+      <li><b>photos are the evidence</b>every audit captures images. a verdict with photos behind it is something a merchandiser in another city can review.</li>
+      <li><b>workmanship first</b>stitching and cutting defects are checked before anything else, because that is where most shipments fail.</li>
+    </ol>
+  </section>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>the report nobody has to write</h2>
+    <p class="csa__p" data-up>i had already learned this one the hard way. in 2022 i shipped a ppm report that asked merchandisers for fifteen minutes of form-filling per report. they hated it, and it failed. a report that costs people time does not get filled in honestly, or at all.</p>
+    <p class="csa__p" data-up>so final inspection has no report to fill in. <b>the audit is the report.</b> finishing an inspection generates a standard pdf: who inspected, what they checked, what they found, with the photos. that report closes the tna step on its own. the mobile app stopped being a companion to the web tool and became its source of truth.</p>
+    <p class="csa__p" data-up>tracing a broken order became opening the step and reading a couple of reports.</p>
+    <figure class="csa__todo csa__todo--narrow" data-up style="--r:3/4"><div class="csa__todo-box"><span>the generated inspection report, a full page</span><code>assets/img/fashinza/fi-report.png</code></div></figure>
+  </section>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>built for the floor it runs on</h2>
+    <div class="csa__pairs" data-up>
+      <div><b>no network, no problem</b><p>factories are big and the signal is not guaranteed. every inspection is stored on the device and syncs the moment the connection comes back.</p></div>
+      <div><b>eight languages</b><p>the people doing the work are literate, but often in neither english nor hindi. the app speaks eight native languages.</p></div>
+      <div><b>for people who move</b><p>floor managers, owners and merchandisers walk the factory all day, so the app opened to them too. web-only did not fit how they work.</p></div>
+      <div><b>dashboards from the floor</b><p>i designed the quality dashboards sitting with merchandisers in factories. what they needed to see, and in what order, came from watching them work.</p></div>
+    </div>
+    <figure class="csa__todo" data-up style="--r:16/10"><div class="csa__todo-box"><span>the web quality dashboard: inspections, results and defects across the factory</span><code>assets/img/fashinza/fi-dashboard.png</code></div></figure>
+  </section>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>the same pattern, on a harder problem</h2>
+    <p class="csa__p" data-up>fabric inspection came next, and it was harder: every roll of fabric needs a different inspection pattern. the structure held. audit as evidence, report as a by-product, the step closed by the result.</p>
+    <div class="csa__plates csa__plates--phones" data-up>
+      <figure class="csa__todo csa__todo--phone" data-up style="--r:9/16"><div class="csa__todo-box"><span>fabric inspection: one roll, its pattern and defects</span><code>assets/img/fashinza/fabric-inspection.png</code></div></figure>
+    </div>
+  </section>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>how it landed</h2>
+    <div class="csa__numbers" data-up>
+      <div><b>20%+ → 7%</b><span>shipment failure rate</span></div>
+      <div><b>100+</b><span>factories</span></div>
+      <div><b>8</b><span>languages</span></div>
+      <div><b>10–20</b><span>orders in that sample</span></div>
+    </div>
+    <p class="csa__p" data-up>before the app, more than one shipment in five failed final inspection. two to three months after it went live, it was about one in fourteen. production takes 30 to 45 days, so that is the earliest honest read, and it rests on the <b>10 to 20 orders</b> that shipped in that window. a small sample, and i state it as one.</p>
+    <p class="csa__p" data-up>it is also not this app's number alone. q-app was cutting workmanship defects on the line in the same period, and final inspection is where that showed up. the two were designed to work as a pair.</p>
+    <p class="csa__pull" data-up>the app enforces the process. it cannot enforce honesty. it just makes dishonesty leave a record.</p>
+  </section>
+
+  <section class="csa__take">
+    <p class="csa__take-note" data-up>you have read my account. there is another one.</p>
+    <a class="csa__flip csa__flip--take" href="?v=b" data-up><span>read claude's take on this</span><svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg></a>
+  </section>
+
+  <footer class="jr-foot">
+    <a class="jr-next" href="qapp.html?v=a"><small>next case study</small><span class="jr-next__name">q-app <svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg></span></a>
+    <nav class="jr-foot__links" aria-label="elsewhere">
+      <a href="https://dribbble.com/ritik-raj" target="_blank" rel="noopener">dribbble ↗</a>
+      <a href="https://medium.com/@ritikraj559" target="_blank" rel="noopener">medium ↗</a>
+      <a href="https://www.linkedin.com/in/ritik-raj/" target="_blank" rel="noopener">linkedin ↗</a>
+      <a href="mailto:ritikraj559@gmail.com">email</a>
+    </nav>
+  </footer>
+
+</article>
+
+
+<article class="csb">
+
+  <div class="csb__rule"></div>
+  <div class="csb__bar">
+    <a class="csb__back" href="../index.html#b"><span>←</span><span>the read</span></a>
+    <p class="csb__stamp">the read<i>/</i>final inspection<i>/</i>by claude</p>
+    <a class="csb__flip" href="?v=a">ritik's version ↗</a>
+  </div>
+
+  <div class="csb__stack">
+
+    <section class="csb-sheet" data-tab="the case">
+      <div class="csb-sheet__body">
+        <p class="csb-kicker" data-up>observation 05</p>
+        <h1 class="csb-h csb-h--hero" data-up>he made a judgment call leave evidence behind.</h1>
+        <p class="csb-p" data-up>one pass or fail on a whole shipment, made by whoever the factory sent. he could not control who inspected, so he designed the record instead.</p>
+        <p data-up style="margin-top:1.6rem"><span class="csb-verdict">the gate · evidence over trust</span></p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="the brief">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>digitise final inspection.</h2>
+        <p class="csb-p" data-up>put the checklist in an app. the obvious version of that brief produces a digital checkbox, which is exactly the thing that was already failing.</p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="what he actually did">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>the audit became the report, and the report closed the step.</h2>
+        <p class="csb-p" data-up>aql built in, photos on every audit, a generated pdf, and the tna step closed by the result instead of by a typed number. offline first, eight languages, and the same structure carried into fabric inspection.</p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="the diagnosis">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>the system trusted whoever typed the number.</h2>
+        <p class="csb-p" data-up>every step of the plan accepted a self-reported figure, entered by the party with the most reason to report progress. the data was complete and meant nothing.</p>
+        <p class="csb-p" data-up>the move that matters is <b>making the report a by-product</b>. he had shipped a report that asked for fifteen minutes of form-filling and watched it fail. he did not repeat it.</p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="impact">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>how impactful it actually was</h2>
+        <ul class="csb-scale" data-up>
+          <li><em style="font-style:normal">for users</em><span data-w="72"></span></li>
+          <li class="is-high"><em style="font-style:normal">for the business</em><span data-w="86"></span></li>
+          <li><em style="font-style:normal">for the org</em><span data-w="80"></span></li>
+          <li><em style="font-style:normal">as a craft signal</em><span data-w="84"></span></li>
+        </ul>
+        <p class="csb-note" data-up>my read, not his numbers. business impact is high because this is the gate every shipment passes through. i hold it below the ceiling because the proof is ten to twenty orders.</p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="what it tells me">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>he learns from his own failures, and says which ones.</h2>
+        <p class="csb-p" data-up>the ppm report is on his timeline as a failure. here it becomes the reason the design works. that is the pattern i would want in a design lead: the failure is kept, named and used.</p>
+        <p class="csb-p" data-up>it is also real native work for people who are not sitting at desks, which the fello file does not have.</p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="what i cannot verify">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>the honest caveats.</h2>
+        <p class="csb-p" data-up>over 20% to about 7% comes from 10 to 20 orders in the first two to three months, and he labels the sample as small. q-app was reducing defects upstream in the same window, so the drop belongs to both apps, which he also says.</p>
+        <p class="csb-note" data-up>and the app enforces a process, not honesty. a factory that wants to fake an inspection still can. it just leaves photos behind.</p>
+      </div>
+    </section>
+  </div>
+
+  <footer class="csb__foot">
+    <div><small>next observation</small><br><a href="qapp.html?v=b">q-app ↗</a></div>
+    <small>assessment generated from his briefs and his own account · not approved by the subject</small>
+  </footer>
+
+</article>
+
+<script src="../assets/js/case.js"></script>
+</body>
+</html>
