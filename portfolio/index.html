@@ -218,124 +218,56 @@ html.to-b[data-pb="dark"] #veil b{background:#eeede8}
       <div class="bubbles" id="bubbles" aria-hidden="true"></div>
 
       <div class="scrollcue" data-reveal="6" aria-hidden="true">
-        <span>scroll for case studies</span>
+        <span>scroll for the case studies</span>
         <i class="scrollcue__line"></i>
       </div>
     </section>
 
-    <!-- ─────────────── 02 · EMAIL BUILDER ─────────────── -->
-    <section class="panel panel--case" data-case="1" data-label="email builder">
-      <span class="panel__ghost" aria-hidden="true">01</span>
-      <div class="panel__in case">
-        <div class="case__text">
-          <ul class="case__tags" data-reveal="1"><li class="is-name">email builder</li><li class="is-flag">flagship</li><li>0 → 1</li></ul>
-          <h2 class="case__head" data-reveal="2">
-            here's how we solved the <em>email customization</em> problem.
-          </h2>
-          <p class="case__line case__line--how" data-reveal="3">
-            twelve months pulling 530+ signals out of support, sales and product usage,
-            compressed into four structural themes, then built on the framework the
-            product already spoke. proposal to launch in ten weeks.
-          </p>
-          <p class="case__line case__line--got" data-reveal="4">
-            and it landed: adoption <b>75.2%</b> across ~3,000 accounts, churn-save of
-            <b>5.4%</b>, <b>$2M+</b> attributable ARR.
-          </p>
-          <a class="case__link" href="case/email-builder.html?v=a" data-reveal="5">
-            <span>read the case study</span>
-            <svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg>
+    <!-- ─────────────── 02 · FEATURED CASE STUDIES ───────────────
+         Heading, then four cards, then the journey. Each card is one link:
+         a tag, the problem in the serif, one short line on how it landed.
+         Keep that line to one sentence and no more than one number or three.
+         Below 1100px the cards are a sideways slider with four dots under it
+         (built by app.js → Proj, one dot per card, nothing to register).
+         ──────────────────────────────────────────────────── -->
+    <section class="panel panel--proj" data-label="case studies">
+      <div class="panel__in proj">
+        <header class="proj__head">
+          <span class="proj__tag" data-reveal="1">featured case studies</span>
+          <h2 class="proj__title" data-reveal="2">here's how we solved <em>four problems</em>.</h2>
+        </header>
+        <div class="proj__grid" id="projGrid" data-reveal="3" data-scroll-x>
+          <a class="proj-card" href="case/email-builder.html?v=a">
+            <ul class="proj-card__tags"><li class="is-name">email builder</li><li class="is-flag">flagship</li></ul>
+            <h3 class="proj-card__head">the <em>email customization</em> problem</h3>
+            <p class="proj-card__line">75.2% adoption, a 5.4% churn-save and $2M+ in new ARR.</p>
+            <span class="proj-card__go">read the case study <svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg></span>
+          </a>
+          <a class="proj-card" href="case/builder-framework.html?v=a">
+            <ul class="proj-card__tags"><li class="is-name">builder framework</li></ul>
+            <h3 class="proj-card__head">the <em>every builder is its own product</em> problem</h3>
+            <p class="proj-card__line">four products now run on one interaction model.</p>
+            <span class="proj-card__go">read the case study <svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg></span>
+          </a>
+          <a class="proj-card" href="case/design-system.html?v=a">
+            <ul class="proj-card__tags"><li class="is-name">design system 3.0</li><li class="is-flag">flagship</li></ul>
+            <h3 class="proj-card__head">the <em>design is the bottleneck</em> problem</h3>
+            <p class="proj-card__line">under 1% detach rate, and 3.6M insertions in six months.</p>
+            <span class="proj-card__go">read the case study <svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg></span>
+          </a>
+          <a class="proj-card" href="case/property-intelligence.html?v=a">
+            <ul class="proj-card__tags"><li class="is-name">property intelligence</li></ul>
+            <h3 class="proj-card__head">the <em>commission nobody could see</em> problem</h3>
+            <p class="proj-card__line">agent rosters grew ~30%, at no seat cost to the owner.</p>
+            <span class="proj-card__go">read the case study <svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg></span>
           </a>
         </div>
-        <figure class="case__plate case__plate--clip" data-reveal="4">
-          <video src="assets/img/concepts/email-builder-drag.mp4" poster="assets/img/concepts/email-builder-drag-poster.webp" autoplay muted loop playsinline preload="metadata" aria-label="the fello email builder: dragging a block into an email"></video>
-        </figure>
-      </div>
-    </section>
-
-    <!-- ─────────────── 03 · BUILDER FRAMEWORK ─────────────── -->
-    <section class="panel panel--case" data-case="2" data-label="builder framework">
-      <span class="panel__ghost" aria-hidden="true">02</span>
-      <div class="panel__in case">
-        <div class="case__text">
-          <ul class="case__tags" data-reveal="1"><li class="is-name">builder framework</li><li>architecture</li></ul>
-          <h2 class="case__head" data-reveal="2">
-            here's how we solved the <em>every builder is its own product</em> problem.
-          </h2>
-          <p class="case__line case__line--how" data-reveal="3">
-            the brief said fix the email builder. i wrote a framework instead: base
-            blocks, shared widgets, product-specific widgets. i held architect, reviewer
-            and owner on it at the same time.
-          </p>
-          <p class="case__line case__line--got" data-reveal="4">
-            <b>four products</b> now run on <b>one</b> interaction model, and nobody
-            re-learns the product when they move across it.
-          </p>
-          <a class="case__link" href="case/builder-framework.html?v=a" data-reveal="5">
-            <span>read the case study</span>
-            <svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg>
-          </a>
-        </div>
-        <figure class="case__plate" data-reveal="4">
-          <img src="assets/img/builder-canvas.jpg" alt="the html canvas, five levels" loading="lazy" decoding="async">
-        </figure>
-      </div>
-    </section>
-
-    <!-- ─────────────── 04 · DESIGN SYSTEM 3.0 ─────────────── -->
-    <section class="panel panel--case" data-case="3" data-label="design system 3.0">
-      <span class="panel__ghost" aria-hidden="true">03</span>
-      <div class="panel__in case">
-        <div class="case__text">
-          <ul class="case__tags" data-reveal="1"><li class="is-name">design system 3.0</li><li class="is-flag">flagship</li><li>foundations</li></ul>
-          <h2 class="case__head" data-reveal="2">
-            here's how we solved the <em>design is the bottleneck</em> problem.
-          </h2>
-          <p class="case__line case__line--how" data-reveal="3">
-            token architecture in figma variables, 120+ coded components against 1,000+
-            figma components. every one of them engineered to hold ai before engineering
-            wrote a line of it.
-          </p>
-          <p class="case__line case__line--got" data-reveal="4">
-            design-to-delivery came in <b>~30% faster</b> at a detach rate under
-            <b>1%</b>. the tenth design system, and the first one that stuck.
-          </p>
-          <a class="case__link" href="case/design-system.html?v=a" data-reveal="5">
-            <span>read the case study</span>
-            <svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg>
-          </a>
-        </div>
-        <figure class="case__plate" data-reveal="4">
-          <img src="assets/img/system-architecture.jpg" alt="foundations to rendered ui" loading="lazy" decoding="async">
-        </figure>
-      </div>
-    </section>
-
-    <!-- ─────────────── 05 · PROPERTY INTELLIGENCE ─────────────── -->
-    <section class="panel panel--case" data-case="4" data-label="property intelligence">
-      <span class="panel__ghost" aria-hidden="true">04</span>
-      <div class="panel__in case">
-        <div class="case__text">
-          <ul class="case__tags" data-reveal="1"><li class="is-name">property intelligence</li><li>solo</li></ul>
-          <h2 class="case__head" data-reveal="2">
-            here's how we solved the <em>commission nobody could see</em> problem.
-          </h2>
-          <p class="case__line case__line--how" data-reveal="3">
-            the blocker was never the dashboard, it was our own per-seat pricing. so i
-            added a user class called <i>suspended</i>: no seat cost, no permissions,
-            no access. a user type whose entire purpose is to not be a user.
-          </p>
-          <p class="case__line case__line--got" data-reveal="4">
-            agent databases grew <b>~30%</b>, and brokerages could finally put a number
-            on the revenue walking out of the door.
-          </p>
-          <a class="case__link" href="case/property-intelligence.html?v=a" data-reveal="5">
-            <span>read the case study</span>
-            <svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg>
-          </a>
-        </div>
-        <figure class="case__plate" data-reveal="4">
-          <img src="assets/img/fello-user-default.webp" alt="fello user management: active, invited and suspended users in one roster" loading="lazy" decoding="async">
-        </figure>
+        <div class="proj__dots" id="projDots" aria-hidden="true"></div>
+        <a class="proj__journey" href="journey.html" data-reveal="4">
+          <span class="proj__journey-name">the full journey</span>
+          <span class="proj__journey-note">every project since 2018, including three that did not land</span>
+          <span class="proj__journey-go"><svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg></span>
+        </a>
       </div>
     </section>
 
@@ -468,14 +400,9 @@ html.to-b[data-pb="dark"] #veil b{background:#eeede8}
     <section class="panel panel--more" data-label="more">
       <div class="panel__in more">
         <span class="more__tag" data-reveal="1">want to know more?</span>
-        <h2 class="more__head" data-reveal="2">the rest of the <em>record</em>.</h2>
+        <h2 class="more__head" data-reveal="2">elsewhere, <em>on the record</em>.</h2>
 
         <nav class="more__grid" data-reveal="3" aria-label="more about ritik">
-          <a class="more__card more__card--lead" href="journey.html">
-            <span class="more__name">journey</span>
-            <span class="more__desc">every project since 2018, including the ones that did not work</span>
-            <span class="more__go"><svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg></span>
-          </a>
           <a class="more__card" href="https://dribbble.com/ritik-raj" target="_blank" rel="noopener">
             <span class="more__name">dribbble</span>
             <span class="more__desc">shots and visual work</span>

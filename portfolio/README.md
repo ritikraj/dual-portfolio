@@ -127,13 +127,20 @@ There are four case studies and they must stay matched across both sides.
 `case/<slug>.html` files chain to each other through their "next" links, so
 inserting one means retargeting the two links on either side of it.
 
-**Adding a case study** — copy a `<section class="panel panel--case">`, bump
-`data-case` and `data-label`. The dots, counter, thread progress and section
-count all read the DOM at boot. Nothing to register.
+**The case studies are one section** (`.panel--proj`, `§ 08a` in `app.css`):
+"featured case studies", then four cards, then the journey row. Each card is a
+single link: a tag, the problem in the serif, one short line on how it landed.
+Below 1100px the cards become a slider with one dot per card underneath
+(`Proj` in `app.js` builds the dots from the cards and tracks the scroll).
 
-Three lines per case, on purpose: `.case__head` (here's how i solved the *X*
-problem), `.case__line--how` (the solution), `.case__line--got` (how it landed).
-Drop an `<img>` in `.case__plate` for the visual — hidden under 1024px.
+**Adding a case study** — copy an `<a class="proj-card">`, change its link,
+tags, problem and line. A fifth card needs the grid set to five
+columns (or two rows) in `.proj__grid`. The case-study timeline on the left
+only appears for sections marked `data-case`, so it is dormant now.
+
+The long-form material from the previous portfolio (process, funnels,
+failures) is saved in `../notes/old-case-studies.md`, outside the deployed
+folder.
 
 **Reveals** `data-reveal="1..6"` on any element; the number is the stagger order.
 

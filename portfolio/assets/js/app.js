@@ -880,6 +880,50 @@
   }
 
 
+  /* ── PROJ: THE CASE STUDY SLIDER ──────────────────────────────────────────
+     Below 1100px the cards scroll sideways. One dot per card: the dot of the
+     card nearest the left edge lights up, and a dot scrolls to its card.
+     On desktop the dots are hidden by css and this does nothing visible.
+     -------------------------------------------------------------------- */
+  var Proj = {
+    init: function () {
+      var grid = document.getElementById('projGrid'),
+          dots = document.getElementById('projDots');
+      if (!grid || !dots) return;
+      var cards = [].slice.call(grid.querySelectorAll('.proj-card'));
+
+      dots.innerHTML = cards.map(function (c, i) {
+        return '<button type="button" tabindex="-1" aria-label="case study ' + (i + 1) + '"></button>';
+      }).join('');
+      var buttons = [].slice.call(dots.children);
+
+      function step() { return cards.length > 1 ? cards[1].offsetLeft - cards[0].offsetLeft : 1; }
+      function current() {
+        // the last card can never reach the left edge; count the end as the end
+        if (grid.scrollLeft + grid.clientWidth >= grid.scrollWidth - 4) return cards.length - 1;
+        return Math.max(0, Math.min(cards.length - 1, Math.round(grid.scrollLeft / step())));
+      }
+      function paint(i) {
+        if (typeof i !== 'number') i = current();
+        buttons.forEach(function (b, k) { b.classList.toggle('is-on', k === i); });
+      }
+
+      var raf = 0;
+      grid.addEventListener('scroll', function () {
+        cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(function () { paint(); });
+      }, { passive: true });
+      buttons.forEach(function (b, i) {
+        b.addEventListener('click', function () {
+          paint(i);
+          grid.scrollTo({ left: cards[i].offsetLeft - cards[0].offsetLeft, behavior: 'smooth' });
+        });
+      });
+      paint();
+    }
+  };
+
+
   /* ── WORK: THE EXPLORATIONS SECTION ───────────────────────────────────────
      A list of concept screens and one stage. Picking an item shows it whole.
      While the section is on screen it advances every CONFIG-ish `dwell` ms,
@@ -1133,6 +1177,7 @@
     Thread.init();
     Viewer.init();
     Work.init();
+    Proj.init();
     Stage.init();
     Aside.sync();
     Hero.init();
