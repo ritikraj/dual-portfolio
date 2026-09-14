@@ -136,6 +136,47 @@ html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
     <p class="csa__p" data-up>the third tier is the one that makes it survive. without a sanctioned place to put the genuinely product-specific thing, people put it in tier one, and a year later you are back where you started with more abstraction to unpick.</p>
   </section>
   <section class="csa__block">
+    <h2 class="csa__h" data-up>from framework to screens</h2>
+    <p class="csa__p" data-up>the tiers say what a block is. two more decisions say where it lives. every page is <b>areas holding sections, holding columns, holding blocks and widgets</b>. and every builder is the same four regions: a header, a navigation rail, a panel and a working canvas.</p>
+    <div class="bf-pair">
+      <figure class="bf-fig" data-up>
+        <div class="bf-anat" role="img" aria-label="page anatomy: a header area with a section; a body area with a section, and a section split into a column and a column holding two blocks or widgets; a footer area with a section">
+          <div class="bf-area"><span class="bf-lbl">area <i>(header)</i></span><div class="bf-sec bf-sec--solo"><span>section</span></div></div>
+          <div class="bf-area"><span class="bf-lbl">area <i>(body)</i></span>
+            <div class="bf-sec bf-sec--line"><span>section</span></div>
+            <div class="bf-sec"><span class="bf-lbl">section</span>
+              <div class="bf-cols">
+                <div class="bf-col"><span>column</span></div>
+                <div class="bf-col bf-col--stack"><div class="bf-blk">block <i>/ widget</i></div><div class="bf-blk">block <i>/ widget</i></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="bf-area"><span class="bf-lbl">area <i>(footer)</i></span><div class="bf-sec bf-sec--solo"><span>section</span></div></div>
+        </div>
+        <figcaption>the page: what holds what</figcaption>
+      </figure>
+      <figure class="bf-fig" data-up>
+        <div class="bf-shell" role="img" aria-label="builder shell: a header across the top; below it a navigation rail, a panel, and a working canvas">
+          <div class="bf-shell__head"><span>header</span></div>
+          <div class="bf-shell__nav"><span>navigation</span></div>
+          <div class="bf-shell__panel"><span>panel</span></div>
+          <div class="bf-shell__canvas"><span>working <i>canvas</i></span></div>
+        </div>
+        <figcaption>the builder: the same four regions, whatever it builds</figcaption>
+      </figure>
+    </div>
+    <p class="csa__p" data-up>the email builder was the first product drawn on that shell. across its main screens only the panel changes: adding elements, setting up the send, editing the text or the layout that is selected.</p>
+    <figure class="bf-fig bf-fig--wires" data-up>
+      <div class="bf-wires" role="img" aria-label="four wireframes of the email builder on the shared shell: the add elements panel; the send setup checklist; a selected block with text settings; a selected section with layout settings">
+        <div class="bf-wire bf-wire--add"><div class="bf-wire__top"><span class="bf-x">✕</span><b>page title</b><i class="bf-chip"></i><span class="bf-mid">device switch</span><span class="bf-end"><span>undo / redo</span><span>preview / test</span><span class="bf-btn">publish cta</span></span></div><div class="bf-wire__body"><div class="bf-rail"><i></i><i></i><i></i></div><div class="bf-panel"><b>add elements</b><div class="bf-tabs"><span class="is-on">pre-built</span><span>saved</span></div><small>layouts</small><div class="bf-tiles"><span><i></i>1 column</span><span><i></i>2 column</span><span><i></i>3 column</span><span><i></i>4 column</span><span><i></i>5 column</span><span><i></i>6 column</span></div><small>blocks</small><div class="bf-tiles"><span><i></i>heading</span><span><i></i>paragraph</span><span><i></i>button</span><span><i></i>link</span><span><i></i>spacer</span><span><i></i>divider</span><span><i></i>image</span><span><i></i>video</span><span><i></i>html</span><span><i></i>icon</span><span><i></i>card</span><span><i></i>logo</span></div><small>widgets</small><div class="bf-tiles"><span><i></i>widget</span><span><i></i>widget</span><span><i></i>widget</span></div></div><div class="bf-canvas"><div class="bf-page"></div></div></div></div>
+        <div class="bf-wire bf-wire--send"><div class="bf-wire__top"><span class="bf-x">✕</span><b>page title</b><i class="bf-chip"></i><span class="bf-mid">device switch</span><span class="bf-end"><span>preview / test</span><span class="bf-btn">publish / send</span></span></div><div class="bf-wire__body"><div class="bf-rail"><i></i><i></i><i></i></div><div class="bf-check"><div class="bf-step is-done"><i></i><span><b>email type</b><small>set to “regular” email</small></span><em>edit</em></div><div class="bf-step is-done"><i></i><span><b>design email</b><small>you’ve designed an email</small></span><em>edit design</em></div><div class="bf-step"><i></i><span><b>subject and preview text</b><small>add a subject and preview text</small></span><em>add</em></div><div class="bf-step"><i></i><span><b>sender details</b><small>no sender set up yet</small></span><em>add</em></div><div class="bf-step"><i></i><span><b>recipients details</b><small>no recipients added</small></span><em>add</em></div><div class="bf-step"><i></i><span><b>sending time</b><small>send it now or schedule it</small></span><em>edit</em></div></div><div class="bf-canvas"><div class="bf-page"></div></div></div></div>
+        <div class="bf-wire bf-wire--text"><div class="bf-wire__top"><span class="bf-x">✕</span><b>page title</b><i class="bf-chip"></i><span class="bf-mid">device switch</span><span class="bf-end"><span>undo / redo</span><span>preview / test</span><span class="bf-btn">publish cta</span></span></div><div class="bf-wire__body"><div class="bf-rail"><i></i><i></i><i></i></div><div class="bf-canvas"><div class="bf-page"><i class="bf-sel bf-sel--block"></i></div></div><div class="bf-settings"><b>text settings</b><span>› font</span><span>› background</span><span>› padding</span><span>› border</span><span>› border radius</span></div></div></div>
+        <div class="bf-wire bf-wire--layout"><div class="bf-wire__top"><span class="bf-x">✕</span><b>page title</b><i class="bf-chip"></i><span class="bf-mid">device switch</span><span class="bf-end"><span>undo / redo</span><span>preview / test</span><span class="bf-btn">publish cta</span></span></div><div class="bf-wire__body"><div class="bf-rail"><i></i><i></i><i></i></div><div class="bf-panel"><b>add elements</b><div class="bf-tabs"><span class="is-on">pre-built</span><span>saved</span></div><small>layouts</small><div class="bf-tiles"><span><i></i>1 column</span><span><i></i>2 column</span><span><i></i>3 column</span><span><i></i>4 column</span><span><i></i>5 column</span><span><i></i>6 column</span></div><small>blocks</small><div class="bf-tiles"><span><i></i>heading</span><span><i></i>paragraph</span><span><i></i>button</span><span><i></i>link</span><span><i></i>spacer</span><span><i></i>divider</span><span><i></i>image</span><span><i></i>video</span><span><i></i>html</span><span><i></i>icon</span><span><i></i>card</span><span><i></i>logo</span></div><small>widgets</small><div class="bf-tiles"><span><i></i>widget</span><span><i></i>widget</span><span><i></i>widget</span></div></div><div class="bf-canvas"><div class="bf-page"><i class="bf-sel bf-sel--section"></i></div></div><div class="bf-settings"><b>layout settings</b><span>› background</span><span>› padding</span><span>› border</span><span>› border radius</span></div></div></div>
+      </div>
+      <figcaption>the email builder, wireframed on the shell</figcaption>
+    </figure>
+  </section>
+  <section class="csa__block">
     <h2 class="csa__h" data-up>the timing was the strategy</h2>
     <p class="csa__p" data-up>i proposed this the week after design system 3.0 shipped. that was deliberate. institutional trust in system-led design was the highest it was ever going to be, and a framework proposal is a bet on trust more than a bet on craft.</p>
     <p class="csa__p" data-up>the same document, six months earlier, would have read as architecture for its own sake. the work was ready before the company was. i waited for the company.</p>
@@ -145,7 +186,7 @@ html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
     <h2 class="csa__h" data-up>three roles, one pair of hands</h2>
     <p class="csa__p" data-up>i held architect, reviewer and owner at the same time, and that is not a boast. it is the reason it worked, and it is also the risk i would flag to anyone repeating it.</p>
     <p class="csa__p" data-up>a framework fragments at review time, not at design time. someone has to say no to the twentieth reasonable-sounding exception, week after week, long after the launch that made it exciting. remove sustained ownership and the widgets drift within two quarters.</p>
-    <figure class="csa__plate csa__plate--free" data-up><img src="../assets/img/builder-canvas.jpg" alt="the html canvas: elements, blocks, columns, layouts, output" loading="lazy" decoding="async"><figcaption>the html canvas — five levels, and who each one is for</figcaption></figure>
+    <figure class="csa__plate csa__plate--free" data-up><img src="../assets/img/builder-canvas.jpg" alt="the html canvas: elements, blocks, columns, layouts, output" loading="lazy" decoding="async"><figcaption>the html canvas: five levels, and who each one is for</figcaption></figure>
     <figure class="csa__plate csa__plate--free" data-up><img src="../assets/img/builder-suite.jpg" alt="four builders running the same interaction model" loading="lazy" decoding="async"><figcaption>four products, one interaction model</figcaption></figure>
   </section>
   <section class="csa__block">

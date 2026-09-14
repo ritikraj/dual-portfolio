@@ -228,7 +228,7 @@ html.to-b[data-pb="dark"] #veil b{background:#eeede8}
           </a>
         </div>
         <figure class="case__plate" data-reveal="4">
-          <img src="assets/img/email-builder.jpg" alt="the fello email builder, mid-edit" loading="lazy" decoding="async">
+          <video src="assets/img/concepts/email-builder-drag.mp4" poster="assets/img/concepts/email-builder-drag-poster.webp" autoplay muted loop playsinline preload="metadata" aria-label="the fello email builder: dragging a block into an email"></video>
         </figure>
       </div>
     </section>
@@ -362,6 +362,77 @@ html.to-b[data-pb="dark"] #veil b{background:#eeede8}
           <span>see the plugin</span>
           <svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg>
         </a>
+      </div>
+    </section>
+
+    <!-- ─────────────── 06b · EXPLORATIONS ───────────────
+         Concept interfaces. Always in the running order, after the plugin
+         section and before "want to know more". Each tile is a button:
+           data-full   the large image the viewer opens (…-s.webp is the tile)
+           data-video  a clip instead, with data-poster for its first frame
+         The first tile spans 2×2 and the second 2×1 on desktop; below 1024px
+         the grid becomes a sideways strip. Images live in assets/img/concepts.
+         ──────────────────────────────────────────────────── -->
+    <section class="panel panel--work" data-label="explorations">
+      <div class="panel__in work">
+        <header class="work__head">
+          <div>
+            <span class="work__tag" data-reveal="1">explorations</span>
+            <h2 class="work__title" data-reveal="2">concept interfaces, <em>up close</em>.</h2>
+          </div>
+          <p class="work__line" data-reveal="2">directions i drew to think a product through. open any of them.</p>
+        </header>
+        <ul class="work__grid" data-reveal="3" data-scroll-x>
+          <li class="work__tile work__tile--lead">
+            <button class="work__open" type="button" data-full="assets/img/concepts/fello-dashboard.webp" data-name="fello" data-what="home dashboard" aria-label="fello, home dashboard. open larger">
+              <img class="work__media" src="assets/img/concepts/fello-dashboard-s.webp" alt="" fetchpriority="low" decoding="async">
+              <span class="work__cap"><b>fello</b><i>home dashboard</i></span>
+            </button>
+          </li>
+          <li class="work__tile work__tile--wide">
+            <button class="work__open" type="button" data-video="assets/img/concepts/email-builder-drag.mp4" data-poster="assets/img/concepts/email-builder-drag-poster.webp" data-name="email builder" data-what="drag and drop" aria-label="email builder, drag and drop. open larger">
+              <img class="work__media" src="assets/img/concepts/email-builder-drag-poster.webp" alt="" fetchpriority="low" decoding="async">
+              <video class="work__media" src="assets/img/concepts/email-builder-drag.mp4" poster="assets/img/concepts/email-builder-drag-poster.webp" muted loop playsinline preload="metadata" aria-hidden="true"></video>
+              <span class="work__cap"><b>email builder</b><i>drag and drop</i></span>
+            </button>
+          </li>
+          <li class="work__tile">
+            <button class="work__open" type="button" data-full="assets/img/concepts/workflows.webp" data-name="workflows" data-what="automation canvas" aria-label="workflows, automation canvas. open larger">
+              <img class="work__media" src="assets/img/concepts/workflows-s.webp" alt="" fetchpriority="low" decoding="async">
+              <span class="work__cap"><b>workflows</b><i>automation canvas</i></span>
+            </button>
+          </li>
+          <li class="work__tile">
+            <button class="work__open" type="button" data-full="assets/img/concepts/email-builder-ai.webp" data-name="email builder" data-what="edit with ai" aria-label="email builder, edit with ai. open larger">
+              <img class="work__media" src="assets/img/concepts/email-builder-ai-s.webp" alt="" fetchpriority="low" decoding="async">
+              <span class="work__cap"><b>email builder</b><i>edit with ai</i></span>
+            </button>
+          </li>
+          <li class="work__tile">
+            <button class="work__open" type="button" data-full="assets/img/concepts/direction-shipments.webp" data-name="direction" data-what="shipments" aria-label="direction, shipments. open larger">
+              <img class="work__media" src="assets/img/concepts/direction-shipments-s.webp" alt="" fetchpriority="low" decoding="async">
+              <span class="work__cap"><b>direction</b><i>shipments</i></span>
+            </button>
+          </li>
+          <li class="work__tile">
+            <button class="work__open" type="button" data-full="assets/img/concepts/direction-tasks.webp" data-name="direction" data-what="task detail" aria-label="direction, task detail. open larger">
+              <img class="work__media" src="assets/img/concepts/direction-tasks-s.webp" alt="" fetchpriority="low" decoding="async">
+              <span class="work__cap"><b>direction</b><i>task detail</i></span>
+            </button>
+          </li>
+          <li class="work__tile">
+            <button class="work__open" type="button" data-full="assets/img/concepts/resto.webp" data-name="resto" data-what="api testing" aria-label="resto, api testing. open larger">
+              <img class="work__media" src="assets/img/concepts/resto-s.webp" alt="" fetchpriority="low" decoding="async">
+              <span class="work__cap"><b>resto</b><i>api testing</i></span>
+            </button>
+          </li>
+          <li class="work__tile">
+            <button class="work__open" type="button" data-full="assets/img/concepts/ipsator-website.webp" data-name="ipsator" data-what="website" aria-label="ipsator, website. open larger">
+              <img class="work__media" src="assets/img/concepts/ipsator-website-s.webp" alt="" fetchpriority="low" decoding="async">
+              <span class="work__cap"><b>ipsator</b><i>website</i></span>
+            </button>
+          </li>
+        </ul>
       </div>
     </section>
 
@@ -795,6 +866,23 @@ html.to-b[data-pb="dark"] #veil b{background:#eeede8}
   <nav class="pb__rail" id="pbRail" aria-label="sections"></nav>
 </main>
 
+
+<!-- the concept viewer · built for .panel--work, driven by app.js → Viewer -->
+<div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-label="concept viewer" aria-hidden="true" tabindex="-1">
+  <button class="viewer__close" type="button" data-close>close</button>
+  <figure class="viewer__stage" data-close>
+    <img class="viewer__img" alt="">
+    <video class="viewer__video" muted loop playsinline></video>
+  </figure>
+  <div class="viewer__bar">
+    <span class="viewer__count"><b>01</b> / 08</span>
+    <span class="viewer__cap"><b></b><i></i></span>
+    <span class="viewer__nav">
+      <button type="button" data-step="-1" aria-label="previous"><svg viewBox="0 0 28 8" aria-hidden="true"><path d="M28 4H2M6 1L2 4l4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg></button>
+      <button type="button" data-step="1" aria-label="next"><svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg></button>
+    </span>
+  </div>
+</div>
 
 <div class="curtain" id="curtain" aria-hidden="true"></div>
 

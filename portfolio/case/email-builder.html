@@ -142,10 +142,22 @@ html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
   <section class="csa__block">
     <h2 class="csa__h" data-up>what i built</h2>
     <p class="csa__p" data-up>the builder came out of the <b>builder framework</b> rather than getting bolted on beside it. same canvas grammar, same slot model, same state rules as every other builder in the suite. what a user learned in one place still worked here.</p>
-    <p class="csa__p" data-up>that decision is why ten weeks was possible. i was not designing a product, i was instantiating one.</p>
-      <figure class="csa__plate csa__plate--free" data-up><img src="../assets/img/email-builder.jpg" alt="the fello email builder with the block library open" loading="lazy" decoding="async"><figcaption>the builder, mid-edit</figcaption></figure>
-      <figure class="csa__plate csa__plate--free" data-up><img src="../assets/img/builder-suite.jpg" alt="the same block language across four builders" loading="lazy" decoding="async"><figcaption>the same grammar, four products</figcaption></figure>
-    <figure class="csa__plate csa__plate--free" data-up><img src="../assets/img/builder-montage.jpg" alt="templates and states across the builder" loading="lazy" decoding="async"><figcaption>states, templates, and the send</figcaption></figure>
+    <p class="csa__p" data-up>that decision is why ten weeks was possible. i was not designing a product, i was instantiating one. the blocks, the layouts and the settings panel are the framework's. what is the email builder's own is the send: who it goes to, from whom, and when.</p>
+    <figure class="csa__plate csa__plate--free" data-up>
+      <video src="../assets/img/concepts/email-builder-drag.mp4" poster="../assets/img/concepts/email-builder-drag-poster.webp" autoplay muted loop playsinline preload="metadata" aria-label="dragging a button block into an email"></video>
+      <figcaption>drag a block in, and the canvas makes room for it</figcaption>
+    </figure>
+    <figure class="csa__plate csa__plate--free" data-up><img src="../assets/img/concepts/email-builder-ai.webp" alt="the email builder with a paragraph selected, the edit with ai panel on the left and its settings on the right" loading="lazy" decoding="async"><figcaption>one block selected: edit it by hand on the right, or ask on the left</figcaption></figure>
+  </section>
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>the first prototype</h2>
+    <p class="csa__p" data-up>this is the first clickable version i put in front of people, before a line of it was built. it is rougher than what shipped, which is the point of showing it.</p>
+    <figure class="csa__embed" data-up>
+      <div class="csa__embed-frame">
+        <iframe src="https://embed.figma.com/proto/4DWd8LuPZ7K1NtOpdOWij1/Builder-%3C-%3E-Email-Builder?node-id=1003-86313&amp;viewport=11988%2C2520%2C0.17&amp;scaling=min-zoom&amp;content-scaling=fixed&amp;starting-point-node-id=1003%3A86313&amp;show-proto-sidebar=1&amp;page-id=1003%3A45833&amp;embed-host=share" title="email builder, first prototype, in figma" loading="lazy" allowfullscreen></iframe>
+      </div>
+      <figcaption>the figma prototype · password protected, ask me for access</figcaption>
+    </figure>
   </section>
   <section class="csa__block">
     <h2 class="csa__h" data-up>how it landed</h2>
@@ -156,6 +168,21 @@ html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
       <div><b>5.4%</b><span>churn-save</span></div>
       <div><b>$2M+</b><span>attributable arr</span></div>
     </div>
+    <p class="csa__p" data-up>the shape of it, step by step. every step of a send grew after launch, and the steps that mean an email actually went out grew the most: published roughly five times over, sent six.</p>
+    <figure class="csa__chart" data-up>
+      <div class="csa__chart-box">
+        <canvas id="funnelChart" role="img" aria-label="bar chart of the send funnel. before launch: opened 10, created 9, published 3, sent 1. after launch: opened 46, created 28, published 13, sent 6."></canvas>
+      </div>
+      <!-- the numbers the chart draws. edit here, nothing else. -->
+      <script type="application/json" id="funnelData">
+        {
+          "groups": ["before launch", "after launch"],
+          "steps":  ["opened", "created", "published", "sent"],
+          "values": [[10, 9, 3, 1], [46, 28, 13, 6]]
+        }
+      </script>
+      <figcaption>the send funnel, before and after launch</figcaption>
+    </figure>
     <p class="csa__p" data-up>i tracked it at step level in mixpanel rather than at the top line. step retention held between <b>79% and 85%</b> through the flow, with one visible cliff. completion came in at <b>29%</b> for automated sends and <b>19%</b> for one-time sends.</p>
     <p class="csa__p" data-up>beta numbers are labelled beta numbers here, because that is what they are.</p>
   </section>
@@ -268,6 +295,8 @@ html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
 
 </article>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="../assets/js/chart-funnel.js"></script>
 <script src="../assets/js/case.js"></script>
 </body>
 </html>

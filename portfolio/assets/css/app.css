@@ -781,7 +781,7 @@ em{font-style:italic}
   display:grid; place-items:center;
   overflow:hidden;
 }
-.case__plate img{
+.case__plate img,.case__plate video{
   width:100%;height:100%;display:block;
   object-fit:cover;object-position:0 0;
   transform:scale(1.005);
@@ -795,7 +795,7 @@ em{font-style:italic}
   transition:opacity 700ms var(--ease-lux);
 }
 .case__plate:hover::after{opacity:0}
-.case__plate:hover img{transform:scale(1.04)}
+.case__plate:hover img,.case__plate:hover video{transform:scale(1.04)}
 .case__plate-note{
   font-size:.6rem; letter-spacing:.36em; text-transform:uppercase; opacity:.28;
 }
@@ -908,6 +908,153 @@ em{font-style:italic}
 .more__card:hover .more__go{opacity:1;transform:translateX(5px)}
 .more__card:hover .more__go--out{transform:translate(3px,-3px)}
 
+/* ── 08d · EXPLORATIONS ──────────────────────────────────────────────────
+   Concept interfaces, shown rather than explained. A bento on desktop: the
+   lead tile spans 2×2, the clip 2×1, six singles. Every tile is a button that
+   opens the viewer. Below 1024px it becomes a sideways strip.
+   --------------------------------------------------------------------- */
+.panel--work .panel__in{
+  display:flex; flex-direction:column;
+  height:100%; max-height:52rem; max-width:78rem;
+}
+.work__head{
+  display:flex; align-items:flex-end; justify-content:space-between; gap:1rem 3rem;
+  margin-bottom:1.8rem;
+}
+.work__tag{
+  display:block; margin-bottom:1rem;
+  font-size:.62rem; letter-spacing:.4em; text-transform:uppercase;
+  color:var(--gold); opacity:.85;
+}
+.work__title{
+  font-family:var(--font-display); font-weight:400;
+  font-size:clamp(2rem,3.9vw,3.3rem); line-height:1.05; letter-spacing:-.02em;
+}
+.work__title em{font-style:normal;color:var(--gold)}
+.work__line{
+  max-width:19rem; padding-bottom:.35rem;
+  font-size:.86rem; line-height:1.7; color:var(--cream-dim);
+}
+
+.work__grid{
+  flex:1; min-height:0;
+  margin:0; padding:0; list-style:none;
+  display:grid; gap:.7rem;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  grid-template-rows:repeat(3,minmax(0,1fr));
+}
+.work__tile{min-width:0;min-height:0}
+.work__tile--lead{grid-column:span 2;grid-row:span 2}
+.work__tile--wide{grid-column:span 2}
+
+.work__open{
+  position:relative; display:block;
+  width:100%; height:100%; padding:0;
+  border:1px solid var(--cream-faint);
+  background:linear-gradient(150deg,var(--plate-a),var(--plate-b));
+  overflow:hidden; cursor:zoom-in;
+  color:inherit; font:inherit; text-align:left;
+  transition:border-color 500ms var(--ease-lux);
+}
+.work__media{
+  position:absolute; inset:0;
+  width:100%; height:100%; display:block;
+  object-fit:cover; object-position:50% 0;
+  transform:scale(1.001);
+  transition:transform 1.4s var(--ease-lux);
+}
+/* the same dimmer as the case plates: a bright screenshot in a dark room */
+.work__open::after{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:var(--ink); opacity:.22;
+  transition:opacity 700ms var(--ease-lux);
+}
+.work__open:hover{border-color:var(--gold-half)}
+.work__open:hover::after,
+.work__open:focus-visible::after{opacity:0}
+.work__open:hover .work__media{transform:scale(1.035)}
+.work__open:focus-visible{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-glow)}
+
+/* the caption: the bead chip, left in the corner */
+.work__cap{
+  position:absolute; z-index:1; left:.6rem; bottom:.6rem;
+  max-width:calc(100% - 1.2rem); overflow:hidden;
+  display:flex; flex-direction:column; gap:.28rem;
+  padding:6px 9px;
+  background:color-mix(in srgb, var(--ink) 90%, transparent);
+  border:1px solid var(--cream-faint); border-radius:3px;
+  white-space:nowrap;
+  transform:translateY(3px); opacity:.92;
+  transition:transform 500ms var(--ease-lux), opacity 400ms ease;
+}
+.work__cap b{font-weight:400;font-size:7.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold)}
+.work__cap i{font-style:normal;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--cream);opacity:.75;overflow:hidden;text-overflow:ellipsis}
+.work__open:hover .work__cap{transform:none;opacity:1}
+
+/* ── the viewer ──────────────────────────────────────────────────────── */
+.viewer{
+  position:fixed; inset:0; z-index:95;
+  display:grid; grid-template-rows:1fr auto;
+  padding:4.2rem var(--gutter) 1.6rem;
+  background:color-mix(in srgb, var(--ink) 95%, transparent);
+  -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
+  opacity:0; visibility:hidden;
+  transition:opacity 520ms var(--ease-lux), visibility 0s linear 520ms;
+}
+.viewer.is-open{opacity:1;visibility:visible;transition:opacity 520ms var(--ease-lux), visibility 0s}
+.viewer__stage{
+  margin:0; min-height:0;
+  display:grid; place-items:center;
+  cursor:zoom-out;
+}
+.viewer__img,.viewer__video{
+  display:block; max-width:100%;
+  /* the figure's grid row cannot resolve a % height, so say it in viewport
+     terms: the screen, less the viewer's padding and its caption bar */
+  max-height:calc(100vh - 9.6rem); max-height:calc(100dvh - 9.6rem);
+  width:auto; height:auto; object-fit:contain;
+  border:1px solid var(--cream-faint);
+  transform:scale(.97); opacity:0;
+  transition:transform 700ms var(--ease-lux), opacity 420ms ease;
+  cursor:default;
+}
+.viewer__img[hidden],.viewer__video[hidden]{display:none}
+.viewer.is-open .viewer__img.is-in,
+.viewer.is-open .viewer__video.is-in{transform:none;opacity:1}
+
+.viewer__close{
+  position:absolute; top:1.5rem; right:var(--gutter);
+  padding:.4rem 0; border:0; background:none; cursor:pointer;
+  color:var(--cream); opacity:.7;
+  font-family:var(--font-body); font-size:.62rem; letter-spacing:.32em; text-transform:uppercase;
+  transition:opacity 300ms ease;
+}
+.viewer__close:hover{opacity:1}
+.viewer:focus{outline:none}
+.viewer__close:focus-visible,.viewer__nav button:focus-visible{outline:1px solid var(--gold-half);outline-offset:4px}
+.viewer__bar{
+  display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:1rem;
+  padding-top:1.2rem;
+  font-size:.62rem; letter-spacing:.3em; text-transform:uppercase;
+}
+.viewer__count{color:var(--cream-dim);font-variant-numeric:tabular-nums}
+.viewer__count b{font-weight:400;color:var(--gold)}
+.viewer__cap{display:flex;align-items:baseline;gap:.9rem;white-space:nowrap}
+.viewer__cap b{font-weight:400;color:var(--gold);font-size:.56rem}
+.viewer__cap i{font-style:normal;color:var(--cream)}
+.viewer__nav{justify-self:end;display:flex;gap:.4rem}
+.viewer__nav button{
+  display:grid; place-items:center;
+  width:3rem; height:2.2rem; padding:0;
+  border:1px solid var(--cream-faint); background:none; cursor:pointer;
+  color:var(--cream);
+  transition:border-color 400ms var(--ease-lux), color 400ms var(--ease-lux);
+}
+.viewer__nav svg{width:22px;height:8px;transition:transform 500ms var(--ease-lux)}
+.viewer__nav button:hover{border-color:var(--gold-half);color:var(--gold)}
+.viewer__nav button[data-step="1"]:hover svg{transform:translateX(3px)}
+.viewer__nav button[data-step="-1"]:hover svg{transform:translateX(-3px)}
+
 /* ── 09 · ABOUT + FOOTER ────────────────────────────────────────────────── */
 .panel--end{justify-content:space-between;padding-top:8rem;padding-bottom:2.6rem}
 .end{display:flex;flex-direction:column;gap:3.2rem;height:100%;justify-content:center;max-width:78rem}
@@ -985,6 +1132,20 @@ em{font-style:italic}
 
 /* ── 12 · RESPONSIVE ────────────────────────────────────────────────────── */
 @media (max-width:1024px){
+  /* explorations: a sideways strip rather than a bento */
+  .panel--work .panel__in{height:auto;max-height:none}
+  .work__head{display:block;margin-bottom:1.4rem}
+  .work__line{margin-top:.8rem;max-width:30rem}
+  .work__grid{
+    display:flex; gap:.7rem;
+    overflow-x:auto; scroll-snap-type:x mandatory;
+    margin-right:calc(var(--gutter) * -1); padding-right:var(--gutter);
+    scrollbar-width:none;
+  }
+  .work__grid::-webkit-scrollbar{display:none}
+  .work__tile,.work__tile--lead,.work__tile--wide{
+    flex:0 0 min(78vw,34rem); aspect-ratio:3/2; scroll-snap-align:start;
+  }
   :root{--thread-x:5vw;--gutter:2rem}
   .panel{padding-left:calc(var(--thread-x) + 3.2rem)}
   .case,.end__top{grid-template-columns:1fr;gap:2.6rem}
@@ -994,6 +1155,10 @@ em{font-style:italic}
   .scrollcue{left:calc(var(--thread-x) + 3.2rem)}
 }
 @media (max-width:720px){
+  .viewer{padding:3.8rem 1rem 1.2rem}
+  .viewer__bar{grid-template-columns:auto 1fr;row-gap:.8rem}
+  .viewer__cap{grid-column:1 / -1;grid-row:1;justify-self:start}
+  .work__title{font-size:clamp(1.8rem,8vw,2.4rem)}
   :root{--thread-x:.9rem;--gutter:1.5rem}
 
   /* the bar gets tighter: the switcher loses its label at this width, so it

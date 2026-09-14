@@ -37,10 +37,9 @@ portfolio you came from.
 
 | file | where it is used |
 |---|---|
-| `email-builder.jpg` | email builder, both the portfolio plate and the case page |
+| `email-builder.jpg` | not used any more: the email builder plate and case page use `concepts/email-builder-drag.mp4` |
 | `builder-canvas.jpg` | the HTML Canvas diagram, builder framework |
 | `builder-suite.jpg` | four builders on one model |
-| `builder-montage.jpg` | states and templates across the builder |
 | `system-architecture.jpg` | design system 3.0 |
 
 Nothing exists yet for **property intelligence**, and design system 3.0 has one
@@ -320,6 +319,34 @@ Every number on it comes from the plugin's product brief. The brief rules out
 build-time claims, code export, "ai" and accessibility claims; keep it that way.
 Screens are 2x PNG exports from the Figma file, in `assets/img/plugin/`. Coming back (`index.html#a:plugin`) reopens
 the bubbles section quietly, since the pop count resets with the page change.
+
+## case study extras
+
+**Email builder** plays the drag-and-drop clip, shows the "edit with ai"
+screenshot, embeds the first Figma prototype (password protected, so the
+caption says to ask), and draws the send funnel with Chart.js from cdnjs.
+The numbers live in `<script id="funnelData">` inside the page; the drawing is
+`assets/js/chart-funnel.js`, which reads its colours from `theme.css`.
+
+**Builder framework** has three diagrams drawn in HTML and CSS, not images
+(`.bf-*` in `case-a.css`): the page anatomy, the builder shell, and four email
+builder wireframes. The wireframes are sized in container units, so they scale
+like a picture at any width. Edit the words in the markup directly.
+
+## explorations
+
+A section of concept interfaces between the plugin section and "want to know
+more" (`.panel--work`, `§ 08d` in `app.css`, `Viewer` in `app.js`). Each tile is
+a `button.work__open`: `data-full` is the large image, the `<img>` inside is the
+small one, `data-name` / `data-what` are the two caption lines. A clip uses
+`data-video` and `data-poster` instead, and plays only while the section is on
+screen. The first tile spans 2x2 and the second 2x1; below 1024px the grid is a
+sideways strip. Clicking opens the viewer: arrows, swipe, esc (esc closes the
+viewer before it would leave the portfolio).
+
+Images are in `assets/img/concepts/`, WebP at 2000px and 960px (`-s`), made
+from the originals in `assets/img/portfolio-webimages/`. That folder is
+excluded from Firebase deploys, since it is 26MB of source PNGs.
 
 ## want to know more, and the journey
 

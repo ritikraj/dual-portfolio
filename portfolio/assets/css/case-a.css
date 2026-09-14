@@ -118,6 +118,168 @@ a{color:inherit;text-decoration:none}
 .csa__plates .csa__plate--free{aspect-ratio:4/3}
 .csa__plates .csa__plate--free img{height:100%}
 
+/* a plate can hold a clip as well as a screenshot */
+.csa__plate video{width:100%;height:auto;display:block}
+.csa__plate--free + .csa__plate--free{margin-top:1.6rem}
+
+/* ── embedded prototype ──────────────────────────────────────────────── */
+.csa__embed{margin:2.4rem 0 0}
+.csa__embed-frame{
+  position:relative; aspect-ratio:16/10;
+  border:1px solid var(--cream-faint);
+  background:linear-gradient(150deg,var(--plate-a),var(--plate-b));
+}
+.csa__embed-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+.csa__embed figcaption,
+.csa__chart figcaption{
+  padding:.9rem 0 0;
+  font-size:.58rem;letter-spacing:.26em;text-transform:uppercase;opacity:.45;
+}
+
+/* ── chart ───────────────────────────────────────────────────────────── */
+.csa__chart{margin:2.4rem 0 1rem;max-width:44rem}
+.csa__chart-box{
+  position:relative; height:clamp(16rem,38vw,21rem);
+  padding:1.4rem 1.4rem 1rem;
+  border:1px solid var(--cream-faint);
+  background:linear-gradient(150deg,var(--plate-a),var(--plate-b));
+}
+
+/* ── builder framework diagrams ─────────────────────────────────────────
+   drawn in html rather than exported, so they stay sharp and re-flow. the
+   wireframes are sized in container units (cqw): each one scales like a
+   picture of itself, text included, whatever width it is given.
+   --------------------------------------------------------------------- */
+.bf-pair{display:grid;grid-template-columns:1.1fr 1fr;gap:1.4rem;margin-top:2.6rem;align-items:start}
+.bf-fig{margin:0}
+.bf-fig figcaption{padding:.9rem 0 0;font-size:.58rem;letter-spacing:.26em;text-transform:uppercase;opacity:.45}
+.bf-fig--wires{margin-top:2.6rem}
+
+/* labels shared by the two diagrams */
+.bf-anat,.bf-shell{font-size:.82rem;color:var(--cream-dim);font-weight:300}
+.bf-anat i,.bf-shell i{font-style:normal;color:var(--gold)}
+.bf-anat span,.bf-shell span{line-height:1.2}
+
+/* the page anatomy */
+.bf-anat{display:grid;gap:.5rem}
+.bf-area{
+  display:grid;gap:.5rem;padding:.7rem .75rem .8rem;
+  border:1px dashed var(--cream-faint);
+  background:var(--plate-a);
+}
+.bf-lbl{display:block;color:var(--cream)}
+.bf-sec{
+  display:grid;gap:.5rem;padding:.55rem .6rem;
+  border:1px solid color-mix(in srgb, var(--cream) 30%, transparent);
+}
+.bf-sec--solo{place-items:center;min-height:3.6rem}
+.bf-sec--line{padding:.45rem .6rem}
+.bf-cols{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.bf-col{
+  display:grid;place-items:center;min-height:5.4rem;padding:.4rem;
+  border:1px solid color-mix(in srgb, var(--cream) 30%, transparent);
+}
+.bf-col--stack{place-items:stretch;align-content:center;gap:.4rem}
+.bf-blk{
+  display:block;padding:.45rem .3rem;text-align:center;white-space:nowrap;
+  border:1px dashed var(--gold-half);
+}
+.bf-pair + .csa__p{margin-top:2.4rem}
+
+/* the builder shell */
+.bf-shell{
+  display:grid;gap:.5rem;aspect-ratio:3/2;
+  grid-template-columns:8% 22% 1fr;
+  grid-template-rows:auto 1fr;
+}
+.bf-shell > div{
+  display:grid;place-items:center;
+  border:1px solid color-mix(in srgb, var(--cream) 30%, transparent);
+  background:var(--plate-a);
+}
+.bf-shell__head{grid-column:1 / -1;padding:.65rem}
+.bf-shell__nav span{writing-mode:vertical-rl;transform:rotate(180deg)}
+.bf-shell__canvas{background:linear-gradient(150deg,var(--plate-a),var(--plate-b)) !important}
+
+/* the wireframes */
+.bf-wires{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+.bf-wire{
+  container-type:inline-size;
+  aspect-ratio:16/11;
+  display:flex;flex-direction:column;
+  border:1px solid var(--cream-faint);
+  background:var(--ink);
+  color:var(--cream-dim);
+  overflow:hidden;
+}
+.bf-wire *{box-sizing:border-box}
+.bf-wire__top{
+  display:flex;align-items:center;gap:1.6cqw;
+  height:7.5cqw;padding:0 2cqw;flex:none;
+  border-bottom:1px solid var(--cream-faint);
+  font-size:1.35cqw;letter-spacing:.08em;text-transform:uppercase;
+}
+.bf-wire__top b{font-weight:500;color:var(--cream);text-transform:lowercase;letter-spacing:0;font-size:1.6cqw}
+.bf-x{color:var(--cream)}
+.bf-chip{display:block;width:6cqw;height:1.8cqw;background:var(--gold-glow)}
+.bf-mid{margin-left:auto}
+.bf-end{margin-left:auto;display:flex;align-items:center;gap:2cqw}
+.bf-btn{padding:.9cqw 1.4cqw;border:1px solid var(--gold-half);color:var(--gold)}
+
+.bf-wire__body{flex:1;min-height:0;display:grid;gap:0}
+.bf-wire--add    .bf-wire__body{grid-template-columns:6cqw 24cqw 1fr}
+.bf-wire--send   .bf-wire__body{grid-template-columns:6cqw 1fr 26cqw}
+.bf-wire--text   .bf-wire__body{grid-template-columns:6cqw 1fr 22cqw}
+.bf-wire--layout .bf-wire__body{grid-template-columns:6cqw 24cqw 1fr 22cqw}
+
+.bf-rail{display:flex;flex-direction:column;align-items:center;gap:2.2cqw;padding-top:2cqw;border-right:1px solid var(--cream-faint)}
+.bf-rail i{display:block;width:2.4cqw;height:2.4cqw;background:var(--gold-glow)}
+
+.bf-panel,.bf-settings,.bf-check{padding:2cqw;overflow:hidden;font-size:1.2cqw}
+.bf-panel{border-right:1px solid var(--cream-faint)}
+.bf-panel b,.bf-settings b{display:block;margin-bottom:1.4cqw;font-weight:500;font-size:1.5cqw;color:var(--cream)}
+.bf-tabs{display:grid;grid-template-columns:1fr 1fr;margin-bottom:1.6cqw;border:1px solid var(--cream-faint)}
+.bf-tabs span{padding:.7cqw 0;text-align:center}
+.bf-tabs .is-on{background:var(--plate-b);color:var(--cream)}
+.bf-panel small{display:block;margin:1cqw 0 .6cqw;font-size:1.2cqw;color:var(--cream)}
+.bf-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:.6cqw}
+.bf-tiles span{
+  display:flex;flex-direction:column;align-items:center;gap:.5cqw;
+  padding:.7cqw .3cqw;border:1px solid var(--cream-faint);
+  font-size:.95cqw;white-space:nowrap;overflow:hidden;
+}
+.bf-tiles i{display:block;width:1.8cqw;height:1.8cqw;background:var(--gold-glow)}
+
+.bf-canvas{position:relative;display:grid;justify-items:center;padding:0 4cqw}
+.bf-page{position:relative;width:100%;max-width:34cqw;height:100%;background:var(--gold-glow)}
+.bf-wire--text .bf-page{max-width:40cqw}
+.bf-sel{position:absolute;display:block;border:.35cqw solid var(--gold);background:var(--ink)}
+.bf-sel--block{left:4%;bottom:6%;width:36%;height:12%}
+.bf-sel--section{left:-12%;top:30%;width:124%;height:18%}
+
+.bf-settings{border-left:1px solid var(--cream-faint)}
+.bf-settings span{display:block;padding:1.1cqw 0;border-bottom:1px solid var(--cream-faint)}
+
+.bf-check{display:flex;flex-direction:column;gap:1cqw;border-right:1px solid var(--cream-faint)}
+.bf-step{
+  display:grid;grid-template-columns:2.2cqw 1fr auto;align-items:center;gap:1.4cqw;
+  padding:1.2cqw 1.4cqw;border:1px solid var(--cream-faint);
+}
+.bf-step i{display:block;width:2cqw;height:2cqw;border-radius:50%;border:1px solid var(--cream-dim)}
+.bf-step.is-done i{background:var(--gold);border-color:var(--gold)}
+.bf-step b{display:block;font-weight:500;font-size:1.35cqw;color:var(--cream)}
+.bf-step small{display:block;margin-top:.3cqw;font-size:1cqw}
+.bf-step em{font-style:normal;padding:.6cqw 1.1cqw;border:1px solid var(--cream-faint);font-size:1cqw;text-transform:uppercase;letter-spacing:.08em}
+
+@media (max-width:900px){
+  .bf-pair{grid-template-columns:1fr}
+  .bf-wires{grid-template-columns:1fr}
+}
+@media (max-width:520px){
+  .bf-anat,.bf-shell{font-size:.72rem}
+  .bf-shell{aspect-ratio:4/3}
+}
+
 /* ── numbers ─────────────────────────────────────────────────────────── */
 .csa__numbers{
   margin-top:2.4rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(10rem,1fr));

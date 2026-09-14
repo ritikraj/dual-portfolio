@@ -114,6 +114,12 @@
     }
   }
 
+  /* muted clips carry autoplay, but a browser can still skip it. ask once. */
+  [].slice.call(document.querySelectorAll('video[autoplay]')).forEach(function (v) {
+    v.muted = true;
+    var p = v.play(); if (p && p.catch) p.catch(function () {});
+  });
+
   /* ── esc goes back to the portfolio you came from ─────────────────────── */
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' || e.key === 'Esc') leave(home);

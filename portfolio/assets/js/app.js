@@ -449,7 +449,7 @@
 
       // keys
       $(document).on('keydown', function (e) {
-        if (!self.isLive() || self.locked) return;
+        if (!self.isLive() || self.locked || Viewer.isOpen) return;
         switch (e.key) {
           case 'ArrowDown': case 'PageDown': case ' ':
             e.preventDefault(); self.move(1); break;
@@ -529,6 +529,7 @@
       var $cur = this.$panels.eq(i);
       Timeline.update(i, $cur.is('[data-case]'));
       if ($cur.is('[data-bubbles]')) Bubbles.spawn(); else Bubbles.clear();
+      Viewer.clips($cur.is('.panel--work'));
       Thread.set(this.count > 1 ? i / (this.count - 1) : 1, instant);
       Thread.mark(i);
       $('#countNow').text(pad(i + 1));
@@ -763,6 +764,7 @@
       $(document).on('keydown', function (e) {
         if (e.key !== 'Escape' && e.key !== 'Esc') return;
         if ($body.hasClass('is-hero')) return;
+        if (Viewer.isOpen) return;            // esc closes the viewer first
         e.preventDefault();
         Hero.back();
       });
@@ -878,6 +880,128 @@
   }
 
 
+  /* ── VIEWER: THE EXPLORATIONS SECTION ─────────────────────────────────────
+     Opens any .work__open tile large, with previous / next, arrow keys, a
+     sideways swipe and esc. The list is read from the DOM when it opens, so
+     adding a tile in index.html is all it takes. It also plays the section's
+     clips only while that section is on screen.
+     -------------------------------------------------------------------- */
+  var Viewer = {
+    isOpen: false,
+    i: 0,
+
+    init: function () {
+      var self = this;
+      this.$el    = $('#viewer');
+      this.$img   = this.$el.find('.viewer__img');
+      this.$video = this.$el.find('.viewer__video');
+      if (!this.$el.length) return;
+
+      $(document).on('click', '.work__open', function () {
+        self.open($('.work__open').index(this));
+      });
+      this.$el.on('click', '[data-step]', function (e) {
+        e.stopPropagation();
+        self.step(parseInt($(this).attr('data-step'), 10));
+      });
+      // the backdrop and the close button shut it; the media itself does not
+      this.$el.on('click', function (e) {
+        if ($(e.target).is('.viewer__img, .viewer__video')) return;
+        if ($(e.target).closest('[data-close], .viewer').length &&
+            !$(e.target).closest('.viewer__bar').length) self.close();
+      });
+      $(document).on('keydown', function (e) {
+        if (!self.isOpen) return;
+        if (e.key === 'Escape' || e.key === 'Esc') { e.preventDefault(); e.stopImmediatePropagation(); self.close(); }
+        else if (e.key === 'ArrowRight') { e.preventDefault(); self.step(1); }
+        else if (e.key === 'ArrowLeft')  { e.preventDefault(); self.step(-1); }
+      });
+
+      var x0 = 0;
+      this.$el.on('touchstart', function (e) { x0 = e.originalEvent.touches[0].clientX; });
+      this.$el.on('touchend', function (e) {
+        var dx = e.originalEvent.changedTouches[0].clientX - x0;
+        if (Math.abs(dx) > 50) self.step(dx < 0 ? 1 : -1);
+      });
+    },
+
+    open: function (i) {
+      this.$tiles = $('.work__open');
+      this.last = document.activeElement;
+      this.isOpen = true;
+      $body.addClass('is-viewing');
+      this.$el.addClass('is-open').attr('aria-hidden', 'false');
+      this.show(i);
+      this.$el[0].focus({ preventScroll: true });
+    },
+
+    close: function () {
+      if (!this.isOpen) return;
+      this.isOpen = false;
+      $body.removeClass('is-viewing');
+      this.$el.removeClass('is-open').attr('aria-hidden', 'true');
+      this.$video[0].pause();
+      if (this.last) this.last.focus({ preventScroll: true });
+    },
+
+    step: function (d) {
+      var n = this.$tiles.length;
+      this.show((this.i + d + n) % n);
+    },
+
+    show: function (i) {
+      var $t = this.$tiles.eq(i), n = this.$tiles.length, self = this;
+      this.i = i;
+
+      this.$el.find('.viewer__count').html('<b>' + pad(i + 1) + '</b> / ' + pad(n));
+      this.$el.find('.viewer__cap b').text($t.data('name'));
+      this.$el.find('.viewer__cap i').text($t.data('what'));
+
+      var clip = $t.attr('data-video');
+      var $on  = clip ? this.$video : this.$img,
+          $off = clip ? this.$img : this.$video;
+
+      $off.removeClass('is-in').prop('hidden', true);
+      this.$video[0].pause();
+      $on.removeClass('is-in').prop('hidden', false);
+
+      if (clip) {
+        this.$video.attr('poster', $t.attr('data-poster'));
+        if (this.$video.attr('src') !== clip) this.$video.attr('src', clip);
+        var v = this.$video[0];
+        v.currentTime = 0;
+        var p = v.play(); if (p && p.catch) p.catch(function () {});
+        requestAnimationFrame(function () { $on.addClass('is-in'); });
+      } else {
+        var src = $t.attr('data-full');
+        this.$img.attr('alt', $t.data('name') + ', ' + $t.data('what'));
+        var reveal = function () { requestAnimationFrame(function () { if (self.i === i) $on.addClass('is-in'); }); };
+        this.$img.off('load').one('load', reveal);
+        this.$img.attr('src', src);
+        if (this.$img[0].complete) reveal();
+      }
+
+      // warm the neighbours so stepping is instant
+      [i - 1, i + 1].forEach(function (k) {
+        var f = self.$tiles.eq((k + n) % n).attr('data-full');
+        if (f) { var im = new Image(); im.src = f; }
+      });
+    },
+
+    /* the section's clips play only while it is the section on screen */
+    clips: function (on) {
+      clearTimeout(this.clipT);
+      var $v = $('.panel--work video.work__media');
+      if (!on) { $v.each(function () { this.pause(); }); return; }
+      // a beat later: a play() fired in the same frame as the slide starting
+      // can be dropped by the browser, and then the tile sits on its poster
+      this.clipT = setTimeout(function () {
+        $v.each(function () { var p = this.play(); if (p && p.catch) p.catch(function () {}); });
+      }, 120);
+    }
+  };
+
+
   /* ── ASIDE: THE PLUGIN SECTION ────────────────────────────────────────────
      Normally earned by popping six bubbles. Where the bubbles are not shown
      at all (css hides #bubbles below 1320px), there is nothing to pop, so the
@@ -907,6 +1031,7 @@
     Viewport.init();
     Theme.init();
     Thread.init();
+    Viewer.init();
     Stage.init();
     Aside.sync();
     Hero.init();
