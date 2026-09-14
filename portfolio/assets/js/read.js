@@ -260,6 +260,9 @@ window.TheRead = (function () {
 
 
   /* ── metric roll-up ───────────────────────────────────────────────────── */
+  /* the markup holds the final values (75.2%, ~3,000, $2M+), so scrapers, link
+     previews and anyone without js read the real numbers. this only replays
+     them from zero when a sheet comes into view. keep the two in step. */
   function countUp(card) {
     [].slice.call(card.querySelectorAll('b[data-count]')).forEach(function (el) {
       if (el._done) return;
