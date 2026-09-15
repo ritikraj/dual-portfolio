@@ -242,7 +242,10 @@ window.TheRead = (function () {
     var label = cards[index].getAttribute('data-rail') || '';
     type(label);
     countUp(cards[index]);
-    if (live) document.title = label + ' · the read';
+    if (live) {
+      document.title = label + ' · the read';
+      if (window.trackView) trackView('/b/' + label.replace(/[^a-z0-9]+/gi, '-'), 'b · ' + label);
+    }
   }
 
 

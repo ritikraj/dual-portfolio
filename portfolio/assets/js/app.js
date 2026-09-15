@@ -393,6 +393,7 @@
       if (!$new.length || !$new.prop('hidden')) return;
 
       $new.prop('hidden', false);
+      if (announce && window.track) track('plugin_unlocked');
       this.read();
       this.layout();
       this.render(true);
@@ -535,6 +536,10 @@
       $('#countNow').text(pad(i + 1));
       if (this.isLive()) {
         document.title = ($cur.data('label') ? $cur.data('label') + ' · ' : '') + 'ritik raj';
+        if (window.trackView) {
+          var lab = String($cur.data('label') || 'section');
+          trackView('/a/' + lab.replace(/[^a-z0-9]+/gi, '-'), 'a · ' + lab);
+        }
       }
     },
 
@@ -785,6 +790,7 @@
     enter: function (which, instant, slug) {
       if (this.busy) return;
       this.busy = true;
+      if (window.track) track('portfolio_enter', { side: which, returning: !!instant });
       var self = this;
 
       this.$panels.removeClass('is-hot is-cold').css('flex-grow', '');
@@ -1088,6 +1094,7 @@
       Work.pause();
       if (Work.$vid) Work.$vid[0].pause();
       $body.addClass('is-viewing');
+      if (window.track) { var $o = this.$tiles.eq(i); track('concept_open', { concept: $o.data('name') + ' · ' + $o.data('what') }); }
       this.$el.addClass('is-open').attr('aria-hidden', 'false');
       this.show(i);
       this.$el[0].focus({ preventScroll: true });

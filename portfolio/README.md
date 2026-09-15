@@ -434,3 +434,17 @@ a team. Everything below the headline is first person, because the decisions
 were yours. That split is deliberate; don't let it drift either way.
 No em dashes in body copy. Both are easy to break by accident when you edit,
 so: `grep "—" index.html` should only ever hit the HTML comments.
+
+## analytics
+
+Google Analytics 4, in `assets/js/analytics.js`, loaded by every page. Set the
+measurement id at the top of that file. While it is the placeholder, or the
+site is on localhost, nothing loads and nothing is sent.
+
+Besides normal page views it sends a virtual page view for every portfolio A
+section (`/a/<section>`) and portfolio B sheet (`/b/<sheet>`), and these events:
+`portfolio_enter`, `case_study_click`, `case_voice_switch`, `next_case_click`,
+`journey_click`, `plugin_click`, `plugin_unlocked`, `concept_open`,
+`contact_click`. Link clicks are caught by one listener in analytics.js; the
+section, sheet, door, unlock and viewer hooks call `window.track` /
+`window.trackView` from app.js and read.js.
