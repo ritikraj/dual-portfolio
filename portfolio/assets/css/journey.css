@@ -123,6 +123,14 @@
   font-family:var(--font-display);
   font-size:clamp(1.15rem,1.7vw,1.4rem); line-height:1.45;
 }
+/* a link out, for plain entries: quieter than the case study door */
+.jr-ext{
+  display:inline-block; margin-top:.9rem;
+  font-size:.58rem; letter-spacing:.24em; text-transform:uppercase;
+  color:var(--cream-dim); border-bottom:1px solid var(--cream-faint); padding-bottom:.2rem;
+  transition:color 300ms ease, border-color 300ms ease;
+}
+.jr-ext:hover{color:var(--gold);border-color:var(--gold-half)}
 .jr-cta{
   display:inline-flex; align-items:center; gap:.8rem;
   margin-top:1.7rem; padding:.8rem 1.2rem;
