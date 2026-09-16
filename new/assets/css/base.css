@@ -1,0 +1,62 @@
+/* ==========================================================================
+   BASE · reset, page, type primitives
+   ========================================================================== */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--fg);
+  font-family:var(--font-body);
+  font-weight:var(--wt-body);
+  font-size:var(--t0);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+body::before{               /* the theme's texture, never interactive */
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:var(--texture);background-size:var(--texture-size);
+  opacity:1;
+}
+main,header,footer{position:relative;z-index:1}
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:var(--wt-strong);margin:0;line-height:1.15;letter-spacing:-.015em}
+p{margin:0}
+a{color:inherit;text-decoration:none}
+ul,ol,dl,dd{margin:0;padding:0;list-style:none}
+img{max-width:100%;display:block}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:var(--focus) solid var(--lens-accent);outline-offset:3px}
+
+.wrap{max-width:var(--page);margin:0 auto;padding-inline:var(--pad)}
+.skip{position:absolute;left:-9999px;top:0;padding:var(--s2) var(--s3);background:var(--fg);color:var(--bg);z-index:99}
+.skip:focus{left:var(--s3);top:var(--s3)}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* micro label. the one place tracking is used hard */
+.label{
+  font-family:var(--lens-label-font);
+  font-size:.66rem;letter-spacing:var(--tracking-label);text-transform:uppercase;
+  color:var(--fg-3);font-weight:var(--wt-body);
+}
+.rule{border:0;border-top:var(--lens-rule) solid var(--line);margin:0}
+
+/* ── page chrome ───────────────────────────────────────────────────────── */
+.masthead{padding-block:var(--s6) var(--s4)}   /* never a shorthand: .wrap owns the inline padding */
+.masthead__row{display:flex;align-items:baseline;justify-content:space-between;gap:var(--s3);flex-wrap:wrap}
+.masthead__name{font-size:var(--t2);letter-spacing:-.02em}
+.masthead__meta{font-family:var(--lens-label-font);font-size:.78rem;color:var(--fg-2)}
+
+.section{padding-block:var(--block)}
+.section:first-child{padding-top:var(--s2)}
+.section__head{display:flex;align-items:baseline;gap:var(--s3);margin-bottom:var(--gap);flex-wrap:wrap}
+.section__title{font-size:var(--t2)}
+.section__note{font-size:.85rem;color:var(--fg-2);max-width:var(--lens-measure)}
+
+.foot{padding:var(--s7) 0 var(--s6);border-top:var(--lens-rule) solid var(--line);margin-top:var(--s7)}
+.foot__sideways{font-size:.85rem;color:var(--fg-2);margin-top:var(--s3);max-width:var(--lens-measure)}
+.foot__sideways a{border-bottom:1px solid var(--lens-accent);color:var(--fg)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;transition-duration:.001ms !important}
+}

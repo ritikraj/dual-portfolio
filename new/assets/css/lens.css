@@ -1,0 +1,50 @@
+/* ==========================================================================
+   LAYER 2 · LENS
+   Six variables. That is the entire allowance. A lens may not introduce a
+   colour, a typeface or a radius, which is why four audiences can share one
+   design system instead of forking it.
+
+     --lens-accent      which of the theme's accents leads
+     --lens-density     spacing multiplier
+     --lens-measure     line length
+     --lens-ramp        type scale ratio
+     --lens-label-font  where monospace enters the page
+     --lens-rule        hairline weight
+   ========================================================================== */
+[data-lens]{
+  --lens-accent:var(--accent);
+  --lens-density:1;
+  --lens-measure:64ch;
+  --lens-ramp:1.22;
+  --lens-label-font:var(--font-body);
+  --lens-rule:var(--rule);
+
+  /* the scale every component reads, computed from the ramp */
+  --t1:calc(var(--t0)*var(--lens-ramp));
+  --t2:calc(var(--t1)*var(--lens-ramp));
+  --t3:calc(var(--t2)*var(--lens-ramp));
+  --t4:calc(var(--t3)*var(--lens-ramp));
+  --t5:calc(var(--t4)*var(--lens-ramp));
+  --gap:calc(var(--s4)*var(--lens-density));
+  --block:calc(var(--s7)*var(--lens-density));
+}
+
+/* dense, one screen, no decoration. a card, not a page */
+[data-lens="facts"]{
+  --lens-density:.8;  --lens-measure:56ch; --lens-ramp:1.16;
+}
+/* wide margins, long measure, prose that wants to be read */
+[data-lens="decisions"]{
+  --lens-density:1.35; --lens-measure:66ch; --lens-ramp:1.2;
+}
+/* documentation. mono everywhere a label appears, tighter rhythm */
+[data-lens="architecture"]{
+  --lens-density:.95; --lens-measure:78ch; --lens-ramp:1.15;
+  --lens-label-font:var(--font-mono);
+  --lens-rule:calc(var(--rule)*1.5);
+}
+/* numbers first, everything else small */
+[data-lens="outcomes"]{
+  --lens-accent:var(--accent-2);
+  --lens-density:.9; --lens-measure:52ch; --lens-ramp:1.34;
+}

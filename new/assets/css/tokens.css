@@ -1,0 +1,94 @@
+/* ==========================================================================
+   LAYER 1 · THEME
+   The global skin. One active at a time, set with data-theme on <html>.
+   Owns palette, typefaces, rule weight, radius, texture and motion.
+   All four lenses share it completely: this is what stops four lenses from
+   becoming four unrelated sites.
+
+   Three themes, all self-hosted variable fonts, no weight above 500.
+     blueprint · drafting table. cool paper, ink navy, drawn rules, mono numbers
+     riso      · two-ink overprint. warm paper, grain, registration offset
+     signal    · instrument panel. near black, one acid accent, tabular numerals
+   ========================================================================== */
+
+@font-face{font-family:'Space Grotesk';src:url('../fonts/space-grotesk.woff2') format('woff2-variations');font-weight:300 700;font-display:swap}
+@font-face{font-family:'JetBrains Mono';src:url('../fonts/jetbrains-mono.woff2') format('woff2-variations');font-weight:300 600;font-display:swap}
+@font-face{font-family:'Bricolage';src:url('../fonts/bricolage.woff2') format('woff2-variations');font-weight:300 600;font-display:swap}
+@font-face{font-family:'Martian Mono';src:url('../fonts/martian-mono.woff2') format('woff2-variations');font-weight:300 600;font-display:swap}
+@font-face{font-family:'Instrument Sans';src:url('../fonts/instrument-sans.woff2') format('woff2-variations');font-weight:400 600;font-display:swap}
+@font-face{font-family:'Chivo Mono';src:url('../fonts/chivo-mono.woff2') format('woff2-variations');font-weight:300 600;font-display:swap}
+
+/* ── structure, identical in every theme ─────────────────────────────────
+   spacing is one scale. themes may not redefine it. */
+:root{
+  --u:.25rem;
+  --s1:calc(var(--u)*2);  --s2:calc(var(--u)*3);  --s3:calc(var(--u)*4);
+  --s4:calc(var(--u)*6);  --s5:calc(var(--u)*8);  --s6:calc(var(--u)*12);
+  --s7:calc(var(--u)*16); --s8:calc(var(--u)*24); --s9:calc(var(--u)*36);
+  --pad:clamp(1.25rem,5vw,4.5rem);
+  --page:78rem;
+  --t0:1rem;
+  --fast:.16s; --slow:.42s;
+  --focus:2px;
+  color-scheme:light;
+}
+
+/* ══ BLUEPRINT ══════════════════════════════════════════════════════════ */
+[data-theme="blueprint"]{
+  --bg:#eceff2;  --bg-2:#f6f8f9;  --bg-3:#e2e7ec;
+  --fg:#0e1c2b;  --fg-2:#41566b;  --fg-3:#7c8ea1;
+  --line:#c3ccd6; --line-2:#0e1c2b;
+  --accent:#0a6f96; --accent-2:#b4442c; --accent-ink:#ffffff;
+  --font-display:'Space Grotesk',system-ui,sans-serif;
+  --font-body:'Space Grotesk',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,monospace;
+  --radius:0px;
+  --rule:1px;
+  --tracking-label:.18em;
+  --wt-body:350; --wt-strong:500;
+  --shadow:none;
+  --texture:
+    repeating-linear-gradient(0deg,rgba(14,28,43,.045) 0 1px,transparent 1px 24px),
+    repeating-linear-gradient(90deg,rgba(14,28,43,.045) 0 1px,transparent 1px 24px);
+  --texture-size:auto;
+  --ease:cubic-bezier(.2,.7,.3,1);
+  color-scheme:light;
+}
+/* ══ RISOGRAPH ══════════════════════════════════════════════════════════ */
+[data-theme="riso"]{
+  --bg:#f2eee3;  --bg-2:#fbf8f1;  --bg-3:#e7e1d2;
+  --fg:#17140f;  --fg-2:#4d463a;  --fg-3:#8a8170;
+  --line:#c8c0ad; --line-2:#17140f;
+  --accent:#e8402a; --accent-2:#2b4de0; --accent-ink:#fbf8f1;
+  --font-display:'Bricolage',system-ui,sans-serif;
+  --font-body:'Bricolage',system-ui,sans-serif;
+  --font-mono:'Martian Mono',ui-monospace,monospace;
+  --radius:2px;
+  --rule:1.5px;
+  --tracking-label:.1em;
+  --wt-body:350; --wt-strong:500;
+  --shadow:none;
+  --texture:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E");
+  --texture-size:120px 120px;
+  --ease:cubic-bezier(.34,1.3,.5,1);
+  color-scheme:light;
+}
+/* ══ SIGNAL ═════════════════════════════════════════════════════════════ */
+[data-theme="signal"]{
+  --bg:#0a0b0d;  --bg-2:#111317;  --bg-3:#171a1f;
+  --fg:#e9ecef;  --fg-2:#9aa3ad;  --fg-3:#636c76;
+  --line:#23272d; --line-2:#3a4048;
+  --accent:#d6ff3f; --accent-2:#5ad2ff; --accent-ink:#0a0b0d;
+  --font-display:'Instrument Sans',system-ui,sans-serif;
+  --font-body:'Instrument Sans',system-ui,sans-serif;
+  --font-mono:'Chivo Mono',ui-monospace,monospace;
+  --radius:2px;
+  --rule:1px;
+  --tracking-label:.26em;
+  --wt-body:400; --wt-strong:500;
+  --shadow:none;
+  --texture:radial-gradient(120% 80% at 50% -10%,rgba(214,255,63,.07),transparent 60%);
+  --texture-size:auto;
+  --ease:cubic-bezier(.2,.9,.2,1);
+  color-scheme:dark;
+}

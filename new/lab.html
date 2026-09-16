@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint" data-lens="facts">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>lab · lens portfolio</title>
+<meta name="robots" content="noindex">
+<!--
+  PHASE 0 · the decision lab.
+  The same content, the same components, three themes and two chooser modes.
+  Pick a theme and a chooser mode, then lab.html, lab.css and lab.js go away
+  and index.html takes over with the winners as defaults.
+-->
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/lens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/lab.css">
+<script>
+  /* theme before first paint, so nothing flashes */
+  try {
+    var t = localStorage.getItem('rr.lab.theme');
+    if (t) document.documentElement.setAttribute('data-theme', t);
+    var l = (location.search.match(/[?&]lens=([a-z-]+)/) || [])[1] || localStorage.getItem('rr.lens');
+    if (l) document.documentElement.setAttribute('data-lens', l);
+  } catch (e) {}
+</script>
+</head>
+<body>
+
+<a class="skip" href="#page">skip to content</a>
+
+<div id="chooserHost"></div>
+
+<header class="masthead wrap">
+  <div class="masthead__row">
+    <h2 class="masthead__name">ritik raj</h2>
+    <p class="masthead__meta" id="lensQuestion"></p>
+  </div>
+</header>
+
+<main class="wrap" id="page"></main>
+
+<script src="data/content.js"></script>
+<script src="assets/js/lens.js"></script>
+<script src="assets/js/render.js"></script>
+<script src="assets/js/chooser.js"></script>
+<script src="assets/js/lab.js"></script>
+<script>
+(function (w, d) {
+  var host = d.getElementById('chooserHost');
+  var page = d.getElementById('page');
+  var q    = d.getElementById('lensQuestion');
+  var ch;
+
+  d.documentElement.setAttribute('data-theme', Lab.theme());
+
+  function paint(id) {
+    Render.page(page, id);
+    q.textContent = LENS_CONTENT.LENSES[id].question;
+  }
+
+  Lens.onChange(paint);
+  Lens.init();
+  paint(Lens.get());
+
+  function mountChooser(mode, forceAnswered) {
+    host.innerHTML = '';
+    ch = Chooser.mount(host, mode, { forceAnswered: forceAnswered });
+  }
+  mountChooser(Lab.mode(), false);
+
+  Lab.mount(d.body, function (mode) { mountChooser(mode, mode === 'strip'); });
+
+  /* lens links inside the page (the sideways pointer) switch without a reload */
+  d.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('[data-lens-link]');
+    if (!a) return;
+    e.preventDefault();
+    Lens.set(a.getAttribute('data-lens-link'), { from: 'sideways' });
+  });
+})(window, document);
+</script>
+</body>
+</html>

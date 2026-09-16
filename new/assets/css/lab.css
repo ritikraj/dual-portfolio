@@ -1,0 +1,30 @@
+/* ==========================================================================
+   LAB · the decision bar. Not part of the site. Deleted when you have chosen.
+   ========================================================================== */
+.lab{
+  position:fixed;left:50%;bottom:var(--s3);transform:translateX(-50%);
+  z-index:70;display:flex;align-items:center;gap:var(--s3);flex-wrap:wrap;
+  justify-content:center;
+  padding:var(--s2) var(--s3);
+  background:var(--bg-2);border:var(--rule) solid var(--line-2);border-radius:var(--radius);
+  box-shadow:0 18px 40px -24px rgba(0,0,0,.6);
+  max-width:calc(100vw - var(--s3)*2);
+}
+.lab__set{display:flex;align-items:center;gap:var(--s1)}
+.lab__k{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--fg-3);margin-right:var(--s1)}
+.lab__b{
+  padding:4px 10px;border:1px solid var(--line);border-radius:var(--radius);
+  font-family:var(--font-body);font-size:.78rem;color:var(--fg-2);
+  transition:all var(--fast) var(--ease);
+}
+.lab__b:hover{border-color:var(--fg-3);color:var(--fg)}
+.lab__b[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.lab__sep{width:1px;align-self:stretch;background:var(--line)}
+@media (max-width:760px){
+  .lab{left:var(--s2);right:var(--s2);transform:none;bottom:var(--s2);font-size:.9em}
+  .lab__set{flex:1 1 auto}
+}
+@media print{.lab{display:none}}
+/* content must clear the bar */
+body:has(.lab){padding-bottom:6rem}
+@media (max-width:760px){body:has(.lab){padding-bottom:12rem}}
