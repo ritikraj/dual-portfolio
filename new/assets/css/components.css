@@ -213,3 +213,154 @@
   a{color:#000}
   .pitem{break-inside:avoid}
 }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   THE DOOR
+   The question, full screen, asked once. Each band previews its own lens
+   with that lens's own content, so the choice has a visible consequence
+   before it is made. The chosen band then becomes the chip in the strip.
+   ══════════════════════════════════════════════════════════════════════════ */
+.door{
+  position:fixed;inset:0;z-index:80;
+  display:grid;grid-template-rows:auto 1fr auto;
+  background:var(--bg);
+  padding:clamp(1.5rem,4vw,3.5rem) 0 clamp(1rem,2vw,2rem);
+  overflow:hidden;
+}
+.door::before{
+  content:"";position:absolute;inset:0;
+  background-image:var(--texture);background-size:var(--texture-size);
+  pointer-events:none;
+}
+.door > *{position:relative}
+
+.door__head{padding-inline:var(--pad);max-width:var(--page);margin:0 auto;width:100%}
+.door__name{
+  font-family:var(--font-mono);font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--fg-3);margin-bottom:clamp(1.5rem,6vh,4rem);
+}
+.door__q{
+  font-family:var(--font-display);font-weight:var(--wt-strong);
+  font-size:clamp(2.6rem,8.5vw,6.4rem);line-height:.92;letter-spacing:-.045em;
+  animation:doorQ .9s var(--ease) both;
+}
+.door__q em{font-style:normal;color:var(--accent)}
+.door__hint{
+  margin-top:var(--s3);max-width:44ch;font-size:.92rem;line-height:1.6;color:var(--fg-2);
+  animation:doorQ .9s .12s var(--ease) both;
+}
+@keyframes doorQ{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+.door__bands{
+  display:flex;flex-direction:column;
+  margin-top:clamp(1.5rem,5vh,3.5rem);
+  border-top:var(--rule) solid var(--line);
+  min-height:0;
+}
+.door__band{
+  position:relative;flex:1 1 0;min-height:4.2rem;
+  display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;
+  align-items:center;gap:clamp(.75rem,2.5vw,2.5rem);
+  padding:var(--s2) var(--pad);
+  border-bottom:var(--rule) solid var(--line);
+  text-align:left;overflow:hidden;
+  transition:flex-grow .55s var(--ease),opacity .35s var(--ease);
+}
+.door__band::before{                     /* the accent wash */
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 16%,transparent),transparent 62%);
+  transform:translateX(-101%);
+  transition:transform .55s var(--ease);
+}
+.door__bands.has-hot .door__band{opacity:.42}
+.door__band.is-hot{flex-grow:2.6;opacity:1}
+.door__band.is-hot::before{transform:translateX(0)}
+
+.door__n{
+  font-family:var(--font-mono);font-size:.7rem;letter-spacing:.1em;color:var(--fg-3);
+  transition:color .35s var(--ease);
+}
+.door__band.is-hot .door__n{color:var(--accent)}
+.door__mid{display:block;min-width:0}
+.door__label{
+  display:block;font-family:var(--font-display);font-weight:var(--wt-strong);
+  font-size:clamp(1.15rem,2.6vw,2rem);line-height:1.1;letter-spacing:-.025em;
+}
+.door__sub{
+  display:block;margin-top:.15rem;font-size:.82rem;color:var(--fg-2);
+  opacity:.55;transition:opacity .35s var(--ease);
+}
+.door__band.is-hot .door__sub{opacity:1}
+.door__prev{
+  font-family:var(--font-mono);font-size:.8rem;line-height:1.55;color:var(--fg);
+  max-width:38ch;text-align:right;
+  opacity:0;transform:translateY(6px);
+  transition:opacity .4s var(--ease),transform .4s var(--ease);
+}
+.door__band.is-hot .door__prev{opacity:1;transform:none}
+.door__go{
+  font-size:1.1rem;color:var(--fg-3);
+  transform:translateX(-6px);opacity:0;
+  transition:transform .4s var(--ease),opacity .3s var(--ease),color .3s var(--ease);
+}
+.door__band.is-hot .door__go{transform:none;opacity:1;color:var(--accent)}
+
+.door__band.is-chosen{flex-grow:40;opacity:1}
+.door__band.is-chosen::before{transform:translateX(0)}
+.door__bands.has-hot .door__band.is-chosen ~ .door__band,
+.door__band.is-chosen ~ .door__band{opacity:0}
+
+.door__skip{
+  justify-self:start;margin:var(--s3) auto 0;max-width:var(--page);width:100%;
+  padding-inline:var(--pad);
+  font-size:.8rem;color:var(--fg-3);text-align:left;
+}
+.door__skip:hover{color:var(--fg)}
+
+@media (max-width:760px){
+  .door{grid-template-rows:auto auto auto}
+  .door__band{grid-template-columns:auto minmax(0,1fr) auto;padding-block:var(--s3)}
+  .door__prev{grid-column:2 / -1;text-align:left;opacity:1;transform:none;font-size:.68rem;margin-top:.35rem}
+  .door__go{display:none}
+  .door__bands.has-hot .door__band{opacity:1}
+  .door__band.is-hot{flex-grow:1}
+}
+
+/* ══ transitions ═══════════════════════════════════════════════════════════
+   the lens change is the argument. cards keep their identity and travel. */
+::view-transition-old(root),::view-transition-new(root){animation-duration:.42s}
+.chooser--strip .chooser__opt[aria-checked="true"] .chooser__label{view-transition-name:lens-title}
+html.is-door .chooser--strip .chooser__opt[aria-checked="true"] .chooser__label{view-transition-name:none}
+
+/* ══ arrival ═══════════════════════════════════════════════════════════════ */
+.js [data-reveal]{opacity:0;transform:translateY(18px)}
+.js [data-reveal].is-in{opacity:1;transform:none;transition:opacity .6s var(--ease),transform .6s var(--ease)}
+@media (prefers-reduced-motion:reduce){
+  .js [data-reveal]{opacity:1;transform:none}
+  .door__q,.door__hint{animation:none}
+}
+
+/* ══ hover life on the work itself ═════════════════════════════════════════ */
+.pitem{position:relative}
+.pitem::after{
+  content:"";position:absolute;left:0;top:0;width:2px;height:0;background:var(--lens-accent);
+  transition:height .4s var(--ease);
+}
+a.pitem:hover::after{height:100%}
+.plist--card a.pitem::after,.plist--brief a.pitem::after{left:-1px}
+.pitem__more{position:relative;transition:color .25s var(--ease)}
+.pitem__more::after{
+  content:" \2192";display:inline-block;transform:translateX(-4px);opacity:0;
+  transition:transform .3s var(--ease),opacity .3s var(--ease);
+}
+a.pitem:hover .pitem__more::after{transform:translateX(2px);opacity:1}
+.cta__main{position:relative;overflow:hidden}
+
+/* the door's second column of information: who is answering the question */
+.door__who{
+  position:absolute;top:clamp(1.5rem,4vw,3.5rem);right:var(--pad);
+  font-family:var(--font-mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--fg-3);text-align:right;line-height:1.9;
+  animation:doorQ .9s .2s var(--ease) both;
+}
+@media (max-width:760px){.door__who{display:none}}

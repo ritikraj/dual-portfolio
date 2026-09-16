@@ -51,6 +51,10 @@
     var a = el(p.body ? 'a' : 'div', 'pitem' + (p.status === 'did-not-land' ? ' pitem--failed' : ''));
     if (p.body) { a.href = p.body; a.setAttribute('data-case', p.id); }
     a.setAttribute('data-anchor', 'p-' + p.id);
+    /* the same card in two lenses is the same card: it travels to its new
+       position and size instead of being destroyed and rebuilt */
+    a.setAttribute('data-flip', 'p-' + p.id);
+    a.style.viewTransitionName = 'p-' + p.id;
 
     var top = el('div', 'pitem__top');
     top.appendChild(el('h3', 'pitem__title', esc(p.title)));
@@ -181,6 +185,7 @@
       if (note) head.appendChild(el('p', 'section__note', esc(note)));
       node.appendChild(head);
     }
+    node.setAttribute('data-reveal', '');
     var body = el('div');
     node.appendChild(body);
     return { node: node, body: body };
@@ -221,10 +226,13 @@
         if (node) mount.appendChild(node);
       });
       var foot = el('footer', 'foot');
+      foot.setAttribute('data-reveal', '');
       foot.appendChild(el('p', 'label', esc(lens.question)));
       foot.appendChild(cta(lens));
       foot.appendChild(sideways(lens));
       mount.appendChild(foot);
+
+      if (w.Motion) w.Motion.reveal(mount);
     },
     projectsFor: projectsFor
   };

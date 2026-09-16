@@ -63,14 +63,20 @@
     opts = opts || {};
     var a = opts.keepPlace === false ? null : anchor();
     current = id;
-    d.documentElement.setAttribute('data-lens', id);
     remember(id);
     if (!opts.silentURL) {
       var url = location.pathname + '?lens=' + id + location.hash;
       history.replaceState({ lens: id }, '', url);
     }
-    for (var i = 0; i < listeners.length; i++) listeners[i](id);
-    restore(a);
+    function apply() {
+      d.documentElement.setAttribute('data-lens', id);
+      for (var i = 0; i < listeners.length; i++) listeners[i](id);
+      restore(a);
+    }
+    /* the reorder is the idea. it has to be visible, so it is animated
+       unless we are already inside someone else's transition */
+    if (opts.noAnim || !w.Motion) apply();
+    else w.Motion.swap(apply);
     if (!opts.quiet) announce(id);
     if (w.track) w.track('lens_switch', { lens: id, from: opts.from || 'chooser' });
   }

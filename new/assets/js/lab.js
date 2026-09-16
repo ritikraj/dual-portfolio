@@ -14,7 +14,7 @@
 
   w.Lab = {
     theme: function () { return get(TK, 'blueprint'); },
-    mode : function () { return get(MK, 'strip'); },
+    mode : function () { return get(MK, 'wall'); },
     mount: function (host, onMode) {
       var bar = d.createElement('div');
       bar.className = 'lab';

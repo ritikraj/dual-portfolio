@@ -111,7 +111,7 @@ const sharedProse = [
   ...C.PROFILE.facts.map(f => f[1]),
   ...C.PROFILE.timeline.flat(),
   C.DIAGNOSIS.intro,
-  ...Object.values(C.LENSES).flatMap(l => [l.label, l.sub, l.question, l.cta?.note || ''])
+  ...Object.values(C.LENSES).flatMap(l => [l.label, l.sub, l.question, l.preview || '', l.cta?.note || ''])
 ];
 const allTokens = new Set();
 for (const m of Object.values(C.METRICS)) tokensIn(String(m.value)).forEach(t => allTokens.add(t));
