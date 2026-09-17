@@ -13,6 +13,38 @@
         "source": "**",
         "destination": "/index.html"
       }
+    ],
+    "redirects": [
+      {
+        "regex": "^/email-builder/?$",
+        "destination": "/case/email-builder.html?v=a",
+        "type": 302
+      },
+      {
+        "regex": "^/design-system/?$",
+        "destination": "/case/design-system.html?v=a",
+        "type": 302
+      },
+      {
+        "regex": "^/builder-framework/?$",
+        "destination": "/case/builder-framework.html?v=a",
+        "type": 302
+      },
+      {
+        "regex": "^/property-intelligence/?$",
+        "destination": "/case/property-intelligence.html?v=a",
+        "type": 302
+      },
+      {
+        "regex": "^/final-inspection/?$",
+        "destination": "/case/final-inspection.html?v=a",
+        "type": 302
+      },
+      {
+        "regex": "^/qapp/?$",
+        "destination": "/case/qapp.html?v=a",
+        "type": 302
+      }
     ]
   }
 }
