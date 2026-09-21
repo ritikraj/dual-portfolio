@@ -228,11 +228,13 @@ html.to-b[data-pb="dark"] #veil b{background:#eeede8}
     </section>
 
     <!-- ─────────────── 02 · FEATURED CASE STUDIES ───────────────
-         Heading, then six case study cards, then the journey as a card of its own below the grid. Each card is one link:
-         a tag, the problem in the serif, one short line on how it landed.
+         Tabs, then the case studies as a sideways scroller at every width, then
+         the journey as a card of its own below it. Each card is one link: the
+         project name, the problem in the serif, one short line on how it landed.
          Keep that line to one sentence and no more than one number or three.
-         Below 1100px the cards are a sideways slider with a dot per card under it
-         (built by app.js → Proj, one dot per card, nothing to register).
+         The tabs filter on data-tags, and the dots follow whatever is showing
+         (both built by app.js → Proj). To add a card, copy one and give it tags
+         that already exist in the tab row: six tabs is the ceiling.
          ──────────────────────────────────────────────────── -->
     <section class="panel panel--proj" data-label="case studies">
       <div class="panel__in proj">
@@ -240,45 +242,53 @@ html.to-b[data-pb="dark"] #veil b{background:#eeede8}
           <span class="proj__tag" data-reveal="1">featured case studies</span>
           <h2 class="proj__title" data-reveal="2">some of my works</h2>
         </header>
-        <div class="proj__grid" id="projGrid" data-reveal="3" data-scroll-x>
-          <a class="proj-card" href="case/email-builder.html?v=a">
-            <ul class="proj-card__tags"><li class="is-name">email builder</li><li class="is-flag">flagship</li></ul>
+        <div class="proj__tabs" id="projTabs" role="group" aria-label="filter the case studies" data-reveal="3">
+          <button type="button" class="proj__tab is-on" data-filter="all" aria-pressed="true">all</button>
+          <button type="button" class="proj__tab" data-filter="systems" aria-pressed="false">systems</button>
+          <button type="button" class="proj__tab" data-filter="0 to 1" aria-pressed="false">0 to 1</button>
+          <button type="button" class="proj__tab" data-filter="research" aria-pressed="false">research</button>
+          <button type="button" class="proj__tab" data-filter="native apps" aria-pressed="false">native apps</button>
+        </div>
+        <div class="proj__grid" id="projGrid" data-reveal="4" data-scroll-x>
+          <a class="proj-card" href="case/email-builder.html?v=a" data-tags="0 to 1,research">
+            <span class="proj-card__name">email builder</span>
             <h3 class="proj-card__head">the email customization problem</h3>
             <p class="proj-card__line">75.2% adoption, a 5.4% churn-save and $2M+ in new ARR.</p>
-            <span class="proj-card__go">read the case study <svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg></span>
+            <svg class="proj-card__arrow" viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg>
           </a>
-          <a class="proj-card" href="case/builder-framework.html?v=a">
-            <ul class="proj-card__tags"><li class="is-name">builder framework</li></ul>
+          <a class="proj-card" href="case/builder-framework.html?v=a" data-tags="systems">
+            <span class="proj-card__name">builder framework</span>
             <h3 class="proj-card__head">the every builder is its own product problem</h3>
             <p class="proj-card__line">four products now run on one interaction model.</p>
-            <span class="proj-card__go">read the case study <svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg></span>
+            <svg class="proj-card__arrow" viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg>
           </a>
-          <a class="proj-card" href="case/design-system.html?v=a">
-            <ul class="proj-card__tags"><li class="is-name">design system 3.0</li><li class="is-flag">flagship</li></ul>
+          <a class="proj-card" href="case/design-system.html?v=a" data-tags="systems">
+            <span class="proj-card__name">design system 3.0</span>
             <h3 class="proj-card__head">the design is the bottleneck problem</h3>
             <p class="proj-card__line">under 1% detach rate, and 3.6M insertions in six months.</p>
-            <span class="proj-card__go">read the case study <svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg></span>
+            <svg class="proj-card__arrow" viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg>
           </a>
-          <a class="proj-card" href="case/property-intelligence.html?v=a">
-            <ul class="proj-card__tags"><li class="is-name">property intelligence</li></ul>
+          <a class="proj-card" href="case/property-intelligence.html?v=a" data-tags="0 to 1">
+            <span class="proj-card__name">property intelligence</span>
             <h3 class="proj-card__head">the commission nobody could see problem</h3>
             <p class="proj-card__line">agent rosters grew ~30%, at no seat cost to the owner.</p>
-            <span class="proj-card__go">read the case study <svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg></span>
+            <svg class="proj-card__arrow" viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg>
           </a>
-          <a class="proj-card" href="case/final-inspection.html?v=a">
-            <ul class="proj-card__tags"><li class="is-name">final inspection</li><li>fashinza</li></ul>
+          <a class="proj-card" href="case/final-inspection.html?v=a" data-tags="native apps,research">
+            <span class="proj-card__name">final inspection</span>
             <h3 class="proj-card__head">the final inspection failure problem</h3>
             <p class="proj-card__line">shipment failures fell from over 20% to about 7% in three months.</p>
-            <span class="proj-card__go">read the case study <svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg></span>
+            <svg class="proj-card__arrow" viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg>
           </a>
-          <a class="proj-card" href="case/qapp.html?v=a">
-            <ul class="proj-card__tags"><li class="is-name">q-app</li><li>fashinza</li></ul>
+          <a class="proj-card" href="case/qapp.html?v=a" data-tags="native apps,research">
+            <span class="proj-card__name">q-app</span>
             <h3 class="proj-card__head">the defects problem that affected revenue</h3>
             <p class="proj-card__line">one tap to pass a piece, on a tablet at the line, in 100+ factories.</p>
-            <span class="proj-card__go">read the case study <svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg></span>
+            <svg class="proj-card__arrow" viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg>
           </a>
         </div>
         <div class="proj__dots" id="projDots" aria-hidden="true"></div>
+        <p class="vh" id="projCount" aria-live="polite"></p>
         <!-- the journey: not a case study, so it sits outside the grid and the slider -->
         <a class="proj-journey" href="journey.html" data-reveal="4">
           <span class="proj-journey__tag">journey · 2018 to now</span>

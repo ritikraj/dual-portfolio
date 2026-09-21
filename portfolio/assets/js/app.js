@@ -950,15 +950,30 @@
      -------------------------------------------------------------------- */
   var Proj = {
     init: function () {
-      var grid = document.getElementById('projGrid'),
-          dots = document.getElementById('projDots');
+      var grid  = document.getElementById('projGrid'),
+          dots  = document.getElementById('projDots'),
+          tabs  = document.getElementById('projTabs'),
+          count = document.getElementById('projCount');
       if (!grid || !dots) return;
-      var cards = [].slice.call(grid.querySelectorAll('.proj-card'));
 
-      dots.innerHTML = cards.map(function (c, i) {
-        return '<button type="button" tabindex="-1" aria-label="case study ' + (i + 1) + '"></button>';
-      }).join('');
-      var buttons = [].slice.call(dots.children);
+      var all = [].slice.call(grid.querySelectorAll('.proj-card'));
+      var cards = all, buttons = [];
+
+      /* the dots describe what is showing, so they are rebuilt on every
+         filter rather than fixed to the six cards that exist in the markup */
+      function dotsFor(list) {
+        dots.innerHTML = list.map(function (c, i) {
+          return '<button type="button" tabindex="-1" aria-label="case study ' + (i + 1) + '"></button>';
+        }).join('');
+        buttons = [].slice.call(dots.children);
+        buttons.forEach(function (b, i) {
+          b.addEventListener('click', function () {
+            paint(i);
+            grid.scrollTo({ left: cards[i].offsetLeft - cards[0].offsetLeft, behavior: 'smooth' });
+          });
+        });
+        dots.style.display = list.length > 1 ? '' : 'none';
+      }
 
       function step() { return cards.length > 1 ? cards[1].offsetLeft - cards[0].offsetLeft : 1; }
       function current() {
@@ -971,6 +986,32 @@
         buttons.forEach(function (b, k) { b.classList.toggle('is-on', k === i); });
       }
 
+      function filter(tag) {
+        cards = all.filter(function (c) {
+          var on = tag === 'all' || (' ' + (c.getAttribute('data-tags') || '') + ',').indexOf(tag + ',') > -1;
+          c.hidden = !on;
+          return on;
+        });
+        grid.scrollTo({ left: 0, behavior: 'auto' });
+        dotsFor(cards);
+        paint(0);
+        if (count) count.textContent = cards.length + (cards.length === 1 ? ' case study' : ' case studies') + ', ' + tag;
+        if (window.track) track('case_filter', { tag: tag, shown: cards.length });
+      }
+
+      if (tabs) {
+        tabs.addEventListener('click', function (e) {
+          var b = e.target.closest('.proj__tab');
+          if (!b) return;
+          [].slice.call(tabs.children).forEach(function (x) {
+            var on = x === b;
+            x.classList.toggle('is-on', on);
+            x.setAttribute('aria-pressed', on ? 'true' : 'false');
+          });
+          filter(b.getAttribute('data-filter'));
+        });
+      }
+
       // a short timer rather than rAF: rAF pauses in background tabs, and the
       // dots should be right the moment the page is looked at again
       var t = 0;
@@ -979,12 +1020,8 @@
         t = setTimeout(paint, 50);
       }, { passive: true });
       document.addEventListener('visibilitychange', function () { if (!document.hidden) paint(); });
-      buttons.forEach(function (b, i) {
-        b.addEventListener('click', function () {
-          paint(i);
-          grid.scrollTo({ left: cards[i].offsetLeft - cards[0].offsetLeft, behavior: 'smooth' });
-        });
-      });
+
+      dotsFor(cards);
       paint();
     }
   };
