@@ -53,7 +53,11 @@ ul{padding:0;list-style:none}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 em{font-style:italic}
-::selection{background:var(--gold);color:var(--ink)}
+/* the selected text keeps its own colour. it used to be set to var(--ink),
+   which is the page colour in both themes, so the words only stayed legible
+   while the accent band painted behind them: click away and chrome greys
+   that band out, leaving text the same colour as the paper. */
+::selection{background:var(--gold-soft);color:var(--cream)}
 
 /* ── 02 · HERO ──────────────────────────────────────────────────────────── */
 .hero{
@@ -544,25 +548,6 @@ em{font-style:italic}
 }
 
 /* ── 07 · INTRO ─────────────────────────────────────────────────────────── */
-.greet{
-  font-family:var(--font-hand);
-  font-size:clamp(2rem,4.6vw,3.4rem);
-  color:var(--gold);
-  line-height:1; margin-bottom:.4rem;
-}
-.name{
-  font-family:var(--font-display);
-  font-weight:400;
-  font-size:clamp(5rem,16.5vw,14.5rem);
-  line-height:.86;
-  letter-spacing:-.025em;
-}
-.name__dot{color:var(--gold)}
-.role{
-  margin-top:1.6rem;
-  font-size:.7rem; letter-spacing:.42em; text-transform:uppercase;
-  opacity:.5;
-}
 .lede{
   margin-top:2.2rem; max-width:38rem;
   font-size:clamp(.95rem,1.15vw,1.05rem); line-height:1.85;
@@ -1494,4 +1479,55 @@ em{font-style:italic}
 @media (min-width:1101px){
   .proj__grid{gap:0;background:none;border:0;border-top:1px solid var(--cream-faint);border-left:1px solid var(--cream-faint)}
   .proj__grid > *{border-right:1px solid var(--cream-faint);border-bottom:1px solid var(--cream-faint)}
+}
+
+/* ── intro ───────────────────────────────────────────────────────────────
+   The name used to be the headline at 14.5rem, which spent the whole panel
+   on something the reader already has from the tab title. It steps down to
+   this line, and the three roles take the headline. */
+.who{
+  display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;
+  font-size:.7rem;letter-spacing:.42em;text-transform:uppercase;
+  color:var(--cream);opacity:.65;margin-bottom:2.2rem;
+}
+.who i{width:1.6rem;height:1px;background:var(--gold);opacity:.8}
+
+/* ── intro · the line ────────────────────────────────────────────────────
+   One line, and the role types itself out. The slot is held at the width of
+   the longest word so the tagline underneath never moves while it types.
+   The animation is decoration: a static, readable copy of all three words
+   sits behind it for screen readers, and reduced motion gets that instead. */
+.ty{
+  margin:0;max-width:38rem;
+  font-family:var(--font-display);font-weight:400;
+  font-size:clamp(1.9rem,4.4vw,3.3rem);line-height:1.1;letter-spacing:-.03em;
+  white-space:nowrap;
+}
+.ty__fix{color:var(--cream);margin-right:.3em}
+.ty__slot{display:inline-grid;vertical-align:baseline}
+.ty__sizer,.ty__live{grid-area:1/1;white-space:nowrap}
+.ty__sizer{visibility:hidden}
+.ty__out{color:var(--gold)}
+.ty__caret{
+  display:inline-block;width:.05em;height:.78em;margin-left:.07em;
+  vertical-align:-.04em;background:var(--gold);
+  animation:tyBlink 1.05s steps(1,end) infinite;
+}
+@keyframes tyBlink{0%,49%{opacity:1}50%,100%{opacity:0}}
+.ty__read{
+  position:absolute;width:1px;height:1px;overflow:hidden;
+  clip:rect(0 0 0 0);white-space:nowrap;
+}
+.lede{margin-top:2.2rem;max-width:36rem}
+
+/* narrow: "kickass product owner" will not sit on one line at any size worth
+   reading, so the break is made deliberate rather than left to chance. */
+@media (max-width:900px){
+  .who{margin-bottom:1.6rem;letter-spacing:.3em}
+  .ty__fix{display:block;margin-right:0}
+  .ty__slot{justify-items:start}
+  .lede{margin-top:1.6rem}
+}
+@media (prefers-reduced-motion:reduce){
+  .ty__caret{animation:none;opacity:.5}
 }

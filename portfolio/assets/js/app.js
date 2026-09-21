@@ -190,6 +190,63 @@
   };
 
 
+  /* ── TYPER ────────────────────────────────────────────────────────────
+     The intro line names three jobs by typing one at a time. Decoration
+     only: the readable copy of all three words is already in the markup,
+     so a screen reader, a crawler and anyone on reduced motion get the
+     whole claim without waiting for an animation.
+
+     It pauses while the tab is in the background. It does not try to watch
+     the panel itself: the stage slides a track rather than scrolling, so an
+     intersection observer answers once, says no, and never fires again.
+     ------------------------------------------------------------------- */
+  var Typer = {
+    words: ['designer', 'developer', 'product owner'],
+    typeMs: 62, eraseMs: 26, holdMs: 1900, gapMs: 130,
+
+    init: function () {
+      this.out = document.getElementById('typeOut');
+      if (!this.out) return;
+
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce) { this.out.textContent = this.words[0]; return; }
+
+      this.i = 0; this.n = 0; this.erasing = false;
+
+      var self = this;
+      document.addEventListener('visibilitychange', function () {
+        if (!document.hidden) self.tick();
+      });
+
+      this.tick();
+    },
+
+    tick: function () {
+      clearTimeout(this._t);
+      if (document.hidden) return;
+
+      var word = this.words[this.i], wait;
+
+      if (!this.erasing) {
+        this.n++;
+        if (this.n >= word.length) { this.erasing = true; wait = this.holdMs; }
+        else wait = this.typeMs;
+      } else {
+        this.n--;
+        if (this.n <= 0) {
+          this.erasing = false;
+          this.i = (this.i + 1) % this.words.length;
+          wait = this.gapMs;
+        } else wait = this.eraseMs;
+      }
+
+      this.out.textContent = word.slice(0, Math.max(0, this.n));
+
+      var self = this;
+      this._t = setTimeout(function () { self.tick(); }, wait);
+    }
+  };
+
   /* ── BUBBLES ──────────────────────────────────────────────────────────
      A keyword field drifting in the empty half of the intro. Rebuilt every
      time that section comes back into view, with a different nine of the
@@ -1190,6 +1247,7 @@
     Proj.init();
     Stage.init();
     Aside.sync();
+    Typer.init();
     Hero.init();
 
     // deep link: index.html#a opens portfolio a straight away

@@ -17,6 +17,7 @@
   --pb-line:  #cfcbc0;
   --pb-red:  #d0241b;   /* the red pen: the dark side's colour, on paper */
   --pb-mark: #ffdd3c;   /* the highlighter it marks up with */
+  --pb-mark-ink:#121110; /* stays dark in both modes: it sits on yellow */
   --pb-tab:   #fff;      /* type on the black tab strip */
   --pb-veil:  rgba(233,231,224,.88);
   --pb-shadow:rgba(18,17,16,.06);
@@ -65,7 +66,7 @@ html[data-pb="dark"] .curtain--light{background:#15141a}
 }
 .pb.is-live{opacity:1;visibility:visible;transition:opacity 560ms ease, visibility 0s}
 .pb *{box-sizing:border-box}
-.pb ::selection{background:var(--pb-mark);color:var(--pb-ink)}
+.pb ::selection{background:var(--pb-mark);color:var(--pb-mark-ink)}
 
 /* the graph-paper ground, parallaxed against the strip */
 .pb__grid{

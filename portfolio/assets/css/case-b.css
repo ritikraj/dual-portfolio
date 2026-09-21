@@ -5,7 +5,7 @@
    ========================================================================== */
 html.v-b{
   --bone:#e9e7e0; --sheet:#fbfaf7; --card:#fff; --ink:#121110; --body:#33312e;
-  --grey:#8c8a83; --line:#cfcbc0; --red:#d0241b; --mark:#ffdd3c;
+  --grey:#8c8a83; --line:#cfcbc0; --red:#d0241b; --mark:#ffdd3c; --mark-ink:#121110;
   --tab:#fff; --veil:rgba(233,231,224,.9); --shadow:rgba(18,17,16,.06);
   --sans:"Space Grotesk","Helvetica Neue",Arial,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
@@ -31,7 +31,8 @@ html.v-b body{
 html.v-b .csa{display:none}
 h1,h2,h3,p,dl,dd,figure,ul,ol{margin:0}
 a{color:inherit;text-decoration:none}
-::selection{background:var(--mark);color:var(--ink)}
+/* the highlighter is yellow in both modes, so its ink stays dark in both */
+::selection{background:var(--mark);color:var(--mark-ink)}
 
 /* ── top bar ─────────────────────────────────────────────────────────── */
 .csb__bar{

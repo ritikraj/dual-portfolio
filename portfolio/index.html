@@ -28,7 +28,6 @@
 
 <!-- ============================================================
      FONTS — portfolio A only. portfolio B loads its own, lazily.
-       --font-hand    Caveat        (the greeting)
        --font-display EB Garamond   (headlines · old-style)
        --font-body    Inter         (everything else)
      alternates are listed in app.css § 00.
@@ -202,19 +201,23 @@ html.to-b[data-pb="dark"] #veil b{background:#eeede8}
     <!-- ─────────────── 01 · INTRO ─────────────── -->
     <section class="panel panel--intro" data-label="intro" data-bubbles>
       <div class="panel__in">
-        <p class="greet" data-reveal="1">hi, i am</p>
-        <h1 class="name" data-reveal="2">ritik<span class="name__dot">.</span></h1>
-        <p class="role" data-reveal="3">staff product designer</p>
-        <p class="lede" data-reveal="4">
-          the more complex the problem is, the more i love them. i am a ux architect and a
-          design system expert. also a frontend engineer by training, which is the reason
-          my systems survive handoff. <b>eight years</b> across b2b saas, enterprise
-          platforms, marketplace and supply chain.
+        <p class="who" data-reveal="1">ritik raj<i></i>staff product designer</p>
+
+        <!-- one line. the role types itself out and swaps, so the claim is
+             three jobs without three blocks of copy. the slot is sized to the
+             longest word, so nothing below it moves while it types. -->
+        <h1 class="ty" data-reveal="2">
+          <span class="ty__fix">kickass</span><span class="ty__slot" aria-hidden="true"><span class="ty__sizer">product owner</span><span class="ty__live"><span class="ty__out" id="typeOut"></span><i class="ty__caret"></i></span></span>
+          <span class="ty__read">designer, developer, product owner</span>
+        </h1>
+
+        <p class="lede" data-reveal="3">
+          a senior product designer who used to write frontend, and picked it back up.
+          i deploy and host on firebase, work with firestore and the data behind the
+          screens, and build with coded components, so i know what a framework can
+          carry before i design something it cannot.
         </p>
-        <p class="lede lede--sub" data-reveal="5">
-          i bridge the gap between engineering, design, product and business.
-        </p>
-      </div>
+
       <!-- keywords drifting in the empty half. built by app.js → Bubbles -->
       <div class="bubbles" id="bubbles" aria-hidden="true"></div>
 
