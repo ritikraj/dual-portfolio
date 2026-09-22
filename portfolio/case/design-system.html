@@ -135,7 +135,7 @@ html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
     <dl class="csa__meta" data-up>
       <div><dt>role</dt><dd>owner, architecture to governance</dd></div>
       <div><dt>scale</dt><dd>120+ coded · 1,000+ figma</dd></div>
-      <div><dt>quality</dt><dd>wcag 2.1 aa audited</dd></div>
+      <div><dt>detach rate</dt><dd>under 1% across the product</dd></div>
       <div><dt>timeline</dt><dd>discovery to live in 8 months</dd></div>
       <div><dt>attempt</dt><dd>the tenth. the first that stuck</dd></div>
     </dl>
@@ -168,7 +168,7 @@ html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
     <h2 class="csa__h" data-up>how i built it, in order</h2>
     <ol class="csa__list" data-up>
       <li><b>principles first</b>atomic design as the method, and five principles for the whole product: scalable, simple, purposeful, unambiguous, empowering. plus one rule that saved months: a variation of an existing component before a new component.</li>
-      <li><b>variables in three layers</b>primitives defined and locked. global variables defined and tested across real screens. component variables only where a global one failed. tokens for colour, spacing, type and elevation, and a fluid column layout from day one.</li>
+      <li><b>variables in three layers</b>primitives defined and locked. global variables defined and tested across real screens. component variables only where a global one failed. tokens for colour, spacing, type and elevation, and a fluid column layout from day one. one primitive does more than one job: <b>salmon-07</b> is referenced by <b>text-brand-primary</b> and by <b>bg-brand-solid</b>. one raw colour, two meanings, and changing the brand is one edit rather than a search.</li>
       <li><b>skeletons before components</b>200+ iterations of the main pages to settle the taste, then skeletons for every other page. the base and advanced components were read off those skeletons, not guessed at.</li>
       <li><b>the base layer</b>buttons, inputs, loaders, tooltips: the parts that rarely change. accessibility was built in from the start and solved with global variables, so no base component needed variables of its own.</li>
       <li><b>the architecture</b>product-wide patterns, on logic similar to slack, hubspot and google chat: top navbar and main sidebar, page and section headers, cards and a robust table cell, secondary navigation panels, modals, bottomsheets, side popups, empty states and reusable illustrations.</li>
@@ -183,7 +183,7 @@ html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
 
   <section class="csa__block">
     <h2 class="csa__h" data-up>the architecture, and the hand-off</h2>
-    <p class="csa__p" data-up>token architecture in figma variables, carrying multi-theme and multi-context from the start rather than retrofitting either. <b>120+ coded components</b> against <b>1,000+ figma components</b>, with accessibility audited to wcag 2.1 aa rather than asserted. i benchmarked against atlassian, polaris, lightning and spectrum, to know exactly which of their decisions i was declining, and why.</p>
+    <p class="csa__p" data-up>token architecture in figma variables, carrying multi-theme and multi-context from the start rather than retrofitting either. <b>120+ coded components</b> against <b>1,000+ figma components</b>. i benchmarked against atlassian, polaris, lightning and spectrum, to know exactly which of their decisions i was declining, and why.</p>
     <p class="csa__p" data-up>the design took the team about ten to twelve weeks. engineering did not wait for it: they started in parallel, early, building the components and frameworks each flow would need, and the work was split so every designer owned a module.</p>
   </section>
 
@@ -221,6 +221,29 @@ html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
     <p class="csa__p" data-up>i have built ten or more design systems. most of them failed, and they failed the same way: built as a component library, handed over as a component library, quietly abandoned when the product changed shape.</p>
     <p class="csa__p" data-up>this one worked because the thinking went in before the file did, and because governance was treated as part of the design rather than as admin that happens afterwards.</p>
   </section>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>what i traded away</h2>
+    <ul class="csa__trade" data-up>
+      <li><b>a variation of an existing component always beats a new component.</b><span>simple components. the library stays small and the variants get complicated, which is a cost designers feel every day and engineers feel once.</span></li>
+      <li><b>component variables only where a global one failed.</b><span>speed early on. every global had to be tested across real screens before it could be trusted, which is slow, and it is the reason the system held later.</span></li>
+      <li><b>skeletons before components.</b><span>legibility for everyone who is not a designer. skeletons made the component decisions fast and consistent, and left stakeholders unable to picture the finished ui until much later.</span></li>
+      <li><b>ai variants built before any ai feature existed.</b><span>weeks of work that looked like over-engineering at the time, and paid for itself when ai shipped and nothing had to be retrofitted.</span></li>
+    </ul>
+  </section>
+
+  <details class="csa__eng" data-up>
+    <summary>engineering notes</summary>
+    <div class="csa__eng__in">
+      <dl>
+        <div><dt>token layers</dt><dd>primitives locked, global variables tested across real screens, component variables only where a global failed. <i>salmon-07</i> is a primitive; <i>text-brand-primary</i> and <i>bg-brand-solid</i> both point at it.</dd></div>
+        <div><dt>hand-off</dt><dd>tokens exported from figma as css and handed to engineering, against 120+ coded components.</dd></div>
+        <div><dt>how detach was measured</dt><dd>figma's own library analytics report on the design system file. under 1% is the number it gives, which is why it is the number i quote.</dd></div>
+        <div><dt>updates</dt><dd>component changes reached products as version upgrades, handled by engineering, so a product chose when to take a change rather than having it arrive.</dd></div>
+        <div><dt>lifespan</dt><dd>the system ran about a year in that form and nothing in it needed retiring in that time.</dd></div>
+      </dl>
+    </div>
+  </details>
 
   <section class="csa__take">
     <p class="csa__take-note" data-up>you have read my account. there is another one.</p>
@@ -271,7 +294,7 @@ html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
     </section>
     <section class="csb-sheet" data-tab="what he actually did">
       <div class="csb-sheet__body">
-        <h2 class="csb-h" data-up>tokens, variables, 120+ coded components, aa audited.</h2>
+        <h2 class="csb-h" data-up>tokens, variables, and 120+ coded components.</h2>
         <p class="csb-p" data-up>multi-theme and multi-context from the start. benchmarked against atlassian, polaris, lightning and spectrum. all of that is table stakes at staff level and he executed it cleanly.</p>
       </div>
     </section>
@@ -306,7 +329,7 @@ html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
         <h2 class="csb-h" data-up>the honest caveats.</h2>
         <p class="csb-p" data-up>~30% faster design-to-delivery is the softest figure in his portfolio. delivery speed has a dozen inputs and a design system is one of them. i would treat it as directionally true and not as an attribution.</p>
         <p class="csb-p" data-up>3.6 million insertions in six months is real usage, but it is a volume number. it grows with headcount and with how many screens a team draws, not with how good the system is. read it next to the detach rate, never instead of it.</p>
-        <p class="csb-note" data-up>the detach rate, the component counts and the aa audit are all checkable inside the company. those are the ones to ask about.</p>
+        <p class="csb-note" data-up>the detach rate and the component counts are both checkable inside the company. those are the ones to ask about.</p>
       </div>
     </section>
 

@@ -152,6 +152,7 @@ html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
     <p class="csa__p" data-up>q-app runs in factories of every size, from two or three stitching lines to forty, in places big enough that you take a small caddy from one department to the next. the network comes and goes. the people on the line are literate, but often in neither english nor hindi.</p>
     <p class="csa__p" data-up>and the stitching master checking each piece is using <b>both hands</b>. every decision below comes from that.</p>
     <figure class="csa__plate csa__plate--free csa__plate--device csa__plate--wide" data-up><img src="../assets/img/fashinza/traktez-all-devices.webp" alt="traktez quality on every screen a factory has: a line tv dashboard, the web analytics dashboard on a laptop, and q-app on a phone" loading="lazy" decoding="async"><figcaption>one day of quality, on the tv, the laptop and the phone</figcaption></figure>
+    <p class="csa__p" data-up>the hardware was decided before i arrived: lenovo tablets of about seven inches, the cheapest model going at the time. that is the screen the tool had to work on.</p>
   </section>
 
   <section class="csa__block">
@@ -203,6 +204,28 @@ html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
     <p class="csa__p" data-up>what i can say without a number: a defect is now recorded at the moment it is found, against the piece and the line that made it, instead of being discovered in a finished shipment.</p>
     <p class="csa__pull" data-up>the best quality tool is the one the stitching master barely notices using.</p>
   </section>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>what i traded away</h2>
+    <ul class="csa__trade" data-up>
+      <li><b>friction only where the data is worth having: nothing on a pass, a piece number on a reject or an alter.</b><span>a complete dataset. most pieces pass, and charging the operator for the common case would have bought numbers nobody could trust anyway.</span></li>
+      <li><b>three states instead of pass and fail.</b><span>a simpler control and a simpler report. most stitching defects are repairable, and a two-state control would have forced people to lie about the third.</span></li>
+      <li><b>designed for the cheapest small tablet on the floor.</b><span>everything better hardware makes possible. the tool has to run on what the factory already bought, or it does not run.</span></li>
+    </ul>
+  </section>
+
+  <details class="csa__eng" data-up>
+    <summary>engineering notes</summary>
+    <div class="csa__eng__in">
+      <dl>
+        <div><dt>the device</dt><dd>lenovo tablets of about seven inches, the cheapest model available at the time, on a stand at the station. the layout was drawn for that screen rather than scaled down to it.</dd></div>
+        <div><dt>offline first</dt><dd>every tap is stored on the device and synced when the connection returns. the line does not stop because the network did.</dd></div>
+        <div><dt>the record</dt><dd>one per piece: state, defect type and defect area, with a photo, tied to the piece number and the line. that tie is what makes the line-level dashboards possible at all.</dd></div>
+        <div><dt>the tv</dt><dd>the same data on a rotation of 15 to 20 seconds: dhu and efficiency by hour, plan against output, defects by type, then the whole floor.</dd></div>
+        <div><dt>languages</dt><dd>five, because the operators read one of them and often neither english nor hindi.</dd></div>
+      </dl>
+    </div>
+  </details>
 
   <section class="csa__take">
     <p class="csa__take-note" data-up>you have read my account. there is another one.</p>

@@ -240,6 +240,7 @@ html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
     <h2 class="csa__h" data-up>the timing was the strategy</h2>
     <p class="csa__p" data-up>i proposed this the week after design system 3.0 shipped. that was deliberate. trust in system-led design was the highest it was ever going to be, and a framework proposal is a bet on trust more than a bet on craft.</p>
     <p class="csa__p" data-up>the same document six months earlier would have read as architecture for its own sake. the work was ready before the company was. i waited for the company.</p>
+    <p class="csa__p" data-up>i proposed it and shipped it working directly with engineering. there was no pm in the loop at the architecture stage, which is why the model and the build never drifted apart, and also why the review load sat entirely on me.</p>
   </section>
 
   <section class="csa__block">
@@ -270,6 +271,35 @@ html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
     <p class="csa__p" data-up>the outcome is a negative one, which is why it is hard to sell and easy to undervalue: nothing had to be learned twice. the email builder was the proof, shipping in ten weeks as an instance rather than an invention, and the landing page builder went into development straight after it.</p>
     <p class="csa__p" data-up>this project was never about shipping a builder. it was about recognising one failure repeated across a product, solving it once, and letting the next product grow without repeating it.</p>
   </section>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>the part nobody demos: the migration</h2>
+    <p class="csa__p" data-up>a new builder with an empty library is a new product nobody asked for. the templates and content already sitting in the old builders were converted into the framework, so the first thing an account saw was its own work in the new editor.</p>
+    <p class="csa__p" data-up>that constraint shaped the model more than any interface decision did. the content format had to be able to describe what already existed as well as what people would build next, which is the real reason the tiers are drawn where they are.</p>
+  </section>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>what i traded away</h2>
+    <ul class="csa__trade" data-up>
+      <li><b>three tiers instead of one shared library.</b><span>simplicity. every shared layer either limits what people can make or adds complexity, so each tier had to earn itself, and the third exists purely to stop product-specific parts leaking into the base.</span></li>
+      <li><b>email gets fixed widths and no nesting. landing pages get fluid widths and nesting.</b><span>one grammar across all four products. email cannot carry the same layouts reliably, so the shared model bends where the medium does.</span></li>
+      <li><b>a floating properties panel, chosen over docked for smaller screens.</b><span>a great deal of build time. it took far more manual work than planned, and i knew that when i chose it.</span></li>
+      <li><b>mobile stacking deferred to hit the beta date.</b><span>the first thing beta users raised. i own the delay: it was a process failure, not a surprise.</span></li>
+    </ul>
+  </section>
+
+  <details class="csa__eng" data-up>
+    <summary>engineering notes</summary>
+    <div class="csa__eng__in">
+      <dl>
+        <div><dt>content model</dt><dd>builder content is stored as <i>json</i>. the page anatomy is the data shape: areas hold sections, sections hold columns, columns hold blocks and widgets.</dd></div>
+        <div><dt>the three tiers</dt><dd>base blocks, shared widgets, product-specific widgets. a widget is a block with its own settings. the third tier is the pressure valve that keeps the base clean.</dd></div>
+        <div><dt>locking</dt><dd>areas can be locked and their settings hidden, so a product can ship a page people edit without letting them break its structure.</dd></div>
+        <div><dt>email output</dt><dd>rendered through <i>mjml</i>, which produces the table-based html email clients need.</dd></div>
+        <div><dt>migration</dt><dd>existing templates and content from the old builders were converted into the framework.</dd></div>
+      </dl>
+    </div>
+  </details>
 
   <section class="csa__take">
     <p class="csa__take-note" data-up>you have read my account. there is another one.</p>

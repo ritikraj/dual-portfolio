@@ -141,9 +141,16 @@ html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
     </dl>
   </header>
 
+  <section class="csa__glance" data-up>
+    <div><small>the problem</small><p>brokerages are owed a share when a departed agent keeps transacting, and owners could not see it, size it or chase it.</p></div>
+    <div><small>what i did</small><p>found our own pricing was deleting the data, added a user class that costs nothing to keep, then built the report on top of a roster that was finally complete.</p></div>
+    <div><small>how it landed</small><p>about <b>30%</b> more users added to fello, and owners who started the conversation they had been avoiding.</p></div>
+  </section>
+
   <section class="csa__block">
     <h2 class="csa__h" data-up>the problem</h2>
     <p class="csa__p" data-up>when an agent leaves a brokerage and transacts with a client the brokerage sourced, the brokerage is owed a share. that is not a grey area, it is contract.</p>
+    <p class="csa__p" data-up>nobody asked for this. it came up unprompted in <b>20 to 30</b> conversations with account owners, always as a complaint about money they had given up on, never as a feature request.</p>
     <p class="csa__p" data-up>owners knew it in the abstract and could do nothing with it. they could not see which departed agents were still transacting, could not put a number on any of it, and therefore never opened the conversation.</p>
   </section>
   <section class="csa__block">
@@ -163,14 +170,25 @@ html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
     <p class="csa__p" data-up><i>suspended</i> already carries present but switched off in exactly those same tools. the vocabulary was borrowed from where the users already spend their day, not from where the product team spends theirs.</p>
   </section>
   <section class="csa__block">
+    <h2 class="csa__h" data-up>users first, then the report</h2>
+    <p class="csa__p" data-up>the order was the decision. a revenue report run on an incomplete roster returns a wrong number, and a wrong number about money does not get corrected later. it gets disbelieved, and so does everything next to it.</p>
+    <p class="csa__p" data-up>so the roster was fixed first and the report waited. <i>create user</i> absorbed the whole change with almost no new surface: the role dropdown gained one item. bulk email entry handled owners adding years of departures in one go.</p>
+  </section>
+  <section class="csa__block">
     <h2 class="csa__h" data-up>filling the roster</h2>
     <p class="csa__p" data-up>asking owners to remember everyone who left does not work. they do not remember, and the ones they do remember are the ones they are already angry about.</p>
-    <p class="csa__p" data-up>so the product suggests: mls records know who moved, and those became suggested additions with an <b>add all</b>. one owner in testing had twenty-seven entries waiting. the roster grew about <b>30%</b> off the back of it.</p>
+    <p class="csa__p" data-up>so the product suggests: mls records know who moved, and those became suggested additions with an <b>add all</b>. the roster grew about <b>30%</b> off the back of it.</p>
     <figure class="csa__plate csa__plate--free" data-up><img src="../assets/img/fello-user-default.webp" alt="fello user management: counts of active, invited and suspended users above a roster with a status on every row" loading="lazy" decoding="async"><figcaption>one roster: active, invited and suspended, each with a status</figcaption></figure>
+  </section>
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>one person is not one record</h2>
+    <p class="csa__p" data-up>mls data creates a new record every time somebody joins an agency, starts one, registers an office or renews a licence. fello's own ceo had more than <b>five</b>. one user in the shipped interface has <b>27</b>, across agent and office records at several brokerages.</p>
+    <p class="csa__p" data-up>so a new <i>mls details</i> tab inside the existing user page lists every matched record with its type, office and source. an owner can delete a wrong match by hand. matching held up and corrections were rare, but the escape hatch is the reason owners trusted the number at all: a figure you cannot argue with is a figure you do not believe.</p>
   </section>
   <section class="csa__block">
     <h2 class="csa__h" data-up>one calculation, two names</h2>
     <p class="csa__p" data-up>the same maths, run on an active agent, is <b>property intelligence</b>. run on a departed one it is <b>revenue recovery</b>. identical calculation, different meaning, so different name.</p>
+    <p class="csa__p" data-up>every user carries an editable <i>revenue recovery start date</i>, usually the suspension date, set by the owner. the product cannot know when a departure legally took effect, so it does not pretend to and asks the one person who does.</p>
     <p class="csa__p" data-up>and it is not called ai anywhere, because it is not ai. it is a join across records the company already had.</p>
     <div class="csa__plates csa__plates--pair" data-up>
       <figure class="csa__plate csa__plate--free"><img src="../assets/img/user-mls-details.webp" alt="mls details for an active agent, tagged tracking property intelligence, with 27 entries" loading="lazy" decoding="async"><figcaption>active agent · tracking property intelligence</figcaption></figure>
@@ -178,10 +196,40 @@ html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
     </div>
   </section>
   <section class="csa__block">
+    <h2 class="csa__h" data-up>the report never says you lost this much</h2>
+    <p class="csa__p" data-up>it shows comparisons instead: your deals against total listings, your sellers and your buyers against total sold, by month and by year, including history from before launch. the owner draws the conclusion, which is the only version of that conclusion they will act on.</p>
+    <p class="csa__p" data-up>and when the number looks low, a banner inside the report names the teammates who are not in fello yet and lets the owner add them right there. the report sends people back to the roster at the exact moment the roster is worth fixing.</p>
+    <p class="csa__p" data-up>total new surface for all of it: one item in a dropdown, one tab, one report page, one banner. the users screen itself never changed.</p>
+  </section>
+  <section class="csa__block">
     <h2 class="csa__h" data-up>what it does not do</h2>
     <p class="csa__p" data-up>it stops at awareness. it tells an owner what they are owed and by whom. recovering it is an offline conversation involving lawyers, and no interface is going to have that conversation for them.</p>
     <p class="csa__p" data-up>that boundary is in the product, deliberately. a feature that implied it could collect would have been a better demo and a worse product.</p>
+    <p class="csa__p" data-up>there is no per-agent drill-down yet, and an owner cannot independently audit the calculation. the question i got over and over was whether adding a former employee back would hand them access. it would not, and we answered it in the launch forum and on the ceo's own page rather than in the interface. that was a trust problem and i treated it as a ui one for too long.</p>
+    <p class="csa__p" data-up>what it moved: about <b>30%</b> more users added to fello, owner engagement up, and a handful of owners posting about it unprompted. retention barely moved. i would rather say that than round it up.</p>
   </section>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>what i traded away</h2>
+    <ul class="csa__trade" data-up>
+      <li><b>awareness, not recovery. the product stops at telling an owner what they are owed.</b><span>the collection flow, which is where the demo would have been most impressive and the product least honest.</span></li>
+      <li><b>comparisons rather than an asserted dollar figure.</b><span>the headline number. an owner who can dispute your maths stops reading, and this number is about their own money.</span></li>
+      <li><b>a user class that exists only as a record, so the roster can be complete at no seat cost.</b><span>a cleaner permissions model. suspended is a user that is deliberately not a user, and every screen that lists users had to be taught about it.</span></li>
+      <li><b>the existing users screen was left alone.</b><span>a better home for all of this. the change had to survive review and ship in two to three weeks, so it went where the owner already was.</span></li>
+    </ul>
+  </section>
+
+  <details class="csa__eng" data-up>
+    <summary>engineering notes</summary>
+    <div class="csa__eng__in">
+      <dl>
+        <div><dt>suspended</dt><dd>a user status that exists only as a record anchor. no seat, no permissions, no login, so a complete roster costs the owner nothing to keep.</dd></div>
+        <div><dt>identity</dt><dd>one person maps to many mls records: agent records, office records, one per agency or licence event. records are matched to a user, every match is visible in the <i>mls details</i> tab, and a wrong one can be deleted by hand.</dd></div>
+        <div><dt>the calculation</dt><dd>one calculation, labelled by user status: <i>property intelligence</i> for an active agent, <i>revenue recovery</i> for a suspended one. a join across records fello already held, not a model.</dd></div>
+        <div><dt>start date</dt><dd>per user, editable, owner-set, defaulting to the suspension date, because the legal date of departure is not something the product can know.</dd></div>
+      </dl>
+    </div>
+  </details>
 
   <section class="csa__take">
     <p class="csa__take-note" data-up>you have read my account. there is another one.</p>
@@ -266,7 +314,7 @@ html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
     <section class="csb-sheet" data-tab="what i cannot verify">
       <div class="csb-sheet__body">
         <h2 class="csb-h" data-up>the honest caveats.</h2>
-        <p class="csb-p" data-up>~30% roster growth is a testing figure on a small sample and he presents it as one. whether any brokerage actually recovered money is outside the product and outside his reach, which he says himself.</p>
+        <p class="csb-p" data-up>~30% roster growth is the users added to fello after launch. whether any brokerage actually recovered money is outside the product and outside his reach, which he says himself.</p>
         <p class="csb-note" data-up>a feature that stops exactly where its evidence stops is rarer than a feature that works.</p>
       </div>
     </section>

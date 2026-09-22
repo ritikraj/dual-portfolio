@@ -539,3 +539,65 @@ a{color:inherit;text-decoration:none}
 .csa__trio > *{border-right:1px solid var(--cream-faint);border-bottom:1px solid var(--cream-faint)}
 .csa__numbers{gap:0;background:none;border:0;border-top:1px solid var(--cream-faint);border-left:1px solid var(--cream-faint)}
 .csa__numbers > *{border-right:1px solid var(--cream-faint);border-bottom:1px solid var(--cream-faint)}
+
+/* ── what i traded away ──────────────────────────────────────────────────
+   Every design choice cost something. Each row names the choice, what it
+   gave up, and why that was the right side of the trade. Three to five
+   rows: a longer list reads as a changelog, not as judgement. */
+.csa__trade{
+  margin:1.6rem 0 0;padding:0;list-style:none;
+  max-width:62rem;border-top:1px solid var(--cream-faint);
+}
+.csa__trade li{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:.4rem 2.4rem;
+  padding:1.25rem 0;border-bottom:1px solid var(--cream-faint);
+}
+.csa__trade b{
+  font-weight:400;font-size:1.02rem;line-height:1.5;color:var(--cream);
+}
+.csa__trade span{
+  font-size:.92rem;line-height:1.7;color:var(--cream-dim);
+}
+.csa__trade span::before{
+  content:"gave up";display:block;margin-bottom:.25rem;
+  font-size:.56rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);opacity:.8;
+}
+
+/* ── engineering notes ───────────────────────────────────────────────────
+   Secondary on purpose: closed until someone wants it, so the narrative
+   above stays the page. <details> because it is keyboard and screen reader
+   correct without a line of javascript. */
+.csa__eng{
+  margin-top:2.6rem;max-width:62rem;
+  border:1px solid var(--cream-faint);
+}
+.csa__eng > summary{
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  padding:1rem 1.3rem;cursor:pointer;list-style:none;
+  font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);
+}
+.csa__eng > summary::-webkit-details-marker{display:none}
+.csa__eng > summary::after{
+  content:"+";font-size:1.1rem;letter-spacing:0;color:var(--gold);
+  transition:transform .4s var(--ease);
+}
+.csa__eng[open] > summary::after{transform:rotate(45deg)}
+.csa__eng > summary:hover{background:var(--gold-glow)}
+.csa__eng__in{padding:0 1.3rem 1.4rem}
+.csa__eng dl{margin:0;display:grid;gap:1px;border-top:1px solid var(--cream-faint)}
+.csa__eng dl > div{
+  display:grid;grid-template-columns:minmax(0,13rem) minmax(0,1fr);gap:.35rem 2rem;
+  padding:.95rem 0;border-bottom:1px solid var(--cream-faint);
+}
+.csa__eng dt{
+  font-size:.58rem;letter-spacing:.24em;text-transform:uppercase;color:var(--cream);
+  padding-top:.2rem;
+}
+.csa__eng dd{margin:0;font-size:.92rem;line-height:1.7;color:var(--cream-dim)}
+.csa__eng dd i{font-style:normal;color:var(--gold)}
+
+@media (max-width:760px){
+  .csa__trade li{grid-template-columns:1fr;gap:.5rem}
+  .csa__eng dl > div{grid-template-columns:1fr;gap:.3rem}
+}

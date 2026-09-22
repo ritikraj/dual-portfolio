@@ -157,7 +157,7 @@ html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
   <section class="csa__block">
     <h2 class="csa__h" data-up>what 530 signals said</h2>
     <p class="csa__p" data-up>i did not run a survey. the company was already sitting on evidence it had never read in one place: support tickets, sales notes, customer success sessions, churn interviews and product usage. over twelve months i pulled <b>530+ signals</b> out of it, across email, landing pages, forms, widgets, the contact dashboard and automation templates, and sorted them until they stopped being complaints and started being structure.</p>
-    <p class="csa__p" data-up>four structural themes came out. only one of them was about templates. and the same asks were arriving from landing pages, forms and the consumer dashboard, which meant <b>this was never only an email problem</b>.</p>
+    <p class="csa__p" data-up>what came out of it pointed away from templates. the complaint arrived as a cosmetic one, and more templates would not have answered it. the same asks were arriving from landing pages, forms and the consumer dashboard, which meant <b>this was never only an email problem</b>.</p>
     <p class="csa__pull" data-up>the brief was a better email builder. the evidence said something else.</p>
   </section>
 
@@ -179,6 +179,12 @@ html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
       <video src="../assets/img/concepts/email-builder-drag.mp4" poster="../assets/img/concepts/email-builder-drag-poster.webp" autoplay muted loop playsinline preload="metadata" aria-label="dragging a button block into an email"></video>
       <figcaption>drag a block in, and the canvas makes room for it</figcaption>
     </figure>
+  </section>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>what it is made of</h2>
+    <p class="csa__p" data-up>the editor is ours, not a licensed one. an email's content is stored as <b>json</b>, and the output is rendered through <b>mjml</b>, which produces the table-based html that email clients like outlook need. the design brief and the storage format had to agree, because a block that cannot be described in that json is a block that cannot be built.</p>
+    <p class="csa__p" data-up>and it was not a blank start. the emails and templates already sitting in the old builders were converted into the new one, so accounts arrived with their own work rather than an empty canvas.</p>
   </section>
 
   <section class="csa__block">
@@ -217,6 +223,7 @@ html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
       <div class="csa__chart-box">
         <canvas id="funnelChart" role="img" aria-label="bar chart of the send funnel. before launch: opened 10, created 9, published 3, sent 1. after launch: opened 46, created 28, published 13, sent 6."></canvas>
       </div>
+      <figcaption>relative change across the send funnel, before and after launch. the axis is relative, not a count of accounts.</figcaption>
       <!-- the numbers the chart draws. edit here, nothing else. -->
       <script type="application/json" id="funnelData">
         {
@@ -279,6 +286,29 @@ html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
     <p class="csa__pull" data-up>the best design work is not finished. it is honest about what is left.</p>
   </section>
 
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>what i traded away</h2>
+    <ul class="csa__trade" data-up>
+      <li><b>two preview devices in the switch, not five.</b><span>the tablet and the in-between widths. two devices people actually check beat five they ignore, and every extra device is another layout to keep honest.</span></li>
+      <li><b>fixed column widths and no nesting in email.</b><span>the layouts a landing page can make. email clients will not carry them reliably, and a builder that outputs something broken is worse than one that refuses.</span></li>
+      <li><b>mobile column stacking, deprioritised to hit beta.</b><span>the thing beta users raised first. we fixed it in days, but choosing it as the cut was my call and it was the wrong one.</span></li>
+      <li><b>building on mjml.</b><span>layout freedom. email layout now follows what mjml can produce, in exchange for output that survives the clients people actually read mail in.</span></li>
+    </ul>
+  </section>
+
+  <details class="csa__eng" data-up>
+    <summary>engineering notes</summary>
+    <div class="csa__eng__in">
+      <dl>
+        <div><dt>the editor</dt><dd>built in-house rather than licensed, as an instance of the builder framework: same canvas grammar, same slot model, same state rules.</dd></div>
+        <div><dt>content model</dt><dd>an email is <i>json</i>. what the designer can place and what the format can describe are the same list, deliberately.</dd></div>
+        <div><dt>output</dt><dd>rendered through <i>mjml</i>, which produces the table-based html that email clients like outlook need.</dd></div>
+        <div><dt>migration</dt><dd>emails and templates from the old builders were converted into the new builder, so existing accounts did not start from an empty canvas.</dd></div>
+        <div><dt>what is email's own</dt><dd>everything except the send. the recipient, the sender and the timing are the only parts the framework does not already answer.</dd></div>
+      </dl>
+    </div>
+  </details>
+
   <section class="csa__take">
     <p class="csa__take-note" data-up>you have read my account. there is another one.</p>
     <a class="csa__flip csa__flip--take" href="?v=b" data-up><span>read claude's take on this</span><svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg></a>
@@ -329,14 +359,14 @@ html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
     <section class="csb-sheet" data-tab="what he actually did">
       <div class="csb-sheet__body">
         <h2 class="csb-h" data-up>he spent a year counting before he drew anything.</h2>
-        <p class="csb-p" data-up>530+ signals out of support, sales and product usage, gathered over twelve months and compressed into four structural themes. then proposal to launch in ten weeks, on top of the builder framework he had already argued into existence.</p>
+        <p class="csb-p" data-up>530+ signals out of support, sales and product usage, gathered over twelve months and read as one body of evidence. then proposal to launch in ten weeks, on top of the builder framework he had already argued into existence.</p>
         <p class="csb-p" data-up>the speed at the end is entirely bought by the patience at the front. people read the ten weeks and miss the twelve months.</p>
         <p class="csb-p" data-up>he also shows the first clickable prototype, the rough one, rather than only the finished screens. same habit as the failure analysis: the unflattering evidence stays in.</p>
       </div>
     </section>
     <section class="csb-sheet" data-tab="the diagnosis">
       <div class="csb-sheet__body">
-        <h2 class="csb-h" data-up>only one of the four themes was about templates.</h2>
+        <h2 class="csb-h" data-up>the complaint was about templates. the evidence was not.</h2>
         <p class="csb-p" data-up>the presenting complaint was cosmetic. the structural finding was not. this is the move that repeats across every project in his file: <b>take the brief one level down and the real problem turns out to live somewhere the brief never looked.</b></p>
       </div>
     </section>

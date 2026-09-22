@@ -215,6 +215,28 @@ html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
     <p class="csa__pull" data-up>the app enforces the process. it cannot enforce honesty. it just makes dishonesty leave a record.</p>
   </section>
 
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>what i traded away</h2>
+    <ul class="csa__trade" data-up>
+      <li><b>a record that stands on its own, rather than a trusted inspector.</b><span>any reliance on who is holding the device. fashinza did not choose the inspectors, so the design had to make the evidence hard to argue with instead of the person.</span></li>
+      <li><b>one generated standard report instead of flexible reporting.</b><span>every custom report a merchandiser might have wanted. the 2022 ppm report proved the alternative: fifteen minutes of form filling per report, and reports that never got written.</span></li>
+      <li><b>aql sample sizes decided by the app.</b><span>inspector judgement on how much to check. the rule is the standard, so the app applies it and the argument moves to the defects rather than the sample.</span></li>
+    </ul>
+  </section>
+
+  <details class="csa__eng" data-up>
+    <summary>engineering notes</summary>
+    <div class="csa__eng__in">
+      <dl>
+        <div><dt>offline first</dt><dd>the audit is captured on the device and synced when the connection returns. a factory floor is not a place with reliable network, so the app never waits for one.</dd></div>
+        <div><dt>no write conflicts</dt><dd>one inspection, one inspector. inspected quantities are physical, so whoever is recording them is standing there. concurrent editing of a single inspection was blocked in the product, including in testing, rather than resolved after the fact.</dd></div>
+        <div><dt>aql</dt><dd>built in: sample size and the permitted count of minor, major and critical defects come from the standard, not from the person.</dd></div>
+        <div><dt>the report</dt><dd>finishing an inspection generates the standard pdf, and that report closes the production plan step. the mobile app is the source of truth for the web tool, not a companion to it.</dd></div>
+        <div><dt>languages</dt><dd>five: english, hindi, bengali, kannada, tamil.</dd></div>
+      </dl>
+    </div>
+  </details>
+
   <section class="csa__take">
     <p class="csa__take-note" data-up>you have read my account. there is another one.</p>
     <a class="csa__flip csa__flip--take" href="?v=b" data-up><span>read claude's take on this</span><svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg></a>
