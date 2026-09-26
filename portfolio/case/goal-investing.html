@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="../assets/js/analytics.js"></script>
+<title>goal-based investing · ritik raj</title>
+<meta name="description" content="how ritik raj designed a first investing app around life goals instead of market jargon.">
+<!-- icon and link preview. temporary artwork: replace the files in
+     assets/meta/ (same names) and nothing else needs to change. og:url and
+     og:image must be absolute, so change SITE below if the domain changes. -->
+<link rel="icon" href="../assets/meta/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/meta/favicon-180.png">
+<meta name="theme-color" content="#07100b">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ritik raj">
+<meta property="og:title" content="goal-based investing · ritik raj">
+<meta property="og:description" content="how ritik raj designed a first investing app around life goals instead of market jargon.">
+<meta property="og:url" content="https://ritikraj-website.web.app/case/goal-investing.html">
+<meta property="og:image" content="https://ritikraj-website.web.app/assets/meta/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="two portfolios. pick a side.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="goal-based investing · ritik raj">
+<meta name="twitter:description" content="how ritik raj designed a first investing app around life goals instead of market jargon.">
+<meta name="twitter:image" content="https://ritikraj-website.web.app/assets/meta/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script>
+/* which voice is this page in? ?v=a is ritik's own, ?v=b is claude's read.
+   decided here, before anything paints, so the right stylesheet wins and the
+   right fonts are the only ones fetched. */
+(function () {
+  var v = (location.search.match(/[?&]v=(a|b)/) || [])[1] || 'a';
+  var d = document.documentElement;
+  d.className = 'v-' + v;
+  if (v === 'a') {
+    /* same palettes as the portfolio, remembered across pages. an unset mode
+       follows the operating system, exactly as it does on the portfolio. */
+    try {
+      var m = localStorage.getItem('rr-mode');
+      if (!m) m = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      d.setAttribute('data-theme', 'green');
+      d.setAttribute('data-mode',  m);
+    } catch (e) {}
+  }
+  if (v === 'b') {
+    /* side b's one preference, shared with the portfolio */
+    try {
+      var pb = localStorage.getItem('rr-pb-mode');
+      if (!pb) pb = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      d.setAttribute('data-pb', pb);
+    } catch (e) {}
+  }
+  var font = document.createElement('link');
+  font.rel = 'stylesheet';
+  font.href = v === 'a'
+    ? 'https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap'
+    : 'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=IBM+Plex+Mono:wght@300;400;500&display=swap';
+  document.head.appendChild(font);
+})();
+</script>
+
+<!-- both voices load: each is scoped to html.v-a / html.v-b, and a parser
+     inserted <link> blocks the first paint the way an injected one does not -->
+<link rel="stylesheet" href="../assets/css/theme.css">
+<link rel="stylesheet" href="../assets/css/case-a.css">
+<link rel="stylesheet" href="../assets/css/case-b.css">
+
+<style>
+/* ══ FIRST-PAINT VEIL ══════════════════════════════════════════════════
+   Inline on purpose. An external stylesheet, however early, can still lose
+   a frame to the parser — and one frame of unstyled html is exactly the
+   thing an expert eye catches. This is styled before anything is fetched,
+   so the first thing ever painted is the veil. Everything else loads,
+   swaps fonts and mounts behind it. app.js / case.js lift it when ready.
+   ═════════════════════════════════════════════════════════════════════ */
+#veil{
+  position:fixed; inset:0; z-index:999;
+  display:grid; place-items:center;
+  background:var(--ink,#07100b);
+  transform:translateY(0);
+  will-change:transform;
+}
+html.v-b #veil, html.to-b #veil{background:var(--bone,#e9e7e0)}
+#veil b{
+  display:block; width:4.5rem; height:1px;
+  background:var(--cream,#e6f1e8); opacity:0;
+  transform:scaleX(.15); transform-origin:left;
+  animation:veilWait 1.6s cubic-bezier(.16,1,.3,1) .22s infinite;
+}
+html.v-b #veil b, html.to-b #veil b{background:var(--ink,#121110)}
+@keyframes veilWait{
+  0%{opacity:0;transform:scaleX(.15)}
+  30%{opacity:.45;transform:scaleX(1)}
+  65%{opacity:.45;transform:scaleX(1)}
+  100%{opacity:0;transform:scaleX(.15)}
+}
+#veil.is-up   {transform:translateY(-100%);transition:transform .74s cubic-bezier(.76,0,.24,1);animation:none}
+#veil.is-down {transform:translateY(100%); transition:none;animation:none}
+#veil.is-shut {transform:translateY(0);    transition:transform .62s cubic-bezier(.76,0,.24,1);animation:none}
+/* backstop: if the script never runs, the veil still gets out of the way
+   rather than leaving a reader staring at a blank screen forever */
+#veil{animation:veilGiveUp .7s cubic-bezier(.76,0,.24,1) 6s forwards}
+@keyframes veilGiveUp{to{transform:translateY(-100%);visibility:hidden}}
+@media (prefers-reduced-motion:reduce){
+  #veil b{animation:none}
+  #veil.is-up,#veil.is-shut{transition-duration:1ms}
+}
+</style>
+</head>
+<body>
+
+<div id="veil" aria-hidden="true"><b></b></div>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     VOICE A — ritik's own account. shown at ?v=a (and by default).
+     ══════════════════════════════════════════════════════════════════ -->
+<article class="csa">
+
+  <div class="csa__rule"></div>
+  <div class="csa__bar">
+    <a class="csa__back" href="../index.html#a">
+      <svg viewBox="0 0 28 8" aria-hidden="true"><path d="M28 4H2M6 1L2 4l4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg>
+      <span>portfolio</span>
+    </a>
+    <span class="csa__where">goal-based investing</span>
+  </div>
+
+  <header class="csa__hero">
+    <ul class="csa__tags" data-up><li class="is-name">goal-based investing</li><li>consumer fintech</li><li>mobile app</li></ul>
+    <h1 class="csa__title" data-up>the <em>advice only the top 1% get</em> problem</h1>
+    <p class="csa__stand" data-up>good financial planning has always belonged to people who can pay a wealth manager. this was a first investing app built to hand that advice to everyone else, through the goals people already have instead of the jargon the market speaks.</p>
+    <dl class="csa__meta" data-up>
+      <div><dt>role</dt><dd>lead product designer · ux, ui and research</dd></div>
+      <div><dt>timeline</dt><dd>4 months</dd></div>
+      <div><dt>platform</dt><dd>mobile app, version one</dd></div>
+      <div><dt>stage</dt><dd>concept to shipped · version one</dd></div>
+      <div><dt>built on</dt><dd>low-cost, multi-asset etfs</dd></div>
+    </dl>
+  </header>
+
+  <section class="csa__glance" data-up>
+    <div><small>the problem</small><p>first-time investors think in life events. the market talks in alpha, expense ratios and market cap.</p></div>
+    <div><small>what i did</small><p>designed version one end to end, research to high-fidelity ui, around goals rather than products.</p></div>
+    <div><small>how it landed</small><p>designed in <b>4 months</b> and shipped as version one.</p></div>
+  </section>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>the context</h2>
+    <p class="csa__p" data-up>financial planning is quietly broken for most people. the top 1% have a dedicated wealth manager. everyone else is left to work it out across unstructured savings, high-interest emis and stock market jargon that seems designed to keep them out.</p>
+    <p class="csa__p" data-up>the platform was conceived to close that gap: automated, unbiased financial planning, built on low-cost, multi-asset etfs rather than on a salesperson's commission.</p>
+  </section>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>the problem</h2>
+    <p class="csa__p" data-up>first-time investors do not think in alpha, expense ratios or market cap. they think in life events: buying a car, paying for a wedding, building a cushion for the month something goes wrong.</p>
+    <p class="csa__p" data-up>so the job for version one was translation. take the mechanical complexity of etf investing and package it into a journey built on goals, one that feels <b>achievable rather than intimidating</b>.</p>
+    <p class="csa__pull" data-up>nobody has an investment problem. people have a wedding in two years.</p>
+  </section>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>the architecture under the screens</h2>
+    <p class="csa__p" data-up>the foundation was structural before it was visual. these are long-term decisions people are making with their own money, so the app was built on constraints that could carry them, not on screens that happened to scale.</p>
+    <ol class="csa__list" data-up>
+      <li><b>a goal becomes a portfolio</b>a subjective input, like i need ₹5 lakh for a trip in three years, translates systematically into an optimised, risk-adjusted etf portfolio. the whole product depends on that mapping holding.</li>
+      <li><b>data collection as a conversation</b>regulatory and risk data is notoriously high friction to collect. i broke the information architecture down so each step asks for less at once, while still capturing data precise enough for the recommendation engine behind it.</li>
+      <li><b>a system built for what comes next</b>market shifts, portfolio rebalancing and new goal types were all coming. the design system had to absorb them without breaking the primary hierarchy of the screens.</li>
+    </ol>
+    <figure class="csa__todo" data-up>
+      <div class="csa__todo-box" style="--r:16/10"><span>ui library · the design system behind version one</span><code>goal-investing/ui-library.png</code></div>
+      <figcaption>the ui library the whole app is assembled from.</figcaption>
+    </figure>
+  </section>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>onboarding: habits before products</h2>
+    <p class="csa__p" data-up>people are not introduced to the platform by choosing stocks. they start by describing their current financial habits.</p>
+    <p class="csa__p" data-up>the mandatory parts, risk assessment and financial profiling, are where people usually leave. so they are broken into small, approachable steps, each one easy to answer, rather than one long form that asks for everything at the start.</p>
+    <div class="csa__plates csa__plates--phones" data-up>
+      <figure class="csa__todo">
+        <div class="csa__todo-box" style="--r:9/19.5"><span>onboarding · 1</span><code>goal-investing/onboarding-1.png</code></div>
+        <figcaption>starting with habits, not with a product.</figcaption>
+      </figure>
+      <figure class="csa__todo">
+        <div class="csa__todo-box" style="--r:9/19.5"><span>onboarding · 2</span><code>goal-investing/onboarding-2.png</code></div>
+        <figcaption>the risk assessment, one small question at a time.</figcaption>
+      </figure>
+      <figure class="csa__todo">
+        <div class="csa__todo-box" style="--r:9/19.5"><span>onboarding · 3</span><code>goal-investing/onboarding-3.png</code></div>
+        <figcaption>financial profiling, broken into steps.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>the dashboard: an anchor, not a ticker</h2>
+    <p class="csa__p" data-up>the dashboard is the financial anchor, the screen people come back to. so it does not flash red and green market tickers, which mostly produce anxiety. it leads with overall portfolio health and progress toward each goal.</p>
+    <p class="csa__p" data-up>tracking stays free of jargon, and the flat-fee structure is broken down in plain view. trust was the thing being designed here: the comparison people carry in their heads is a commission-based advisor, and a visible, flat fee is the answer to it.</p>
+    <div class="csa__plates csa__plates--phones" data-up>
+      <figure class="csa__todo">
+        <div class="csa__todo-box" style="--r:9/19.5"><span>dashboard · home</span><code>goal-investing/dashboard-home.png</code></div>
+        <figcaption>portfolio health first, not market movement.</figcaption>
+      </figure>
+      <figure class="csa__todo">
+        <div class="csa__todo-box" style="--r:9/19.5"><span>dashboard · goal progress</span><code>goal-investing/dashboard-goals.png</code></div>
+        <figcaption>progress toward each goal, in plain language.</figcaption>
+      </figure>
+      <figure class="csa__todo">
+        <div class="csa__todo-box" style="--r:9/19.5"><span>dashboard · fees</span><code>goal-investing/dashboard-fees.png</code></div>
+        <figcaption>the flat fee, broken down where people can see it.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>goals, short and long</h2>
+    <p class="csa__p" data-up>the ui adapts to the timeline of the goal, because the right investment for a holiday next year is not the right one for a house in ten.</p>
+    <ul class="csa__ticks" data-up>
+      <li><b>short-term goals</b> a near target, like a holiday in eighteen months, is guided toward lower-risk, highly liquid etf allocations.</li>
+      <li><b>long-term goals</b> a distant milestone, like a house downpayment in ten years, is guided toward growth-oriented etfs, so compounding stops being an abstract idea and becomes something people can act on today.</li>
+    </ul>
+    <div class="csa__plates csa__plates--phones" data-up>
+      <figure class="csa__todo">
+        <div class="csa__todo-box" style="--r:9/19.5"><span>goal · short term</span><code>goal-investing/goal-short-1.png</code></div>
+        <figcaption>a short-term goal: lower risk, easy to get to.</figcaption>
+      </figure>
+      <figure class="csa__todo">
+        <div class="csa__todo-box" style="--r:9/19.5"><span>goal · short term</span><code>goal-investing/goal-short-2.png</code></div>
+        <figcaption>the allocation behind a near target.</figcaption>
+      </figure>
+      <figure class="csa__todo">
+        <div class="csa__todo-box" style="--r:9/19.5"><span>goal · long term</span><code>goal-investing/goal-long-1.png</code></div>
+        <figcaption>a long-term goal: built for compounding.</figcaption>
+      </figure>
+    </div>
+    <div class="csa__plates csa__plates--phones" data-up>
+      <figure class="csa__todo">
+        <div class="csa__todo-box" style="--r:9/19.5"><span>goal · long term</span><code>goal-investing/goal-long-2.png</code></div>
+        <figcaption>what ten years does to the same monthly amount.</figcaption>
+      </figure>
+      <figure class="csa__todo">
+        <div class="csa__todo-box" style="--r:9/19.5"><span>goal · types</span><code>goal-investing/goal-types.png</code></div>
+        <figcaption>the goals people can start from.</figcaption>
+      </figure>
+      <figure class="csa__todo">
+        <div class="csa__todo-box" style="--r:9/19.5"><span>goal · creation</span><code>goal-investing/goal-create.png</code></div>
+        <figcaption>creating a goal from a life event.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>explaining without the jargon</h2>
+    <p class="csa__p" data-up>alongside the core journey sit the informative screens, the ones that explain what is happening to someone's money without assuming they already know the vocabulary.</p>
+    <div class="csa__plates csa__plates--phones" data-up>
+      <figure class="csa__todo">
+        <div class="csa__todo-box" style="--r:9/19.5"><span>informative · 1</span><code>goal-investing/info-1.png</code></div>
+        <figcaption>caption to write: what this screen explains.</figcaption>
+      </figure>
+      <figure class="csa__todo">
+        <div class="csa__todo-box" style="--r:9/19.5"><span>informative · 2</span><code>goal-investing/info-2.png</code></div>
+        <figcaption>caption to write: what this screen explains.</figcaption>
+      </figure>
+      <figure class="csa__todo">
+        <div class="csa__todo-box" style="--r:9/19.5"><span>informative · 3</span><code>goal-investing/info-3.png</code></div>
+        <figcaption>caption to write: what this screen explains.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="csa__block">
+    <h2 class="csa__h" data-up>how it landed</h2>
+    <p class="csa__p" data-up>version one went from concept to high-fidelity ui in <b>four months</b>, researched, mapped and designed from the ground up. it set down the platform's core promise, that expert financial advice should be available to everyone, and kept the person focused on their own milestones rather than on the market.</p>
+    <p class="csa__p" data-up>version one shipped. the product has moved through many versions since and looks nothing like this today, so what you are seeing is the app as it launched, not as it is now. there are no usage numbers on this page.</p>
+    <p class="csa__p" data-up>what version one set down was the structure: goals that translate into portfolios, data collection that does not scare people off, and a system with room for rebalancing and new goal types.</p>
+  </section>
+
+  <section class="csa__take">
+    <p class="csa__take-note" data-up>you have read my account. there is another one.</p>
+    <a class="csa__flip csa__flip--take" href="?v=b" data-up><span>read claude's take on this</span><svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg></a>
+  </section>
+
+  <footer class="jr-foot">
+    <a class="jr-next" href="email-builder.html?v=a"><small>next case study</small><span class="jr-next__name">email builder <svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h26M22 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg></span></a>
+    <nav class="jr-foot__links" aria-label="elsewhere">
+      <a href="https://dribbble.com/ritik-raj" target="_blank" rel="noopener">dribbble ↗</a>
+      <a href="https://medium.com/@ritikraj559" target="_blank" rel="noopener">medium ↗</a>
+      <a href="https://www.linkedin.com/in/ritik-raj/" target="_blank" rel="noopener">linkedin ↗</a>
+      <a href="mailto:ritikraj559@gmail.com">email</a>
+    </nav>
+  </footer>
+
+</article>
+
+
+<!-- ═════════════════════════════════════════════════════════════════
+     VOICE B — claude's read. shown at ?v=b.
+     ═════════════════════════════════════════════════════════════════ -->
+<article class="csb">
+
+  <div class="csb__rule"></div>
+  <div class="csb__bar">
+    <a class="csb__back" href="../index.html#b"><span>←</span><span>the read</span></a>
+    <p class="csb__stamp">the read<i>/</i>goal-based investing<i>/</i>by claude</p>
+    <a class="csb__flip" href="?v=a">ritik's version ↗</a>
+  </div>
+
+  <div class="csb__stack">
+    <section class="csb-sheet" data-tab="the case">
+      <div class="csb-sheet__body">
+        <p class="csb-kicker" data-up>observation 07</p>
+        <h1 class="csb-h csb-h--hero" data-up>the one consumer case on this site, and it has no numbers.</h1>
+        <p class="csb-p" data-up>a first investing app, designed in four months and shipped as version one. it is the only place on this site where the user is a member of the public rather than an employee, and that alone makes it worth reading.</p>
+        <p data-up style="margin-top:1.6rem"><span class="csb-verdict">consumer · shipped, not measured</span></p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="the brief">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>make investing feel achievable.</h2>
+        <p class="csb-p" data-up>for people who have never invested and are put off by the vocabulary. the stated product is automated planning on low-cost etfs. the real product is getting a nervous first-timer through a regulatory risk questionnaire without losing them.</p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="what he actually did">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>goals first, products second.</h2>
+        <p class="csb-p" data-up>onboarding that starts from habits, not stocks. a dashboard that shows progress toward goals instead of market movement. goal creation that changes its advice with the timeline. and underneath it, a mapping from a life event to a risk-adjusted portfolio.</p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="the diagnosis">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>the same move, on a different kind of user.</h2>
+        <p class="csb-p" data-up>nobody has an investment problem. people have a wedding in two years. that is the move that runs through his b2b work, taking the brief one level down, applied to a consumer for once.</p>
+        <p class="csb-p" data-up>and the fee decision is the quiet one worth noticing: showing a flat fee in plain view is a trust argument made against a commission advisor the user is picturing, not against a competitor on a feature list.</p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="what it tells me">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>he can design for the public.</h2>
+        <p class="csb-p" data-up>the strongest objection to this portfolio is that it is all b2b tools. this answers part of it: a consumer mobile product, a regulated domain, and a user who is anxious rather than busy.</p>
+        <p class="csb-p" data-up>it answers the design half. it does not answer the outcome half, because there is no outcome on the page.</p>
+      </div>
+    </section>
+    <section class="csb-sheet" data-tab="what i cannot verify">
+      <div class="csb-sheet__body">
+        <h2 class="csb-h" data-up>the honest caveats.</h2>
+        <p class="csb-p" data-up>there are no usage, conversion or retention numbers. version one shipped and the product has been rebuilt many times since, so these screens are history rather than the current app. he says so rather than presenting them as live.</p>
+        <p class="csb-p" data-up>the goal-to-portfolio mapping and the recommendation engine are described, not shown. the architecture claim is that the design was built on constraints that could carry it. that is plausible and it is not demonstrated here.</p>
+        <p class="csb-note" data-up>ask what happened to onboarding drop-off once real people went through the risk questions, and how much of this structure survived the rebuilds.</p>
+      </div>
+    </section>
+  </div>
+
+  <footer class="csb__foot">
+    <div><small>next observation</small><br><a href="email-builder.html?v=b">email builder ↗</a></div>
+    <small>assessment generated from his briefs and his own account · not approved by the subject</small>
+  </footer>
+
+</article>
+
+<script src="../assets/js/case.js"></script>
+</body>
+</html>
