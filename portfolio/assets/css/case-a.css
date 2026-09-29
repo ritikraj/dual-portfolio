@@ -569,7 +569,11 @@ a{color:inherit;text-decoration:none}
    above stays the page. <details> because it is keyboard and screen reader
    correct without a line of javascript. */
 .csa__eng{
-  margin-top:2.6rem;max-width:62rem;
+  /* it sits between blocks rather than inside one, so it takes the same
+     side inset a .csa__block gets from its padding. without this it ran
+     flush to the edge of the window while everything above it was inset. */
+  margin:3rem var(--pad) 0;
+  max-width:62rem;
   border:1px solid var(--cream-faint);
 }
 .csa__eng > summary{
