@@ -75,3 +75,6 @@ node_modules/
 # private working notes about ritik and his work. never publish.
 briefs/
 notes/
+
+# personal claude code permissions for this machine. not for the public repo.
+.claude/settings.local.json
