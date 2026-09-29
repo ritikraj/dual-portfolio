@@ -605,3 +605,70 @@ a{color:inherit;text-decoration:none}
   .csa__trade li{grid-template-columns:1fr;gap:.5rem}
   .csa__eng dl > div{grid-template-columns:1fr;gap:.3rem}
 }
+
+/* ── reveal, tied to the scroll ──────────────────────────────────────────
+   the class-based reveal above fires once per whole container, so a list
+   of eight rows or a grid of numbers used to arrive as one block. where the
+   browser can link an animation to scroll position, every row, cell,
+   paragraph and picture fades up as it enters instead, driven by the
+   scrollbar rather than a timer: scroll back and it reverses, stop and it
+   stops. no javascript runs for this.
+   browsers without view timelines keep the one-shot reveal above, and
+   reduced motion gets nothing at all. */
+@keyframes csaRise{
+  from{opacity:0;transform:translate3d(0,1.6rem,0)}
+  to  {opacity:1;transform:none}
+}
+@supports (animation-timeline: view()){
+  @media (prefers-reduced-motion:no-preference){
+
+    /* hand over from the class to the scroll */
+    .csa [data-up]{opacity:1;transform:none;transition:none}
+
+    .csa [data-up],
+    .csa__list > li,
+    .csa__trade > li,
+    .csa__ticks > li,
+    .csa__flow li,
+    .csa__process > li,
+    .csa__numbers > *,
+    .csa__meta > *,
+    .csa__glance > *,
+    .csa__trio > *,
+    .csa__pairs > *,
+    .csa__eng dl > div{
+      animation:csaRise linear both;
+      animation-timeline:view();
+      /* measured against the viewport, not the element, so a tall row and a
+         one-line row fade over roughly the same stretch of scroll */
+      animation-range:entry 0% cover 22%;
+    }
+
+    /* pictures are tall: finish early, or the top of a screenshot would
+       still be faint while the reader is already looking at it. scoped
+       under .csa so it outranks the [data-up] rule a figure may also carry */
+    .csa .csa__plate,
+    .csa .csa__plates > *,
+    .csa .csa__embed,
+    .csa .csa__chart{
+      animation:csaRise linear both;
+      animation-timeline:view();
+      animation-range:entry 0% cover 18%;
+    }
+
+    /* a container whose rows animate does not also animate itself,
+       or every row would fade twice */
+    .csa__list[data-up],
+    .csa__trade[data-up],
+    .csa__ticks[data-up],
+    .csa__flow[data-up],
+    .csa__process[data-up],
+    .csa__numbers[data-up],
+    .csa__meta[data-up],
+    .csa__glance[data-up],
+    .csa__trio[data-up],
+    .csa__pairs[data-up],
+    .csa__plates[data-up],
+    .csa__eng[data-up]{animation:none}
+  }
+}
