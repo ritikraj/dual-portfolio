@@ -21,12 +21,12 @@
     var n = parseInt(h, 16);
     return 'rgba(' + (n >> 16 & 255) + ',' + (n >> 8 & 255) + ',' + (n & 255) + ',' + a + ')';
   }
-  var accent = token('--gold', '#43e08a');
+  var accent = token('--gold', '#4d9fff');
   var shades = [1, .66, .42, .24].map(function (a) { return alpha(accent, a); });
   var ink    = token('--cream', '#e6f1e8');
   var dim    = token('--cream-dim', 'rgba(230,241,232,.58)');
   var faint  = token('--cream-faint', 'rgba(230,241,232,.15)');
-  var paper  = token('--ink-2', '#0c1711');
+  var paper  = token('--ink-2', '#0a1220');
 
   Chart.defaults.font.family = '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
   Chart.defaults.font.weight = 300;

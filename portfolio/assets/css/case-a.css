@@ -23,11 +23,7 @@ html.v-a body{
 html.v-a .csb{display:none}
 h1,h2,h3,p,dl,dd,figure,ul,ol{margin:0}
 a{color:inherit;text-decoration:none}
-/* the selected text keeps its own colour. it used to be set to var(--ink),
-   which is the page colour in both themes, so the words only stayed legible
-   while the accent band painted behind them: click away and chrome greys
-   that band out, leaving text the same colour as the paper. */
-::selection{background:var(--gold-soft);color:var(--cream)}
+/* selection colours live in theme.css, as literal values: see the note there */
 
 /* ── top bar ─────────────────────────────────────────────────────────── */
 .csa__bar{

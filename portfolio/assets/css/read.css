@@ -66,7 +66,7 @@ html[data-pb="dark"] .curtain--light{background:#15141a}
 }
 .pb.is-live{opacity:1;visibility:visible;transition:opacity 560ms ease, visibility 0s}
 .pb *{box-sizing:border-box}
-.pb ::selection{background:var(--pb-mark);color:var(--pb-mark-ink)}
+[data-theme] .pb ::selection,[data-theme][data-mode] .pb ::selection{background:#ffdd3c;color:#121110}
 
 /* the graph-paper ground, parallaxed against the strip */
 .pb__grid{

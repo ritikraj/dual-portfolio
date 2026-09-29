@@ -53,11 +53,7 @@ ul{padding:0;list-style:none}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 em{font-style:italic}
-/* the selected text keeps its own colour. it used to be set to var(--ink),
-   which is the page colour in both themes, so the words only stayed legible
-   while the accent band painted behind them: click away and chrome greys
-   that band out, leaving text the same colour as the paper. */
-::selection{background:var(--gold-soft);color:var(--cream)}
+/* selection colours live in theme.css, as literal values: see the note there */
 
 /* ── 02 · HERO ──────────────────────────────────────────────────────────── */
 .hero{
@@ -270,7 +266,7 @@ em{font-style:italic}
 }
 /* it rides the seam. hovering a side grows that panel to 65%, so the blade
    travels with the edge instead of being left behind at half-way. */
-.hero.hot-a .saber{left:65%; --saber:#2bff6d}    /* a · the light side */
+.hero.hot-a .saber{left:65%; --saber:#2f8cff}    /* a · the light side, blue */
 .hero.hot-b .saber{left:35%; --saber:#ff2a1c}    /* b · the dark side  */
 .hero.pick-a .saber{left:100%}
 .hero.pick-b .saber{left:0}

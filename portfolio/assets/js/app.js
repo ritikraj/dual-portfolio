@@ -662,6 +662,7 @@
      add a palette there, add a line here, done.
      ------------------------------------------------------------------- */
   var PALETTES = [
+    { id: 'blue',    dot: '#4d9fff' },
     { id: 'green',   dot: '#43e08a' },
     { id: 'red',     dot: '#ff5147' },
     { id: 'orchid',  dot: '#b283ee' },
@@ -674,7 +675,7 @@
     /* portfolio a is the light side, and the light side is green. with this
        set, the stored palette is ignored and the picker is hidden in css.
        set it to null to hand the choice back to the visitor. */
-    FIXED: 'green',
+    FIXED: 'blue',
 
     init: function () {
       var self = this, saved = store('rr-mode');

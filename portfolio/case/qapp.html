@@ -11,7 +11,7 @@
      og:image must be absolute, so change SITE below if the domain changes. -->
 <link rel="icon" href="../assets/meta/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="../assets/meta/favicon-180.png">
-<meta name="theme-color" content="#07100b">
+<meta name="theme-color" content="#060b14">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ritik raj">
 <meta property="og:title" content="q-app · ritik raj">
@@ -41,7 +41,7 @@
     try {
       var m = localStorage.getItem('rr-mode');
       if (!m) m = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-      d.setAttribute('data-theme', 'green');
+      d.setAttribute('data-theme', 'blue');
       d.setAttribute('data-mode',  m);
     } catch (e) {}
   }
@@ -79,7 +79,7 @@
 #veil{
   position:fixed; inset:0; z-index:999;
   display:grid; place-items:center;
-  background:var(--ink,#07100b);
+  background:var(--ink,#060b14);
   transform:translateY(0);
   will-change:transform;
 }
