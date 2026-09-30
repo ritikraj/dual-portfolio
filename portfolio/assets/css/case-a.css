@@ -635,5 +635,18 @@ a{color:inherit;text-decoration:none}
          short one both finish before they reach the reading line */
       animation-range:entry 0% entry 50%;
     }
+
+    /* the journey: each entry (date, dot and card) and each company header
+       is one unit. entries are short, so their timing is measured against
+       the screen rather than the entry itself: a short entry would otherwise
+       finish at the bottom edge where nobody sees it. the dot rides with its
+       entry straight down the timeline, so it never leaves the line. */
+    .csa .jr-item,
+    .csa .jr-group,
+    .csa .jr-legend{
+      animation:csaRise linear both;
+      animation-timeline:view();
+      animation-range:entry 0% cover 35%;
+    }
   }
 }
