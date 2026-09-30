@@ -603,86 +603,37 @@ a{color:inherit;text-decoration:none}
 }
 
 /* ── reveal, tied to the scroll ──────────────────────────────────────────
-   the class-based reveal above fires once per whole container, so a list
-   of eight rows or a grid of numbers used to arrive as one block. where the
-   browser can link an animation to scroll position, every row, cell,
-   paragraph and picture fades up as it enters instead, driven by the
-   scrollbar rather than a timer: scroll back and it reverses, stop and it
-   stops. no javascript runs for this.
-   browsers without view timelines keep the one-shot reveal above, and
-   reduced motion gets nothing at all. */
-/* the first version finished while a line was still in the bottom quarter
-   of the screen and only moved 1.6rem, so nobody could see it happen. the
-   fade now runs across the lower half of the screen, where the eye actually
-   is, and travels far enough to register. */
+   whole units only: a section (heading, its divider and everything under it),
+   the summary card, the engineering notes. an earlier version animated every
+   row, cell and paragraph separately, so a heading and the text under it
+   moved on different curves and slid across the divider between them, and
+   cells moved apart from the borders around them. nothing inside a unit
+   moves on its own now; the unit rises as one piece.
+
+   driven by the scrollbar, not a timer: it completes by the time a section's
+   top reaches about the middle of the screen, scroll back and it reverses.
+   no javascript. browsers without view timelines keep the one-shot reveal
+   above, reduced motion gets none, and an inactive timeline leaves
+   everything at full opacity rather than hidden. */
 @keyframes csaRise{
-  from{opacity:0;transform:translate3d(0,3.2rem,0)}
-  60% {opacity:.85}
-  to  {opacity:1;transform:none}
-}
-@keyframes csaRiseHead{
-  from{opacity:0;transform:translate3d(0,2.6rem,0);filter:blur(6px)}
-  to  {opacity:1;transform:none;filter:none}
-}
-@keyframes csaRisePic{
-  from{opacity:0;transform:translate3d(0,3rem,0) scale(.95)}
+  from{opacity:0;transform:translate3d(0,3rem,0)}
   to  {opacity:1;transform:none}
 }
 @supports (animation-timeline: view()){
   @media (prefers-reduced-motion:no-preference){
 
-    /* hand over from the class to the scroll */
-    .csa [data-up]{opacity:1;transform:none;transition:none}
+    /* children never animate: the class reveal is switched off inside */
+    .csa [data-up]{opacity:1;transform:none;transition:none;animation:none}
 
-    .csa [data-up],
-    .csa__list > li,
-    .csa__trade > li,
-    .csa__ticks > li,
-    .csa__flow li,
-    .csa__process > li,
-    .csa__numbers > *,
-    .csa__meta > *,
-    .csa__glance > *,
-    .csa__trio > *,
-    .csa__pairs > *,
-    .csa__eng dl > div{
+    .csa > .csa__block,
+    .csa > .csa__glance,
+    .csa > .csa__eng,
+    .csa > .csa__take{
       animation:csaRise linear both;
       animation-timeline:view();
-      /* measured against the viewport, not the element, so a tall row and a
-         one-line row fade over roughly the same stretch of scroll. it starts
-         as a line enters at the bottom and completes near the middle */
-      animation-range:entry 20% cover 45%;
+      /* entry is capped at the viewport's height, so a tall section and a
+         short one both finish before they reach the reading line */
+      animation-range:entry 0% entry 50%;
     }
-
-    /* headings come out of a blur, so the section change reads as one */
-    .csa .csa__h,
-    .csa .csa__pull{animation-name:csaRiseHead}
-
-    /* pictures are tall: finish early, or the top of a screenshot would
-       still be faint while the reader is already looking at it. scoped
-       under .csa so it outranks the [data-up] rule a figure may also carry */
-    .csa .csa__plate,
-    .csa .csa__plates > *,
-    .csa .csa__embed,
-    .csa .csa__chart{
-      animation:csaRisePic linear both;
-      animation-timeline:view();
-      animation-range:entry 0% cover 32%;
-    }
-
-    /* a container whose rows animate does not also animate itself,
-       or every row would fade twice */
-    .csa__list[data-up],
-    .csa__trade[data-up],
-    .csa__ticks[data-up],
-    .csa__flow[data-up],
-    .csa__process[data-up],
-    .csa__numbers[data-up],
-    .csa__meta[data-up],
-    .csa__glance[data-up],
-    .csa__trio[data-up],
-    .csa__pairs[data-up],
-    .csa__plates[data-up],
-    .csa__eng[data-up]{animation:none}
   }
 }
