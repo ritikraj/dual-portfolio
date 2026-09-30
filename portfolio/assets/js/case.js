@@ -49,6 +49,30 @@
     ups.forEach(function (el) { el.classList.add('is-in'); });
   }
 
+  /* ── whole units arrive, on a clock ───────────────────────────────────────
+     sections, the summary card, the engineering notes, journey entries and
+     headers. each one waits 300ms after it crosses into view, then fades up
+     (the timing is in case-a.css). units that arrive in the same moment are
+     staggered so they do not land as one block. */
+  var units = [].slice.call(document.querySelectorAll(
+    '.csa > .csa__block, .csa > .csa__glance, .csa > .csa__eng, .csa > .csa__take, ' +
+    '.csa .jr-item, .csa .jr-group, .csa .jr-legend'));
+  var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (units.length && !still && 'IntersectionObserver' in window) {
+    document.documentElement.classList.add('rv');
+    var uo = new IntersectionObserver(function (rows) {
+      var n = 0;
+      rows.forEach(function (row) {
+        if (!row.isIntersecting) return;
+        uo.unobserve(row.target);
+        row.target.style.transitionDelay = (300 + n * 110) + 'ms';
+        row.target.classList.add('rv-in');
+        n++;
+      });
+    }, { rootMargin: '0px 0px -15% 0px' });
+    units.forEach(function (u) { uo.observe(u); });
+  }
+
   /* ── reading progress ─────────────────────────────────────────────────── */
   var rule = document.querySelector('.csa__rule, .csb__rule'), tick = false;
   function paint() {
